@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None):
+def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None, n_points=100):
     """
     Plot the phase portrait of a dynamical system f(θ)
-    on the circle
+    on the circle with r = 1 via the transformation
+    
+                x = r * cos(θ)
+                y = r * sin(θ)
 
     Parameters
     ----------
@@ -18,17 +21,21 @@ def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None):
         Relative tolerance to catch a fixed point
     ax: matplotlib.axis or None
         (if any) plot the diagram on the given subplot
+    n_points: int
+        Number of points to draw the circle
     """
-    theta_circular = np.linspace(0, 2 * np.pi, 100)
+    theta_circular = np.linspace(0, 2 * np.pi, n_points)
     ax = plt.subplots()[1] if ax is None else ax
     for theta in theta_inits:
-        dx = np.cos(theta) * eps * f(theta)
-        dy = -np.sin(theta) * eps * f(theta)
+        dx = -np.sin(theta) * eps * f(theta)
+        dy = np.cos(theta) * eps * f(theta)
 
         if not np.isclose(dx, 0, rtol=rtol) or not np.isclose(dy, 0, rtol=rtol):
-            ax.arrow(np.sin(theta) - dx, np.cos(theta) - dy, dx, dy, width=0.035)
+            arrow_y = np.sin(theta) - dy
+            arrow_x = np.cos(theta) - dx
+            ax.arrow(arrow_x, arrow_y, dx, dy, width=0.035)
         else:
-            ax.scatter(np.sin(theta), np.cos(theta), c="black", s=50)
+            ax.scatter(np.cos(theta), np.sin(theta), c="black", s=50)
 
     ax.plot(np.sin(theta_circular), np.cos(theta_circular))
     ax.axis("equal");
