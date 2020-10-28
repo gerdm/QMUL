@@ -22,8 +22,6 @@ def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None):
     theta_circular = np.linspace(0, 2 * np.pi, 100)
     ax = plt.subplots()[1] if ax is None else ax
     for theta in theta_inits:
-        dx, dy = np.cos(theta) * eps, -np.sin(theta) * eps
-
         dx = np.cos(theta) * eps * f(theta)
         dy = -np.sin(theta) * eps * f(theta)
 
