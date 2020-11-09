@@ -4,6 +4,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage{graphicx}
 %\usepackage{biblatex}
 %\addbibresource{bib.bib}
@@ -108,7 +109,7 @@ Consider the series $(a_n)_{n=1}^\infty = \{n^2 \vert n\in\mathbb{N}\}$ and $(b_
 	\label{fig:growth-1}
 \end{figure*}
 
-In fact, taking a close look at our example, we can see that the relative difference between $a_n$ and $b_n$ --defined as $a_n / b_n$-- growths fast and reaches a peak at $n=4$. This faster growth reaches a peak at $n=4$ and then $b_n$ starts growing faster (eventually reaching up) as shown in figure \ref{fig:relative-growth}.
+In fact, taking a close look at our example, we can see that the relative difference between $a_n$ and $b_n$ (defined as $a_n / b_n$) growths fast and reaches a peak at $n=4$. After this peak, $b_n$ starts growing faster and eventually reaching up, as shown in figure \ref{fig:relative-growth}.
 
 \begin{figure*}[h!]
 	\centering
@@ -131,4 +132,58 @@ At it maximum value, $an$ is around 5 times greater than $bn$! What this means i
 \begin{definition}
 	Let $(a_n)_{n=1}^\infty$, $(b_n)_{n=1}^\infty$ be sequences of positive real numbers. We say that $(a_n)_{n=1}^\infty \prec (b_n)_{n=1}^\infty$. If there exists $C\in\mathbb{R}^{+}$ such that for every $n\in\mathbb{N}. a_n \leq C\cdot b_n$
 \end{definition}
+
+\subsection*{Belief Propagation}
+\subsubsection*{Inference and graphical models}
+The computation of marginal probabilities of graphical models is known as inference. The Belief Propagation (BP) algorithm is used to efficiently make inference over graphical models.
+
+Three main kinds of graphical models are Bayesian Networks, pairwise Markov Random Fields (MRF), and Factor Graphs. Each of these represent the joint probability of a set of random variables in different graphical ways. There are different methods to perform inference over each of these graphs, but they are all variants of the BP algorithm.
+
+
+Bayesian Networks are directed graphs for modeling conditional relationships by assuming that the joint distribution of a set of random variables can be described as
+
+\begin{equation*}
+	p(x_1, \ldots, x_N) = \prod_{n=1}^Np(x_n\vert \text{Pa}(x_n))
+\end{equation*}
+
+where $\text{Pa}(x_n)$ denote the set of nodes that have a \textit{causal} effect on $x_n$.
+
+Pairwise Markov Random Fields, on the other hand, are undirected graphs with an application for computer vision problems. Their joint distribution can be described as a function of neighboring unobserved nodes and pairs of observed and unobserved nodes.
+
+\begin{equation*}
+	p({\bf x}, {\bf y}) = \frac{1}{Z}\prod_{n,m}\psi_{nm}(x_n, x_m)\prod_{n}\phi(x_n, y_n)
+\end{equation*}
+
+Finally, Tanner Graphs have their origins in an application for decoding of error-correcting codes. Their graphical representation is known as a Factor Graphs with joint probability defined as
+
+\begin{equation*}
+	p({\bf x}) = \frac{1}{Z}\prod_{m=1}^M \psi_m(x_m)
+\end{equation*}
+
+All three graphical models are equivalent. That is, one can represent a pairwise MRF or Bayesian network into equivalent factor graphs or vice-versa.
+
+The Belief Propagation has different variants depending on the type of graph one choses to work with. Therefore, by deriving the BP algorithm on a pairwise MRF one can generalize the results to the other types of graphical models.
+
+\subsubsection*{Standard Belief Propagation}
+The main idea behind the Belief Propagation algorithm for pairwise MRFs is the introduction of messages from one node to the other to efficiently make inference on an unobserved node $x_n$, which results in obtaining the ``belief'' of the node $x_n$, denoted as $b_n(x_n)$.
+
+These ``messages'' introduced by the BP model ameliorate the need to compute in exponential time the marginal probability of a node $x_n$:
+
+\begin{equation*}
+	p(x_n) = \sum_{x_m \vert m \neq n} p(x_m),
+\end{equation*}
+
+but insted compute this value in terms of the neighboring nodes of $x_n$:
+
+\begin{equation*}
+	p(x_n) \propto \phi_n(x_n, y_n) \prod_{j \in N(x_n)} m_{j,n}(x_n)
+\end{equation*}
+
+The messages in the BP algorithm are computed recursively until all messages are known. This is done by computing a message as
+
+\begin{equation*}
+	m_{ij}(x_j) \leftarrow \sum_{x_i} \phi(x_i) \psi_{ij}(x_i, x_j) \prod_{k \in N(i) \backslash j} m_{ki}(x_i)
+\end{equation*}
+
+In practice, one starts by computing the messages at the edges of the graph and propagate the messages if necessary.
 \end{document}
