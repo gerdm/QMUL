@@ -6,14 +6,13 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{graphicx}
-%\usepackage{biblatex}
-%\addbibresource{bib.bib}
+\usepackage[font=small,labelfont=bf]{caption}
 
 \usepackage{natbib}
 \usepackage{bibentry}
 \bibliographystyle{plainnat}
 \newtheorem{definition}{Definition}
-
+\setlength{\parskip}{1em}
 
 \title{MTH700 Assesed Coursework}
 \author{Gerardo Durán Martín}
@@ -64,7 +63,7 @@ D. A. Goldston, J. Pintz, C. Y. Yildirim. Primes in Tuples I, Annals of Mathemat
 \begin{enumerate}[label=(\alph*)]
 	\item What is the main message of the paper? \\ \textbf{Ans}: Introduce a method presumed to help in proving the existence of infinitely many prime tuples.
 	\item Why is the paper relevant? \\ \textbf{Ans}: They provided a new way to think about the twin prime conjecture, which was later later on used to prove that there exists an infinite set of two consecutive prime numbers that are below some fixed gap.
-	\item Summary of the paper \\ \textbf{Ans}: The paper introduces three new theorems that show what was possible to know regarding gaps between consecutive prime numbers and the limitations of current methods.\\ Their first theorem follows from a conjecture which, if proven to be true, would mean that there are an infinite amount of consecutive prime numbers whose distance differ by, at most, 16.\\ Their second theorem shows that there are an infinite amount of consecutive prime numbers whose distance differ by no more than the log of the smallest of the pair.\\ Their final theorem places an upper bound for the distance between two prime numbers separated by two or more numbers.
+	\item Summary of the paper \\ \textbf{Ans}: The paper introduces three new theorems  regarding the gaps between consecutive prime numbers and the limitations of current methods to prove the twin prime conjecture.\\ Their first theorem follows from a conjecture which, if proven to be true, would mean that there are an infinite amount of consecutive prime numbers whose distance differ by, at most, 16.\\ Their second theorem shows that there are an infinite amount of consecutive prime numbers whose distance differ by no more than the log of the smallest of the pair.\\ Their final theorem places an upper bound for the distance between two prime numbers separated by two or more numbers.
 \end{enumerate}
 
 \subsection*{Paper 2}
@@ -87,7 +86,7 @@ Their well-written abstract and lengthy introduction gives the reader enough tim
 \section*{Section C: Communicating Mathematics}
 
 \subsection*{Understanding $(a_n)_n \prec (b_n)_n$}
-The role of the symbol $<$ on the real line is to denote order. Informally speaking, for any two numbers $a, b \in \mathbb{R}$,  $a < b$ means that $a$ is to left of $b$ or that $a$ has a lower order than $b$ (see Figure \ref{fig:real-line}). So, on the real line, is straightfoward to check whether $a < b$, we just need to verify whether $a$ is to the left of $b$.
+The role of the symbol $<$ on the real line is to denote order. Informally speaking, for any two numbers $a, b \in \mathbb{R}$, $a < b$ means that $a$ is to left of $b$ (see figure \ref{fig:real-line}). Therefore, to check whether $a < b$, we just need to verify whether $a$ is to the left of $b$.
 
 \begin{figure*}[h!]
 	\centering
@@ -96,11 +95,12 @@ The role of the symbol $<$ on the real line is to denote order. Informally speak
 	\label{fig:real-line}
 \end{figure*}
 
-However, as we start working with more abstract mathematical objects, it becomes harder to define a notion of order based on spacial position.
+However, as we start working with more abstract mathematical objects, it becomes harder to define a notion of order based on spacial position. Suppose that we are given two series of positive real numbers $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$, and we decide to assign some order to them. Clearly, we cannot make use of $<$ to compare which series has higher-order. Not only is $<$ defined to work on the real line, but there is no clear way on how to compare two series based on positioning.
 
-Imagine that we have two infinite-dimensional arrays $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$ of positive real numbers. As we have seen, there is no clear way to use $<$ to compare which has higher-order, so we may come up with a definition that *makes sense*. One such way is to define the hierarchy in terms of *growth*. Roughly speaking, we may want to come up with a definition that states that $a$ is of lesser order than $b$ if $b$ grows more quickly than $a$. A way to think about growth is to ask whether $a$ can *catch-up* $b$. If $a$ can eventually catch $b$ and stay *above* $b$, then $a$ grows more quickly than $b$ and we define $a$ to be of higher order (a more powerful series!). If, on the contrary, $a$ can never catch up $b$ it means that every value $a_n$ will be below $b$.
+In order to compare the two series, we need to come up with a definition of order that \textit{makes sense}. One such way is to define order in terms of \textit{growth}. That is, a series $(b_n)_{n=1}^\infty$ has a higher rank than $(a_n)_{n=1}^\infty$ if $(b_n)_{n=1}^\infty$ \textit{grows} quicker than $(a_n)_{n=1}^\infty$. In other words, can the elements of $(b_n)_n$ eventually \textit{catch-up} $(a_n)_n$?
 
-Consider the series $(a_n)_{n=1}^\infty = \{n^2 \vert n\in\mathbb{N}\}$ and $(b_n)_{n=1}^\infty = \{\texttt{fibo}(n) \vert n\in\mathbb{N}\}$, where $\texttt{fibo(n)}$ is a function that returns the $n$-th element of the Fibonacci sequence. (figure \ref{fig:growth-1}). For $n \leq 11$, $a_n \geq b_n$. However, at $n=12$, $a_{12} = b_{12}$ and, for $n\geq 13$ $a_n < b_n$.
+To understand this idea, consider the series $(a_n)_{n=1}^\infty = \{n^2 \vert n\in\mathbb{N}\}$ and $(b_n)_{n=1}^\infty = \{\texttt{fibo}(n) \vert n\in\mathbb{N}\}$, where $\texttt{fibo(n)}$ is a function that returns the $n$-th element of the Fibonacci sequence (figure \ref{fig:growth-1}). Note that for $n \leq 12$, $b_n < a_n$. However, at $n\geq 13$, $b_n \geq a_n$. Although $(b_n)_n$ starts below $(a_n)_n$, it eventually reaches it and becomes bigger.
+
 
 \begin{figure*}[h!]
 	\centering
@@ -109,22 +109,26 @@ Consider the series $(a_n)_{n=1}^\infty = \{n^2 \vert n\in\mathbb{N}\}$ and $(b_
 	\label{fig:growth-1}
 \end{figure*}
 
-In fact, taking a close look at our example, we can see that the relative difference between $a_n$ and $b_n$ (defined as $a_n / b_n$) growths fast and reaches a peak at $n=4$. After this peak, $b_n$ starts growing faster and eventually reaching up, as shown in figure \ref{fig:relative-growth}.
+Taking a closer look at our example, we can see that the \textit{relative difference} between $a_n$ and $b_n$ (defined as $a_n / b_n$) reaches a peak at $n=4$ (see figure \ref{fig:relative-growth}).
 
 \begin{figure*}[h!]
 	\centering
 	\scalebox{0.5}{\input{figures/relative-growth.tikz}}
-	\caption{Plot of two series}
+	\caption{Relative difference of the series $(a_n)_n$ and $(b_n)_n$}
 	\label{fig:relative-growth}
 \end{figure*}
 
-At it maximum value, $an$ is around 5 times greater than $bn$! What this means is that, since the relative difference between $an$ and $bn$ is bounded above (it is never greater than 5x), if we multiply each entry of $bn$ by 5.333, then every element of $b$ will always be less than or equal to $a$. In other words, $a$ can never catch $b$ if the relative distance is finite, that is to say, there exists some constant $C$ such that for every $n=1\ldots$, $a_n \leq C \cdot b_n$. Armed with this intuition, we can formally define the relationship $\prec$ between two series $(a_n)_n$ and $(b_n)_n$ as follows:
+At its maximum value, $a_n$ is around 5 times bigger than $b_n$: the relative difference between $a_n$ and $b_n$ is bounded above ($a_n$ is never greater than 5 times $b_n$). If we multiply each entry of $b_n$ by the maximum relative difference, then every element in $(b_n)_n$ will always be greater than or equal to $(a_n)_n$ (see figure \ref{fig:growth-2}). In other words, a series $(a_n)_n$ can never catch $(b_n)_n$ if their maximum relative distance is finite, which means that there will exist some constant $C$ such that for every $n\in\mathbb{N}$, $a_n \leq C \cdot b_n$.
+
+A given sequence $(a_n)_n$, however, need not be monotonically increasing. Nevertheless, we can make use of the intuition gained in the previous example to formally define an ordering between two series $(a_n)_n$ and $(b_n)_n$.
+
+To define this ordering, we will make use of the symbol $\prec$ and say that a series $(a_n)_n$ has lower rank than $(b_n)_n$ if their maximum relative distance is bounded above. As we have seen, this implies that there will exist some constant $C$ on the positive real numbers such that every element in $(a_n)_n$ will be less than or equal to $(C b_n)_n$. More formally,
 
 
 \begin{figure*}[h!]
 	\centering
 	\scalebox{0.5}{\input{figures/growth-2.tikz}}
-	\caption{Plot of two series}
+	\caption{Plot of two series on the real line. In this example, we multiply the series of fibonacci numbers by a constant that makes every element in the series to be greater than or equal to every element of the series $n^2$.}
 	\label{fig:growth-2}
 \end{figure*}
 
