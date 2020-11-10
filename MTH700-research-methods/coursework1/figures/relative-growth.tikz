@@ -1,0 +1,83 @@
+\begin{tikzpicture}[]
+\begin{axis}[
+  height = {101.6mm},
+  ylabel = {$a_n / b_n$},
+  xmin = {0.61},
+  xmax = {14.39},
+  ymax = {5.477736516357206},
+  xlabel = {$n$},
+  unbounded coords=jump,scaled x ticks = false,xlabel style = {font = {\fontsize{22 pt}{28.6 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},xmajorgrids = true,xtick = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0},xticklabels = {$1$,$2$,$3$,$4$,$5$,$6$,$7$,$8$,$9$,$10$,$11$,$12$,$13$,$14$},xtick align = inside,xticklabel style = {font = {\fontsize{16 pt}{20.8 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},x grid style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 0.1,
+line width = 0.5,
+solid},axis x line* = left,x axis line style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid},scaled y ticks = false,ylabel style = {font = {\fontsize{22 pt}{28.6 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},ymajorgrids = true,ytick = {1.0,2.0,3.0,4.0,5.0},yticklabels = {$1$,$2$,$3$,$4$,$5$},ytick align = inside,yticklabel style = {font = {\fontsize{16 pt}{20.8 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},y grid style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 0.1,
+line width = 0.5,
+solid},axis y line* = left,y axis line style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid},    xshift = 0.0mm,
+    yshift = 0.0mm,
+    axis background/.style={fill={rgb,1:red,1.00000000;green,1.00000000;blue,1.00000000}}
+,legend style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid,fill = {rgb,1:red,1.00000000;green,1.00000000;blue,1.00000000},fill opacity = 1.0,text opacity = 1.0,font = {\fontsize{16 pt}{20.8 pt}\selectfont}},colorbar style={title=},
+  ymin = {0.37549071618037133},
+  width = {152.4mm}
+]
+
+\addplot+[
+  color = {rgb,1:red,0.00000000;green,0.60560316;blue,0.97868012},
+draw opacity = 1.0,
+line width = 1,
+solid,mark = *,
+mark size = 2.0,
+mark options = {
+            color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0,
+            fill = {rgb,1:red,0.00000000;green,0.60560316;blue,0.97868012}, fill opacity = 1.0,
+            line width = 1,
+            rotate = 0,
+            solid
+        },forget plot
+] coordinates {
+  (1.0, 1.0)
+  (2.0, 4.0)
+  (3.0, 4.5)
+  (4.0, 5.333333333333333)
+  (5.0, 5.0)
+  (6.0, 4.5)
+  (7.0, 3.769230769230769)
+  (8.0, 3.0476190476190474)
+  (9.0, 2.3823529411764706)
+  (10.0, 1.8181818181818181)
+  (11.0, 1.3595505617977528)
+  (12.0, 1.0)
+  (13.0, 0.7253218884120172)
+  (14.0, 0.519893899204244)
+};
+
+\addplot+[
+  color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid,mark = none,
+mark size = 2.0,
+mark options = {
+            color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0,
+            fill = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, fill opacity = 1.0,
+            line width = 1,
+            rotate = 0,
+            solid
+        },forget plot
+] coordinates {
+  (-13.170000000000002, 1.0)
+  (28.17, 1.0)
+};
+
+\end{axis}
+
+\end{tikzpicture}
+

@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+    \begin{axis}[
+    % center the x axis
+    axis x line=middle,
+    % we don't need a y axis line ...
+    axis y line=none,
+    % ... and thus there is no need for much `height' of the axis
+    height=100pt,
+    % but `height' also changes `width' which is restored here
+    width=\axisdefaultwidth,
+    xmin=-3,
+    xmax=3,
+    ]
+    \addplot[color=blue] coordinates {(-2.718,0)};
+    \addplot[color=blue] coordinates {(1.618,0)};
+    \node[label={above:{a}}, circle, fill, inner sep=2pt] at (axis cs:-2.718,0) {};
+    \node[label={above:{b}}, circle, fill, inner sep=2pt] at (axis cs:1.618,0) {};
+    \end{axis}
+\end{tikzpicture}
