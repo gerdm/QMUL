@@ -15,7 +15,7 @@
 \setlength{\parskip}{1em}
 
 \title{MTH700 Assesed Coursework}
-\author{Gerardo Durán Martín}
+\author{Gerardo Durán Martín\\Student ID: 200774408}
 \date{November 2020}
 
 \begin{document}
@@ -29,7 +29,7 @@ The concept of an \textit{iterated function system} as a means of constructing f
 	\begin{itemize}
 	\item \bibentry{itf-ref0}
 	\end{itemize}
-	\item How many citations has this paper received so far? \\ \textbf{Ans}: As of November 2020, the the paper has received 255 citations so far, according to Google Scholar. However, the page where the paper is being cited from, ACM, estimated 107 total citations. 
+	\item How many citations has this paper received so far? \\ \textbf{Ans}: As of November 2020, the the paper has received 255 citations, according to Google Scholar. However, ACM estimates 107 total citations. 
 	\item Provide complete references of \textit{two} papers published in the journal \textit{Inventiones Mathematicae} in the 2010s which make use of the concept of an iterated function system. \\ \textbf{Ans}:
 	\begin{itemize}
 		\item \bibentry{itf-ref1}
@@ -63,30 +63,30 @@ D. A. Goldston, J. Pintz, C. Y. Yildirim. Primes in Tuples I, Annals of Mathemat
 \begin{enumerate}[label=(\alph*)]
 	\item What is the main message of the paper? \\ \textbf{Ans}: Introduce a method presumed to help in proving the existence of infinitely many prime tuples.
 	\item Why is the paper relevant? \\ \textbf{Ans}: They provided a new way to think about the twin prime conjecture, which was later later on used to prove that there exists an infinite set of two consecutive prime numbers that are below some fixed gap.
-	\item Summary of the paper \\ \textbf{Ans}: The paper introduces three new theorems  regarding the gaps between consecutive prime numbers and the limitations of current methods to prove the twin prime conjecture.\\ Their first theorem follows from a conjecture which, if proven to be true, would mean that there are an infinite amount of consecutive prime numbers whose distance differ by, at most, 16.\\ Their second theorem shows that there are an infinite amount of consecutive prime numbers whose distance differ by no more than the log of the smallest of the pair.\\ Their final theorem places an upper bound for the distance between two prime numbers separated by two or more numbers.
+	\item Summary of the paper \\ \textbf{Ans}: The paper introduces three new theorems  regarding the gaps between consecutive prime numbers.\\ Their first theorem follows from a conjecture which, if proven to be true, would mean that there are an infinite amount of consecutive prime numbers whose distance differ by, at most, 16.\\ Their second theorem shows that there are an infinite amount of consecutive prime numbers whose distance differ by no more than the log of the smallest of the pair.\\ Their final theorem places an upper bound on the distance between two prime numbers separated by two or more numbers.
 \end{enumerate}
 
 \subsection*{Paper 2}
 Liu, Yang-Yu, Jean-Jacques Slotine, and Albert-László Barabási. Controllability of complex networks. Nature 473, 167-173, 2011.
 \begin{enumerate}[label=(\alph*)]
-	\item What is the main message of the paper? \\ \textbf{Ans}: One can make use of analytical tools to study which nodes guide the dynamics (behaviour) of an arbitrary complex directed networks. This requires to know where in a complex network should one place \textit{input} nodes to drive the state of the network to a different configuration. 
-	\item Why is the paper relevant? \\ \textbf{Ans}: They were able to show that the minimum number of nodes that control the dynamics of a complex network is given by the degree distribution, i.e., the probability distribution of how many connections a given node contains.
+	\item What is the main message of the paper? \\ \textbf{Ans}: One can make use of analytical tools to study which nodes guide the dynamics (behaviour) of an arbitrary complex directed networks. This requires to know where to place \textit{input} nodes to drive the state of the network to a different configuration. 
+	\item Why is the paper relevant? \\ \textbf{Ans}: They were able to show that the minimum number of nodes that control the dynamics of a complex network is given by the degree distribution, i.e., the probability distribution of how many connections a given node contains. With this proof, one can take any complex directed network and assess which nodes makes the system controllable.
 	\item Summary of the paper \\ \textbf{Ans}: The paper introduces a new method to understand which nodes in a complex directed network drive the dynamics of the network. The authors divided their work in four sections. \\ In the first section, the authors lay out the basic concepts of controllability and show that the Kalman's controllability rank condition is sufficient to identify the minimum number of nodes required to control the network.\\ In the next section, they make use of their method to perform experiments. They find, for instance, that in social networks, few individuals may be able to control the system.\\Then, they make use of the minimum number of nodes to show the role that plays the \textit{density} of the of the network.\\Finally, they analyze how robust the controllability of a network is in terms of the mean degree of each network.
 \end{enumerate}
 
 \subsection*{A critical review of the ``Controllability of Complex Networks'' paper}
 
-In the paper, The Controllability of Complex Networks, the authors show that by choosing and manipulating only a number of input nodes --which are determined by the architecture of the network-- one can drive the state of the system. More specifically, they show that the degree distribution of the network determines the minimum number of \textit{input} nodes that a network should have in order to control the state of the system.
+In the paper ``Controllability of Complex Networks'', the authors show that choosing and manipulating a number of input nodes --which are determined by the architecture of the network-- can drive the state of the system. More specifically, they show that the degree distribution of the network determines the minimum number of \textit{input} nodes that a network should have in order to control the state of the system.
 
-What makes the the Controllability of complex networks a good paper is the insight, discovery, and pedagogy that the authors used to convey their message. They are able to show how a conceptually-simple rule is enough to check the controllability of a network, namely, that whether the rank of the matrix $C = (B, AB, A^2B, \ldots, A^{N-1}B)$  has full rank is enough to determine whether the system is controllable; they discover that the nodes that tend to drive the system tends to avoid nodes that are highly connected to other nodes; finally, their exposition of the mathematical and experimental result gives the reader a sense that their results are not only mathematically appealing, but that they have a ``real-world"" application.
+What makes the the Controllability of complex networks a good paper is the insight, discovery, and pedagogy that the authors used to convey their message. They are able to show how a conceptually-simple rule is enough to check the controllability of a network, namely, that whether the rank of the matrix $C = (B, AB, A^2B, \ldots, A^{N-1}B)$  has full rank is enough to determine if the system is controllable; they discover that nodes that avoid being highly connected to other nodes tend to drive the system; finally, their emphasis the experimental results gives the reader a sense that their work is not only mathematically appealing, but that it has a ``real-world'' application.
 
-Their well-written abstract and lengthy introduction gives the reader enough time to understand what their goals were and what they found. One particular aspect of the paper which I really liked was their their approach to focus the paper on their findings and results which make the reading relatively easy to follow and understand the main ideas without the use of too much math, while at the same time providing a section on supplementary information to understand the math behind their ideas.
+Finally, their lengthy introduction gives the reader enough background to understand their goals and motivations. By focusing on their findings without dwelling too much on the mathematics, the authors make the flow of the paper easy to follow. However, their addition of supplementary information on the mathematics behind the models is a great addition for someone who wants to throughly understand the ideas.
 
 
 \section*{Section C: Communicating Mathematics}
 
 \subsection*{Understanding $(a_n)_n \prec (b_n)_n$}
-The role of the symbol $<$ on the real line is to denote order. Informally speaking, for any two numbers $a, b \in \mathbb{R}$, $a < b$ means that $a$ is to left of $b$ (see figure \ref{fig:real-line}). Therefore, to check whether $a < b$, we just need to verify whether $a$ is to the left of $b$.
+The role of the symbol $<$ on the real line is to denote order. Informally, for any two numbers $a, b \in \mathbb{R}$, if $a < b$ means that $a$ is to left of $b$ (see figure \ref{fig:real-line}).
 
 \begin{figure*}[h!]
 	\centering
@@ -95,21 +95,21 @@ The role of the symbol $<$ on the real line is to denote order. Informally speak
 	\label{fig:real-line}
 \end{figure*}
 
-However, as we start working with more abstract mathematical objects, it becomes harder to define a notion of order based on spacial position. Suppose that we are given two series of positive real numbers $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$, and we decide to assign some order to them. Clearly, we cannot make use of $<$ to compare which series has higher-order. Not only is $<$ defined to work on the real line, but there is no clear way on how to compare two series based on positioning.
+However, as we start working with more abstract mathematical objects, it becomes harder to define a notion of order based on spacial position. Suppose that we are given two series of positive real numbers $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$, and we decide to assign some order to them. Clearly, we cannot make use of $<$ to compare which series has a higher rank. Not only is $<$ defined to work on the real line, but there is no clear way to compare two series based on positioning.
 
-In order to compare the two series, we need to come up with a definition of order that \textit{makes sense}. One such way is to define order in terms of \textit{growth}. That is, a series $(b_n)_{n=1}^\infty$ has a higher rank than $(a_n)_{n=1}^\infty$ if $(b_n)_{n=1}^\infty$ \textit{grows} quicker than $(a_n)_{n=1}^\infty$. In other words, can the elements of $(b_n)_n$ eventually \textit{catch-up} $(a_n)_n$?
+Since the definition of ordering for two real-numbered series is not straightforward, we need to come up with a definition of order that \textit{makes sense}. One such way is to define order in terms of \textit{growth}. That is, a series $(b_n)_{n=1}^\infty$ has a higher rank than $(a_n)_{n=1}^\infty$ if $(b_n)_{n=1}^\infty$ \textit{grows} quicker than $(a_n)_{n=1}^\infty$. Quicker, in this sense, means that the elements of $(b_n)_{n=1}^\infty$ eventually \textit{catch-up} $(a_n)_{n=1}^\infty$.
 
-To understand this idea, consider the series $(a_n)_{n=1}^\infty = \{n^2 \vert n\in\mathbb{N}\}$ and $(b_n)_{n=1}^\infty = \{\texttt{fibo}(n) \vert n\in\mathbb{N}\}$, where $\texttt{fibo(n)}$ is a function that returns the $n$-th element of the Fibonacci sequence (figure \ref{fig:growth-1}). Note that for $n \leq 12$, $b_n < a_n$. However, at $n\geq 13$, $b_n \geq a_n$. Although $(b_n)_n$ starts below $(a_n)_n$, it eventually reaches it and becomes bigger.
+To understand this, consider the series $(a_n)_{n=1}^\infty = \{n^2 \vert n\in\mathbb{N}\}$ and $(b_n)_{n=1}^\infty = \{\texttt{fibo}(n) \vert n\in\mathbb{N}\}$, where $\texttt{fibo(n)}$ is a function that returns the $n$-th element of the Fibonacci sequence (figure \ref{fig:growth-1}). Note that for $n \leq 12$, $b_n \leq a_n$. However, at $n\geq 13$, $b_n > a_n$.
 
 
 \begin{figure*}[h!]
 	\centering
 	\scalebox{0.5}{\input{figures/growth-1.tikz}}
-	\caption{Plot of two series}
+	\caption{Plot of two series. Although $(b_n)_{n=1}^\infty$ remains below or at levels of $(a_n)_{n=1}^\infty$, after $n=12$, the values of $(b_n)_{n=1}^\infty$ remain above the values of $(a_n)_{n=1}^\infty$. See text for context.}
 	\label{fig:growth-1}
 \end{figure*}
 
-Taking a closer look at our example, we can see that the \textit{relative difference} between $a_n$ and $b_n$ (defined as $a_n / b_n$) reaches a peak at $n=4$ (see figure \ref{fig:relative-growth}).
+Taking a closer look at our example, we can see that the \textit{relative difference} between $a_n$ and $b_n$ (defined as $a_n / b_n$) reaches a peak at $n=4$ (see figure \ref{fig:relative-growth}). At its maximum, the relative difference is bounded above and around 5 ($a_n$ is never greater than around $5 b_n$). If we multiply each entry of $b_n$ by the maximum relative difference, then every element in $(b_n)_{n=1}^\infty$ will always be greater than or equal to $(a_n)_{n=1}^\infty$ (see figure \ref{fig:growth-2}). In other words, a series $(a_n)_{n=1}^\infty$ can never catch $(b_n)_{n=1}^\infty$ if their maximum relative distance is bounded above, which means that there will exist some positive constant $C$ such that for every $n\in\mathbb{N}$, $a_n \leq C \cdot b_n$.
 
 \begin{figure*}[h!]
 	\centering
@@ -118,11 +118,10 @@ Taking a closer look at our example, we can see that the \textit{relative differ
 	\label{fig:relative-growth}
 \end{figure*}
 
-At its maximum value, $a_n$ is around 5 times bigger than $b_n$: the relative difference between $a_n$ and $b_n$ is bounded above ($a_n$ is never greater than 5 times $b_n$). If we multiply each entry of $b_n$ by the maximum relative difference, then every element in $(b_n)_n$ will always be greater than or equal to $(a_n)_n$ (see figure \ref{fig:growth-2}). In other words, a series $(a_n)_n$ can never catch $(b_n)_n$ if their maximum relative distance is finite, which means that there will exist some constant $C$ such that for every $n\in\mathbb{N}$, $a_n \leq C \cdot b_n$.
 
-A given sequence $(a_n)_n$, however, need not be monotonically increasing. Nevertheless, we can make use of the intuition gained in the previous example to formally define an ordering between two series $(a_n)_n$ and $(b_n)_n$.
+A given sequence $(a_n)_{n=1}^\infty$, however, need not be monotonically increasing. Nevertheless, we can make use of the intuition gained in the previous example to formally define an ordering between two series $(a_n)_{n=1}^\infty$ and $(b_n)_{n=1}^\infty$.
 
-To define this ordering, we will make use of the symbol $\prec$ and say that a series $(a_n)_n$ has lower rank than $(b_n)_n$ if their maximum relative distance is bounded above. As we have seen, this implies that there will exist some constant $C$ on the positive real numbers such that every element in $(a_n)_n$ will be less than or equal to $(C b_n)_n$. More formally,
+To define this ordering, we will make use of the symbol $\prec$ and state that a series $(a_n)_n$ has lower rank than $(b_n)_{n=1}^\infty$ (which we will denote as $(a_n)_{n=1}^\infty \prec (b_n)_{n=1}^\infty$) if their maximum relative distance is bounded above. As we have seen, this implies that there will exist some constant $C$ on the positive real numbers such that every element in $(a_n)_{n=1}^\infty$ will be less than or equal to $(C \cdot b_n)_{n=1}^\infty$. More formally, we define this relationship as follows:
 
 
 \begin{figure*}[h!]
@@ -139,55 +138,55 @@ To define this ordering, we will make use of the symbol $\prec$ and say that a s
 
 \subsection*{Belief Propagation}
 \subsubsection*{Inference and graphical models}
-The computation of marginal probabilities of graphical models is known as inference. The Belief Propagation (BP) algorithm is used to efficiently make inference over graphical models.
+The computation of marginal probabilities in a graphical model is known as inference. The Belief Propagation (BP) algorithm is used to efficiently make inference over graphical models.
 
-Three main kinds of graphical models are Bayesian Networks, pairwise Markov Random Fields (MRF), and Factor Graphs. Each of these represent the joint probability of a set of random variables in different graphical ways. There are different methods to perform inference over each of these graphs, but they are all variants of the BP algorithm.
+There are three main kinds of graphical models, namely, Bayesian Networks, pairwise Markov Random Fields (MRF), and Factor Graphs. Each of these represent the joint probability over a set of random variables in different graphical ways.
 
 
-Bayesian Networks are directed graphs for modeling conditional relationships by assuming that the joint distribution of a set of random variables can be described as
+Bayesian Networks are directed graphs for modeling conditional relationships that assume a joint distribution over a set of random variables $\bf x$ given by
 
 \begin{equation*}
-	p(x_1, \ldots, x_N) = \prod_{n=1}^Np(x_n\vert \text{Pa}(x_n))
+	p({\bf x}) = \prod_{n=1}^Np(x_n\vert \text{Pa}(x_n)),
 \end{equation*}
 
 where $\text{Pa}(x_n)$ denote the set of nodes that have a \textit{causal} effect on $x_n$.
 
-Pairwise Markov Random Fields, on the other hand, are undirected graphs with an application for computer vision problems. Their joint distribution can be described as a function of neighboring unobserved nodes and pairs of observed and unobserved nodes.
+Pairwise Markov Random Fields, on the other hand, are undirected graphical models with an application for computer vision problems. Their joint distribution can be described as a function of neighboring unobserved nodes $(x_n, x_m)$, and pairs of observed and unobserved nodes $(x_n, y_n)$. Their joint distribution can be expressed as
 
 \begin{equation*}
-	p({\bf x}, {\bf y}) = \frac{1}{Z}\prod_{n,m}\psi_{nm}(x_n, x_m)\prod_{n}\phi(x_n, y_n)
+	p({\bf x}, {\bf y}) = \frac{1}{Z}\prod_{n,m}\psi_{nm}(x_n, x_m)\prod_{n}\phi(x_n, y_n).
 \end{equation*}
 
-Finally, Tanner Graphs have their origins in an application for decoding of error-correcting codes. Their graphical representation is known as a Factor Graphs with joint probability defined as
+The value $\psi_{nm}(x_n, x_m)$ is known as the compatibility function, and $\phi_n(x_n, y_n)$ is called the evidence for $x_n$.
+
+Finally, Tanner Graphs have their origins in decoding of error-correcting codes. Their graphical representation, known as a Factor Graph, has a joint probability defined as
 
 \begin{equation*}
-	p({\bf x}) = \frac{1}{Z}\prod_{m=1}^M \psi_m(x_m)
+	p({\bf x}) = \frac{1}{Z}\prod_{a} \psi_a({\bf x}_a).
 \end{equation*}
 
-All three graphical models are equivalent. That is, one can represent a pairwise MRF or Bayesian network into equivalent factor graphs or vice-versa.
+Here, ${\bf x}_a$ represents the $a$-th group of nodes; whereas $\psi_a$ represents the compatibility of the group $a$.
 
-The Belief Propagation has different variants depending on the type of graph one choses to work with. Therefore, by deriving the BP algorithm on a pairwise MRF one can generalize the results to the other types of graphical models.
+All three graphical models are equivalent. One can represent a pairwise MRF or a Bayesian network into equivalent factor graphs and vice-versa. Therefore, by deriving the BP algorithm on one type of graphical model, one can generalize the results to the other types of graphical models.
 
-\subsubsection*{Standard Belief Propagation}
-The main idea behind the Belief Propagation algorithm for pairwise MRFs is the introduction of messages from one node to the other to efficiently make inference on an unobserved node $x_n$, which results in obtaining the ``belief'' of the node $x_n$, denoted as $b_n(x_n)$.
-
-These ``messages'' introduced by the BP model ameliorate the need to compute in exponential time the marginal probability of a node $x_n$:
+\subsubsection*{Standard Belief Propagation (The BP algorithm over pairwise MRFs)}
+The main idea behind the Belief Propagation algorithm for pairwise MRFs is the introduction of \textit{messages} to efficiently make inference on an unobserved node $x_n$. The passing of messages results in obtaining the ``belief'' of the node $x_n$, denoted as $b_n(x_n)$. The messages introduced by the BP model ameliorate the need to explicitly compute the marginal probability of a node $x_n$ over all elements
 
 \begin{equation*}
-	p(x_n) = \sum_{x_m \vert m \neq n} p(x_m),
+	p(x_n) = \sum_{\{x_m \vert m \neq n\}} p(x_m),
 \end{equation*}
 
-but insted compute this value in terms of the neighboring nodes of $x_n$:
+but instead express the marginal probability of $x_n$ in terms of neighboring nodes and messages
 
 \begin{equation*}
-	p(x_n) \propto \phi_n(x_n, y_n) \prod_{j \in N(x_n)} m_{j,n}(x_n)
+	p(x_n) \propto \phi_n(x_n, y_n) \prod_{j \in N(x_n)} m_{j,n}(x_n).
 \end{equation*}
 
-The messages in the BP algorithm are computed recursively until all messages are known. This is done by computing a message as
+The messages in the BP algorithm are computed recursively by summing over the compatibilities of neighboring nodes and messages until all messages are known.
 
 \begin{equation*}
-	m_{ij}(x_j) \leftarrow \sum_{x_i} \phi(x_i) \psi_{ij}(x_i, x_j) \prod_{k \in N(i) \backslash j} m_{ki}(x_i)
+	m_{ij}(x_j) \leftarrow \sum_{x_i} \phi(x_i, y_i) \psi_{ij}(x_i, x_j) \prod_{k \in N(i) \backslash j} m_{ki}(x_i).
 \end{equation*}
 
-In practice, one starts by computing the messages at the edges of the graph and propagate the messages if necessary.
+In practice, one starts by computing the messages at the edges of the graph and propagate the messages if necessary. The BP algorithm has no assumptions about the topology of the graph, however, in order to compute an exact marginalization, it is a requirement that the graph be loop-free.
 \end{document}
