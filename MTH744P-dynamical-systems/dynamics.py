@@ -39,4 +39,23 @@ def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None, n_points
 
     ax.plot(np.sin(theta_circular), np.cos(theta_circular))
     ax.axis("equal");
+    
 
+
+
+
+def linear_dynamics(A, vmin=-2, vmax=2, step=0.1):
+    """
+    Return the evaluation of a vector field for a linear
+    system of the form
+                ẋ = Ax
+    
+    Inputs
+    ------
+    A: np.array(2, 2)
+        A real matrix with coeffients describing the dynamics
+    """
+    # The mpl streamplot requires the values of x to be equal
+    X = np.mgrid[vmin:vmax:step, vmin:vmax:step][::-1]
+    X_dot = np.einsum("ij,jnm->inm", A, X)
+    return X, X_dot
