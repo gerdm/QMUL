@@ -38,10 +38,25 @@ def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None, n_points
             ax.scatter(np.cos(theta), np.sin(theta), c="black", s=50)
 
     ax.plot(np.sin(theta_circular), np.cos(theta_circular))
-    ax.axis("equal");
+    ax.axis("equal")
     
 
-
+def plot_bifurcation_diagram(f, r_values, n_arrows, xmin, xmax, h=0.1, levels=0):
+    xrange = np.linspace(xmin, xmax, n_arrows)
+    head_width = len(r_values) / 40
+    rmin, rmax = min(r_values), max(r_values)
+    XX = np.mgrid[xmin:xmax+h:h, rmin:rmax+h:h]
+    Z = np.apply_along_axis(lambda xx: f(*xx), 0, XX)
+    for r in r_values:
+        flows = np.sign(f(x=xrange, r=r))
+        for x, flow_value in zip(xrange, flows):
+            color = "tab:red" if flow_value == -1 else "tab:orange"
+            plt.axhline(y=r, c="tab:gray", linestyle="--", alpha=0.02)
+            plt.arrow(x, r, flow_value * 0.2, 0, width=0.001, head_width=head_width,
+                          color=color, head_length=0.1)
+    plt.contour(*XX, Z, levels=levels)
+    plt.ylabel("r", fontsize=15)
+    plt.xlabel("x", fontsize=15)
 
 
 def linear_dynamics(A, vmin=-2, vmax=2, step=0.1):
