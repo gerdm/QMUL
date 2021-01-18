@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.integrate import odeint
 
 def plot_circular_dynamics(theta_inits, f, eps=0.2, rtol=0.02, ax=None, n_points=100):
     """
@@ -74,3 +75,101 @@ def linear_dynamics(A, vmin=-2, vmax=2, step=0.1):
     X = np.mgrid[vmin:vmax:step, vmin:vmax:step][::-1]
     X_dot = np.einsum("ij,jnm->inm", A, X)
     return X, X_dot
+
+
+def x_dot(r, θ, r_dot, θ_dot):
+    """
+    Compute the change in a polar dynamical system in
+    terms of the x-coordinate
+    """
+    return r_dot(r, θ) * np.cos(θ) - θ_dot(r, θ) * r * np.sin(θ)
+
+
+def y_dot(r, θ, r_dot, θ_dot):
+    """
+    Compute the chage in a polar dynamical system in terms
+    of the y-coordinate
+    """
+    return r_dot(r, θ) * np.sin(θ) + θ_dot(r, θ) * r * np.cos(θ)
+
+
+def f_polar(S, r_dot, θ_dot):
+    """
+    Evaluate the direction of a polar dynamical
+    system
+    """
+    r, θ = S
+    Δr = r_dot(r, θ)
+    Δθ = θ_dot(r, θ)
+    return Δr, Δθ
+
+
+def f_polar_to_cartesian(S, r_dot, θ_dot):
+    """
+    Evaluate the direction (in the cartesian place)
+    of a polar dynamical system
+    """
+    r, θ = S
+    ẋ = x_dot(r, θ, r_dot, θ_dot)
+    ẏ = y_dot(r, θ, r_dot, θ_dot)
+    return ẋ, ẏ
+
+
+def to_polar_space(x, y):
+    """
+    Transform values is R^2 to a polar plane
+    """
+    r = np.sqrt(x ** 2 + y ** 2)
+    θ = np.arctan2(y, x)
+    return r, θ
+
+
+def to_cartesian_space(r, θ):
+    """
+    Transform values in a polar plane to R^2
+    """
+    x = r * np.cos(θ)
+    y = r * np.sin(θ)
+    return y, x
+
+
+def evaluate_polar_system(r_dot, θ_dot, xmin, xmax, ymin, ymax, xstep=0.01, ystep=0.01):
+    R = np.mgrid[ymin:ymax:ystep, xmin:xmax:xstep][::-1]
+    S = np.stack(to_polar_space(*R))
+    Rdot = np.stack(f_polar_to_cartesian(S, r_dot, θ_dot))
+    return R, Rdot
+
+
+def plot_polar_system(r_dot, θ_dot, xmin, xmax, ymin, ymax, xstep=0.01, ystep=0.01, alpha=1, ax=None, **kwargs):
+    ax = plt.subplot() if ax is None else ax
+    R, Rdot = evaluate_polar_system(r_dot, θ_dot, xmin, xmax, ymin, ymax, xstep=0.01, ystep=0.01)
+    stream = ax.streamplot(*R, *Rdot, **kwargs)
+    stream.lines.set_alpha(alpha)
+    return stream
+
+
+def integrate_polar_system(r_dot, θ_dot, initial_conditions, t_end, t_steps):
+    """
+    Solve an ODE of a polar system and return
+    its x and y values
+    """
+    n_conditions, m = initial_conditions.shape
+    integrations = np.zeros((n_conditions, t_steps, m))
+    
+    integration_time = np.linspace(0, t_end, t_steps)
+    for n, initial_condition in enumerate(initial_conditions):
+        polar_initial_condition = to_polar_space(*initial_condition)
+        polar_solution = odeint(lambda pos, t: f_polar(pos, r_dot, θ_dot),
+                                polar_initial_condition,
+                                integration_time)
+        cartesian_solution = np.stack(to_cartesian_space(*polar_solution.T)).T
+        integrations[n, ...] = cartesian_solution
+    
+    return integrations
+
+
+def plot_solution_polar_system(r_dot, θ_dot, initial_conditions, t_end, t_steps=100, ax=None, **kwargs):
+    ax = plt.subplot() if ax is None else ax
+    solutions = integrate_polar_system(r_dot, θ_dot, initial_conditions, t_end, t_steps)
+    for solution in solutions:
+        ax.plot(*solution.T, **kwargs)
