@@ -1,0 +1,176 @@
+country_code,country_name,country_border_code,country_border_name
+AD,Andorra,FR,France
+AD,Andorra,ES,Spain
+AL,Albania,GR,Greece
+AL,Albania,ME,Montenegro
+AL,Albania,MK,North Macedonia
+AL,Albania,RS,Serbia
+AM,Armenia,AZ,Azerbaijan
+AM,Armenia,GE,Georgia
+AT,Austria,CZ,Czechia
+AT,Austria,DE,Germany
+AT,Austria,HU,Hungary
+AT,Austria,IT,Italy
+AT,Austria,LI,Liechtenstein
+AT,Austria,SK,Slovakia
+AT,Austria,SI,Slovenia
+AT,Austria,CH,Switzerland
+AZ,Azerbaijan,AM,Armenia
+AZ,Azerbaijan,GE,Georgia
+AZ,Azerbaijan,RU,Russian Federation
+BA,Bosnia and Herzegovina,HR,Croatia
+BA,Bosnia and Herzegovina,ME,Montenegro
+BA,Bosnia and Herzegovina,RS,Serbia
+BE,Belgium,FR,France
+BE,Belgium,DE,Germany
+BE,Belgium,LU,Luxembourg
+BE,Belgium,NL,Netherlands
+BG,Bulgaria,GR,Greece
+BG,Bulgaria,MK,North Macedonia
+BG,Bulgaria,RO,Romania
+BG,Bulgaria,RS,Serbia
+BY,Belarus,LV,Latvia
+BY,Belarus,LT,Lithuania
+BY,Belarus,PL,Poland
+BY,Belarus,RU,Russian Federation
+BY,Belarus,UA,Ukraine
+CH,Switzerland,AT,Austria
+CH,Switzerland,FR,France
+CH,Switzerland,DE,Germany
+CH,Switzerland,IT,Italy
+CH,Switzerland,LI,Liechtenstein
+CZ,Czechia,AT,Austria
+CZ,Czechia,DE,Germany
+CZ,Czechia,PL,Poland
+CZ,Czechia,SK,Slovakia
+DE,Germany,AT,Austria
+DE,Germany,BE,Belgium
+DE,Germany,CZ,Czechia
+DE,Germany,DK,Denmark
+DE,Germany,FR,France
+DE,Germany,LU,Luxembourg
+DE,Germany,NL,Netherlands
+DE,Germany,PL,Poland
+DE,Germany,CH,Switzerland
+DK,Denmark,DE,Germany
+EE,Estonia,LV,Latvia
+EE,Estonia,RU,Russian Federation
+ES,Spain,AD,Andorra
+ES,Spain,FR,France
+ES,Spain,GI,Gibraltar
+ES,Spain,PT,Portugal
+FI,Finland,NO,Norway
+FI,Finland,RU,Russian Federation
+FI,Finland,SE,Sweden
+FR,France,AD,Andorra
+FR,France,BE,Belgium
+FR,France,DE,Germany
+FR,France,IT,Italy
+FR,France,LU,Luxembourg
+FR,France,MC,Monaco
+FR,France,ES,Spain
+FR,France,CH,Switzerland
+GB,United Kingdom of Great Britain and Northern Ireland,IE,Ireland
+GE,Georgia,AM,Armenia
+GE,Georgia,AZ,Azerbaijan
+GE,Georgia,RU,Russian Federation
+GI,Gibraltar,ES,Spain
+GR,Greece,AL,Albania
+GR,Greece,BG,Bulgaria
+GR,Greece,MK,North Macedonia
+HR,Croatia,BA,Bosnia and Herzegovina
+HR,Croatia,HU,Hungary
+HR,Croatia,ME,Montenegro
+HR,Croatia,RS,Serbia
+HR,Croatia,SI,Slovenia
+HU,Hungary,AT,Austria
+HU,Hungary,HR,Croatia
+HU,Hungary,RO,Romania
+HU,Hungary,RS,Serbia
+HU,Hungary,SK,Slovakia
+HU,Hungary,SI,Slovenia
+HU,Hungary,UA,Ukraine
+IE,Ireland,GB,United Kingdom of Great Britain and Northern Ireland
+IT,Italy,AT,Austria
+IT,Italy,FR,France
+IT,Italy,SM,San Marino
+IT,Italy,SI,Slovenia
+IT,Italy,CH,Switzerland
+IT,Italy,VA,Holy See
+KZ,Kazakhstan,RU,Russian Federation
+KZ,Kazakhstan,TM,Turkmenistan
+LI,Liechtenstein,AT,Austria
+LI,Liechtenstein,CH,Switzerland
+LT,Lithuania,BY,Belarus
+LT,Lithuania,LV,Latvia
+LT,Lithuania,PL,Poland
+LT,Lithuania,RU,Russian Federation
+LU,Luxembourg,BE,Belgium
+LU,Luxembourg,DE,Germany
+LU,Luxembourg,FR,France
+LV,Latvia,BY,Belarus
+LV,Latvia,EE,Estonia
+LV,Latvia,LT,Lithuania
+LV,Latvia,RU,Russian Federation
+MC,Monaco,FR,France
+ME,Montenegro,AL,Albania
+ME,Montenegro,BA,Bosnia and Herzegovina
+ME,Montenegro,HR,Croatia
+ME,Montenegro,RS,Serbia
+NL,Netherlands,BE,Belgium
+NL,Netherlands,DE,Germany
+NO,Norway,FI,Finland
+NO,Norway,RU,Russian Federation
+NO,Norway,SE,Sweden
+PL,Poland,BY,Belarus
+PL,Poland,CZ,Czechia
+PL,Poland,DE,Germany
+PL,Poland,LT,Lithuania
+PL,Poland,RU,Russian Federation
+PL,Poland,SK,Slovakia
+PL,Poland,UA,Ukraine
+PT,Portugal,ES,Spain
+RO,Romania,BG,Bulgaria
+RO,Romania,HU,Hungary
+RO,Romania,MD,Moldova (the Republic of)
+RO,Romania,RS,Serbia
+RO,Romania,UA,Ukraine
+RS,Serbia,AL,Albania
+RS,Serbia,BA,Bosnia and Herzegovina
+RS,Serbia,BG,Bulgaria
+RS,Serbia,HR,Croatia
+RS,Serbia,HU,Hungary
+RS,Serbia,ME,Montenegro
+RS,Serbia,MK,North Macedonia
+RS,Serbia,RO,Romania
+RU,Russian Federation,AZ,Azerbaijan
+RU,Russian Federation,BY,Belarus
+RU,Russian Federation,EE,Estonia
+RU,Russian Federation,FI,Finland
+RU,Russian Federation,GE,Georgia
+RU,Russian Federation,KZ,Kazakhstan
+RU,Russian Federation,LV,Latvia
+RU,Russian Federation,LT,Lithuania
+RU,Russian Federation,NO,Norway
+RU,Russian Federation,PL,Poland
+RU,Russian Federation,UA,Ukraine
+SE,Sweden,FI,Finland
+SE,Sweden,NO,Norway
+SI,Slovenia,AT,Austria
+SI,Slovenia,HR,Croatia
+SI,Slovenia,HU,Hungary
+SI,Slovenia,IT,Italy
+SK,Slovakia,AT,Austria
+SK,Slovakia,CZ,Czechia
+SK,Slovakia,HU,Hungary
+SK,Slovakia,PL,Poland
+SK,Slovakia,UA,Ukraine
+SM,San Marino,IT,Italy
+UA,Ukraine,BY,Belarus
+UA,Ukraine,HU,Hungary
+UA,Ukraine,MD,Moldova (the Republic of)
+UA,Ukraine,PL,Poland
+UA,Ukraine,RO,Romania
+UA,Ukraine,RU,Russian Federation
+UA,Ukraine,SK,Slovakia
+VA,Holy See,IT,Italy
