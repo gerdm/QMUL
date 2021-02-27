@@ -1,0 +1,16 @@
+0 Acciaiuoli
+1 Albizzi
+2 Barbadori
+3 Bischeri
+4 Castellani
+5 Ginori
+6 Guadagni
+7 Lamberteschi
+8 Medici
+9 Pazzi
+10 Peruzzi
+11 Pucci
+12 Ridolfi
+13 Salviati
+14 Strozzi
+15 Tornabuoni
