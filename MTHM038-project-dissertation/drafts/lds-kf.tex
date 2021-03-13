@@ -1,0 +1,51 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
+
+\title{Kalman Filters: an introduction}
+\author{Gerardo Durán Martín}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Linear dynamical systems are models that capture the time evolution of a process.
+
+Suppose we have a series of observatios
+
+Suppose $\{z_t\}_t$ is a signal coming from an unknown source and $\{x_t\}$ is an observed value. If the system is not deterministic we may write the equations that govern such system in the form
+
+\begin{align*}
+	{\bf z}_{n+1} &= {\bf A} {\bf z}_{n}\\
+	{\bf x}_{n+1} &= {\bf C} {\bf z}_{n+1}
+\end{align*}
+
+Examples of such systems can be found in... In some cases however, the system may be corrupted by some noise. In this case, we could modify our previous system to take into account the uncertainty of the system as follows:
+
+\begin{align*}
+	{\bf z}_{n+1} &= {\bf A} {\bf z}_{n} + \boldsymbol\varepsilon_n\\
+	{\bf x}_{n+1} &= {\bf C} {\bf z}_{n+1} + \boldsymbol\varphi_n
+\end{align*}
+
+where the noise terms are distributed as follows
+
+\begin{align}
+	\boldsymbol\varepsilon_n &\sim \mathcal{N}({\bf 0}, \boldsymbol\Gamma)\\
+	\boldsymbol\varphi & \sim \mathcal{N}({\bf 0}, \boldsymbol\Sigma)
+\end{align}
+
+Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma\}$ that best represent the data. As we can observe, the existence of the stochastic factors makes this process not linearly solvable.
+
+
+
+One approach of finding such parameters is to make use of the EM algorithm: an iterative approach to maximise the likelihood of the complete-data log-likelihood as follows
+
+\begin{align}
+	\boldsymbol{\theta}^\text{new} &= \arg\max_{\boldsymbol{\theta}} \mathbb{E}_{{\bf Z}\vert {\bf X}, \boldsymbol{\theta}}[\log p({\bf X}, {\bf Z}\vert \boldsymbol\theta)]\\
+	&\argmax{\boldsymbol{\theta}}
+\end{align}
+
+The computation of the function $\mathbb{E}_{{\bf Z}\vert {\bf X}, \boldsymbol{\theta}}[\log p({\bf X}, {\bf Z}\vert \boldsymbol\theta)]$ is called the E-step, whereas the maximisation of the E-step is called the M-step. 
+\end{document}
