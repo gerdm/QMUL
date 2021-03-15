@@ -57,7 +57,7 @@ Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \bold
 One approach of finding such parameters is to make use of the EM algorithm: an iterative approach to maximise the likelihood of the complete-data log-likelihood as follows
 
 \begin{align}
-	\boldsymbol{\theta}^\text{new} &= \argmax{\boldsymbol{\theta}} \mathbb{E}_{{\bf Z}\vert {\bf X}, \boldsymbol{\theta}}[\log p({\bf X}, {\bf Z}\vert \boldsymbol\theta)]
+	\boldsymbol{\theta}^\text{new} &= \argmax{\boldsymbol{\theta}} \mathbb{E}_{{\bf Z}\vert {\bf X}, \boldsymbol{\theta}^\text{old}}[\log p({\bf X}, {\bf Z}\vert \boldsymbol\theta)]
 \end{align}
 
 The computation of the posterior probability of latent variables $p({\bf Z}\vert {\bf X}, \boldsymbol\theta)$ is called the E-step. The  of the complete-data log-likelihood with respect to the posterior latent variables is called the M-step.
@@ -70,12 +70,30 @@ To make use of the E-step, it is helpful to distinguish which elements depend on
 	\log p({\bf X}, {\bf Z}\vert \boldsymbol\theta) &= \log p({\bf z}_1) + \sum_{n=2}^N \log p({\bf z}_n\vert {\bf z}_{n-1}) + \sum_{n=1}^N \log p({\bf x}_n\vert {\bf z}_n)\\
 	   &=\frac{1}{2}\log\vert{\bf V}_0^{-1}\vert - \frac{1}{2}({\bf z}_1 - \boldsymbol\mu_0)^T{\bf V}_0^{-1}({\bf z}_1 - \boldsymbol\mu_0) \nonumber \\
 	   &\hspace{1cm}+ \sum_{n=2}^N \frac{1}{2}\log\vert\boldsymbol\Gamma^{-1}\vert - \frac{1}{2}({\bf z}_n - {\bf A z}_{n-1})^T\boldsymbol{\Gamma}^{-1}({\bf z}_n - {\bf A z}_{n-1}) \nonumber \\
-	   &\hspace{1cm}+\sum_{n=1}^N \frac{1}{2}\log\vert\boldsymbol\Sigma\vert -\frac{1}{2}({\bf x}_n - {\bf C z}_n)
+	   &\hspace{1cm}+\sum_{n=1}^N \frac{1}{2}\log\vert\boldsymbol\Sigma\vert -\frac{1}{2}({\bf x}_n - {\bf C z}_n)^T \boldsymbol{\Sigma}^{-1}({\bf x}_n - {\bf C z}_n) + \text{const.}\\
+	   &= \frac{1}{2}\log \vert
+	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left({\bf z}_1 {\bf z}_1^T {\bf V}_0^{-1}\right) -2 {\bf z}_1{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0 {\bf V}_0^{-1}\boldsymbol\mu_0^T\right] \nonumber \\
+	  &\hspace{1cm}+ \frac{N-1}{2}\log\vert\boldsymbol\Gamma^{-1}\vert + \frac{N}{2}\log\vert \boldsymbol\Sigma^{-1}\vert \nonumber \\
+	  &\hspace{1cm}-\frac{1}{2} \sum_{n=2}^{N}\text{Tr}\left({\bf z}_n{\bf z}_n^T\boldsymbol\Gamma^{-1} -2 {\bf z}_{n-1}{\bf z}_n^T{\bf A}\boldsymbol\Gamma^{-1} +  {\bf z}_{n-1}{\bf z}_{n-1}^T{\bf A}\boldsymbol\Gamma^{-1}{\bf A}\right) \nonumber\\
+	  &\hspace{1cm}-\frac{1}{2}\sum_{n=1}^N\left[{\bf x}_n^T\boldsymbol{\Sigma}^{-1}{\bf x}_n-2{\bf z}_n^T\boldsymbol\Sigma^{-1}{\bf x}_n + \text{Tr}({\bf z}_n{\bf z}_n^T{\bf C}\boldsymbol\Sigma^{-1}{\bf C})\right] \nonumber\\
+	  &\hspace{1cm} + \text{const.}
+\end{align}
+
+Where const. are the terms that do not depend on any of the terms in $\boldsymbol{\theta}$. From this last equation, we note that the expectation with respect to the posterior distribution comes only in the form $\mathbb{E}[{\bf z}_n]$, $\mathbb{E}[{\bf z}_n{\bf z}_{n}^{T}]$, and  $\mathbb{E}[{\bf z}_n{\bf z}_{n-1}^{T}]$. We obtain:
+
+\begin{align}
+	Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) &= \frac{1}{2}\log \vert
+	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left(\mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] {\bf V}_0^{-1}\right) -2 \mathbb{E}\left[{\bf z}_1\right]{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0 {\bf V}_0^{-1}\boldsymbol\mu_0^T\right] \nonumber \\
+	  &\hspace{1cm}+ \frac{N-1}{2}\log\vert\boldsymbol\Gamma^{-1}\vert + \frac{N}{2}\log\vert \boldsymbol\Sigma^{-1}\vert \nonumber \\
+	  &\hspace{1cm}-\frac{1}{2} \sum_{n=2}^{N}\text{Tr}\left(\mathbb{E}\left[{\bf z}_n{\bf z}_n^T\right]\boldsymbol\Gamma^{-1} -2\mathbb{E}\left[ {\bf z}_{n-1}{\bf z}_n^T\right]{\bf A}\boldsymbol\Gamma^{-1} + \mathbb{E}\left[{\bf z}_{n-1}{\bf z}_{n-1}^T\right]{\bf A}\boldsymbol\Gamma^{-1}{\bf A}\right) \nonumber\\
+	  &\hspace{1cm}-\frac{1}{2}\sum_{n=1}^N\left[{\bf x}_n^T\boldsymbol{\Sigma}^{-1}{\bf x}_n-2\mathbb{E}\left[{\bf z}_n^T\right]\boldsymbol\Sigma^{-1}{\bf x}_n + \text{Tr}(\mathbb{E}\left[{\bf z}_n{\bf z}_n^T\right]{\bf C}\boldsymbol\Sigma^{-1}{\bf C})\right] \nonumber\\
+	  &\hspace{1cm} + \text{const.}
 \end{align}
 
 
-%%to-do:Show
-It can be shown that the E-step can be decomposed into a product of two terms
+Our next step is to compute the expected values of the latent variables. We begin by noting that 
+%%to-do: Show that the E-step can be decomposed into a product of two terms
+
 
 \begin{equation}
 	\gamma({\bf z}_n) = \hat\alpha({\bf z}_n)\hat\beta({\bf z}_n).
