@@ -1,5 +1,6 @@
 .DS_Store
 *.gif
+*.mat
 
 ### Tex Files
 # LaTeX temporary files
