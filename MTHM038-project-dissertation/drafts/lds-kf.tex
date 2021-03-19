@@ -82,7 +82,7 @@ To make use of the E-step, it is helpful to distinguish which elements depend on
 	  &\hspace{1cm} + \text{const.}
 \end{align}
 
-Where const. are the terms that do not depend on any of the terms in $\boldsymbol{\theta}$. From this last equation, we note that the expectation with respect to the posterior distribution comes only in the form $\mathbb{E}[{\bf z}_n]$, $\mathbb{E}[{\bf z}_n{\bf z}_{n}^{T}]$, and  $\mathbb{E}[{\bf z}_n{\bf z}_{n-1}^{T}]$. We obtain:
+Where const. are the terms that do not depend on $\boldsymbol{\theta}$. From this last equation, we note that the expectation with respect to the posterior distribution comes only in the form of the expectations $\mathbb{E}[{\bf z}_n]$, $\mathbb{E}[{\bf z}_n{\bf z}_{n}^{T}]$, and  $\mathbb{E}[{\bf z}_n{\bf z}_{n-1}^{T}]$. We obtain:
 
 \begin{align}
 	Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) &= \frac{1}{2}\log \vert
@@ -93,14 +93,14 @@ Where const. are the terms that do not depend on any of the terms in $\boldsymbo
 	  &\hspace{1cm} + \text{const.}
 \end{align}
 
-Before computing the expected values of the latent variables, it is useful to find the posterior distributions of the latent variables $\gamma({\bf z}_n) := p({\bf z}_n\vert {\bf X})$, and $\xi({\bf z}_{n-1}, {\bf z}_{n}) := p({\bf z}_{n-1}, {\bf z}_n\vert {\bf X})$.
+Before computing the expected values of the latent variables, it is useful to find the posterior distributions of the latent variables $\gamma({\bf z}_n) := p({\bf z}_n\vert {\bf X})$, and $\xi({\bf z}_{n-1}, {\bf z}_{n}) := p({\bf z}_{n-1}, {\bf z}_n\vert {\bf X})$. %why is it useful?
 
 \begin{proposition}
 	The term $\gamma({\bf z}_n)$ can be written as a product of the joint probabilities of the first $n$ observations and ${\bf z}_n$, and the conditional probability of the observations that follow ${\bf z}_n$ conditional on ${\bf z}_n$.
 \end{proposition}
 
 \begin{proof}
-Consider the definition of $\gamma({\bf z}_n)$ and equation \ref{gm:1} from proposition \ref{prop:graphical-models-separation}
+Consider  $\gamma({\bf z}_n)$ and equation \ref{gm:1} from proposition \ref{prop:graphical-models-separation}. We have
 \begin{align}
 	\gamma({\bf z}_n) &= p({\bf z}_n \vert {\bf X})\\
 					  &= \frac{1}{p({\bf X})}p({\bf z}_n)p({\bf X} \vert {\bf z}_n)\\
@@ -109,8 +109,22 @@ Consider the definition of $\gamma({\bf z}_n)$ and equation \ref{gm:1} from prop
 					  &= \frac{1}{p({\bf X})}\alpha({\bf z}_n)\beta({\bf z}_n)
 \end{align}
 
-Where we have denoted $\alpha({\bf z}_n) := p({\bf x}_1, \ldots, {\bf x}_n, {\bf z}_n)$ as the probability of the observed data up to $n$, and $\beta({\bf z}_n) := p({\bf x}_{n+1}, \ldots, {\bf x}_N\vert {\bf z}_n)$ as the probability of all data that follows the $n$-th observation, conditional on the $n$-th latent variable ${\bf z}_n$.
+Where we have denoted $\alpha({\bf z}_n) := p({\bf x}_1, \ldots, {\bf x}_n, {\bf z}_n)$ as the joint probability of the observed data up to $n$, and $\beta({\bf z}_n) := p({\bf x}_{n+1}, \ldots, {\bf x}_N\vert {\bf z}_n)$ as the probability of all data that follows the $n$-th observation, conditional on the $n$-th latent variable ${\bf z}_n$.
 \end{proof}
+
+% Here we show that the xi can also be written in terms of alpha and beta
+\begin{proposition}
+	The term $\beta({\bf z}_n)$ can be written as a 
+\end{proposition}
+
+% Hence, to make sense of gamma and xi we only need to find values of alpha and beta
+% 	* We show that alpha can be represented as a recursive formula
+%  	* We show that beta can be represented as a recursive formula
+% We argue that alpha and beta values can become small very quick, so we require another way to compute its values
+% Introduce alpha hat and beta hat: show that they can be written
+% Show that alpha hat is a normal distribution
+%	* Derive the Kalman Filter Equations
+% Show that gamma is also a normal distribution
 
 
 \begin{equation}
