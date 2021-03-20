@@ -38,7 +38,7 @@ In this model, we assume the existence of an unobserved signal ${\bf z}_t$ that 
 	{\bf x}_{n+1} &= {\bf C} {\bf z}_{n+1} + \boldsymbol\varphi_n
 \end{align*}
 
-The noise terms are assumed to be normally distributed with zero mean and covariance matrix $\boldsymbol{\Gamma}$, and $\boldsymbol{\Sigma}$.
+The noise terms $\boldsymbol{\varepsilon}$, and $\boldsymbol{\varphi}$ are assumed to be normally distributed with mean zero and covariance matrices $\boldsymbol{\Gamma}$, and $\boldsymbol{\Sigma}$.
 
 
 
@@ -47,13 +47,13 @@ The noise terms are assumed to be normally distributed with zero mean and covari
 	\boldsymbol\varphi & \sim \mathcal{N}({\bf 0}, \boldsymbol\Sigma)
 \end{align}
 
-We notice that the model has a likelihood given by
+With our specified assumptions, the likelihood of the model is given by
 
 \begin{equation}
-	p({\bf X}, {\bf Z}) = p({\bf z}_1)\prod_{n=2}^N p({\bf z}_n\vert {\bf z}_{n-1})\prod_{n=1}^N p({\bf x}_n\vert {\bf z}_n)
+	p({\bf X}, {\bf Z}\vert\boldsymbol\theta) = p({\bf z}_1)\prod_{n=2}^N p({\bf z}_n\vert {\bf z}_{n-1})\prod_{n=1}^N p({\bf x}_n\vert {\bf z}_n)
 \end{equation}
 
-Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma\}$ that best represent the data. This is usually done maximising the likelihood of the data with respect to the parameters $\boldsymbol{\theta}$. Maximising the likelihood of this model, however, is not straightforward. This is because the only observed data we have is given by the dataset $\{{\bf x}_t\}_t$. 
+Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma\}$ that best represent the data. This is usually done maximising the likelihood of the data with respect to the parameters $\boldsymbol{\theta}$. Maximising the likelihood of this model, however, is not straightforward. This is because the only observed data we have is given by the dataset $\{{\bf x}_n\}_n$. % Explain more this step
 
 
 One approach of finding such parameters is to make use of the EM algorithm: an iterative approach to maximise the likelihood of the complete-data log-likelihood as follows
@@ -99,7 +99,7 @@ Before computing the expected values of the latent variables, it is useful to fi
 	The term $\gamma({\bf z}_n)$ can be written as a product of the joint probabilities of the first $n$ observations and ${\bf z}_n$, and the conditional probability of the observations that follow ${\bf z}_n$ conditional on ${\bf z}_n$.
 \end{proposition}
 
-\begin{proof}
+\begin{proof}\label{prop:gamma-factorisation}
 Consider  $\gamma({\bf z}_n)$ and equation \ref{gm:1} from proposition \ref{prop:graphical-models-separation}. We have
 \begin{align}
 	\gamma({\bf z}_n) &= p({\bf z}_n \vert {\bf X})\\
@@ -109,39 +109,167 @@ Consider  $\gamma({\bf z}_n)$ and equation \ref{gm:1} from proposition \ref{prop
 					  &= \frac{1}{p({\bf X})}\alpha({\bf z}_n)\beta({\bf z}_n)
 \end{align}
 
-Where we have denoted $\alpha({\bf z}_n) := p({\bf x}_1, \ldots, {\bf x}_n, {\bf z}_n)$ as the joint probability of the observed data up to $n$, and $\beta({\bf z}_n) := p({\bf x}_{n+1}, \ldots, {\bf x}_N\vert {\bf z}_n)$ as the probability of all data that follows the $n$-th observation, conditional on the $n$-th latent variable ${\bf z}_n$.
+Where we have defined $\alpha({\bf z}_n) := p({\bf x}_1, \ldots, {\bf x}_n, {\bf z}_n)$ as the joint probability of the observed data up to $n$, and $\beta({\bf z}_n) := p({\bf x}_{n+1}, \ldots, {\bf x}_N\vert {\bf z}_n)$ as the probability of all data that follows the $n$-th observation, conditional on the $n$-th latent variable ${\bf z}_n$.
 \end{proof}
 
+
 % Here we show that the xi can also be written in terms of alpha and beta
-\begin{proposition}
-	The term $\beta({\bf z}_n)$ can be written as a 
+\begin{proposition}\label{prop:xi-factorisation}
+	The term $\xi({\bf z}_{n-1}, {\bf z}_n)$ can be written in terms of $\alpha({\cdot})$, and $\beta(\cdot)$
 \end{proposition}
 
+\begin{proof}
+	\begin{align}
+		\xi({\bf z}_{n-1}, {\bf z}_{n}) &= p({\bf z}_{n-1}, {\bf z}_{n} \vert {\bf X})\\
+		&= \frac{1}{p({\bf X})}p({\bf z}_{n-1}, {\bf z}_{n}) p({\bf X} \vert {\bf z}_{n-1}, {\bf z}_{n})\\
+		&= \frac{1}{p({\bf X})} p({\bf z}_{n-1}) p({\bf z}_{n} \vert {\bf z}_{n-1}) p({\bf x}_1, \ldots, {\bf x}_{n-1}\vert {\bf z}_{n-1}) \nonumber \\
+			&\hspace{1cm} p({\bf x}_n\vert {\bf z}_n) p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n)\\
+		&= \frac{1}{p({\bf X})} p({\bf z}_{n} \vert {\bf z}_{n-1}) p({\bf x}_1, \ldots, {\bf x}_{n-1}, {\bf z}_{n-1}) \nonumber \\
+			&\hspace{1cm} p({\bf x}_n\vert {\bf z}_n) p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n)\\
+		&= \frac{1}{p({\bf X})} \alpha({\bf z}_{n-1}) p({\bf z}_{n} \vert {\bf z}_{n-1}) p({\bf x}_n \vert {\bf z}_n) \beta({\bf z}_n)
+	\end{align}
+\end{proof}
+
+
 % Hence, to make sense of gamma and xi we only need to find values of alpha and beta
+Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} show that both $\gamma$ and $\xi$ are completely determined by the values of $\alpha$, and $\beta$. Hence, we only need to compute the set of values $\{\alpha({\bf z}_n)\}_n$ and $\{\beta({\bf z}_n)\}_n$ once per E-iteration to find the distributions of $\gamma$ and $\xi$. Our next step is to derive an algorithm to efficiently compute $\alpha({\bf z}_n)$, and $\beta({\bf z}_n)$ for every $n$.
+
 % 	* We show that alpha can be represented as a recursive formula
+\begin{proposition}
+	$\alpha({\bf z}_n)$ can be written recursively as
+	\begin{equation}
+		\alpha({\bf z}_n) = p({\bf x}_n\vert {\bf z}_n) \int_{{\bf z}_{n-1}} \alpha({\bf z}_{n-1})p({\bf z}_n\vert{\bf z}_{n-1}) d{\bf z}_{n-1}
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
 %  	* We show that beta can be represented as a recursive formula
+\begin{proposition}
+	$\beta({\bf z}_n)$ can be written recursively as
+	\begin{equation}
+		\beta({\bf z}_n) = \int_{{\bf z}_{n+1}} \beta({\bf z}_{n+1})p({\bf x}_{n+1}\vert {\bf z}_{n+1}) p({\bf z}_{n+1}\vert {\bf z}_n) d{\bf z}_{n+1}
+	\end{equation} 
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
 % We argue that alpha and beta values can become small very quick, so we require another way to compute its values
+For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve this we work with re-scaled values for $\alpha$ and $\beta$. This has the additional benefit that the re-scaled values $\alpha({\bf z}_n)$ can be written in form of a Normal distribution whose updating equations are  called the \textbf{Kalman equations}.
+
 % Introduce alpha hat and beta hat: show that they can be written
+
+\begin{proposition}
+	Defining the scaled value $\hat\alpha({\bf z}_n)$ as
+	\begin{equation}
+		\hat\alpha({\bf z}_n) := \frac{\alpha({\bf z}_n)}{p({\bf x}_1, \ldots, {\bf x}_n)} = p({\bf z}_n \vert {\bf x}_1, \ldots, {\bf x}_n)
+	\end{equation}
+	
+	results in an updating equation of the form
+	
+	\begin{equation}
+		\hat\alpha({\bf z}_n) c_n = p({\bf x}_n\vert{\bf z}_n)\int \hat\alpha({\bf z}_{n-1})p({\bf z}_n \vert {\bf z}_{n-1}) d{\bf z}_{n-1}
+	\end{equation}
+	
+	with
+	
+	\begin{equation}
+		c_n = \int_{{\bf z}_n} p({\bf x}_n \vert {\bf z}_n) \int_{{\bf z}_{n-1}} \hat\alpha({\bf z}_{n-1})p({\bf z}_n \vert {\bf z}_{n-1}) d{\bf z}_n{\bf z}_{n-1}
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+\begin{proposition}
+	Defining the scaled value $\hat\beta({\bf z}_n)$ as
+	\begin{equation}
+		\hat\beta({\bf z}_n) = \frac{p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n)}{p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf x}_1, \ldots {\bf x}_n)}
+	\end{equation}
+	results in an updating equation of the form
+	\begin{equation}
+		\hat\beta({\bf z}_n) = \frac{1}{c_{n+1}}\int p({\bf x}_{n+1}\vert{\bf z}_{n+1})p({\bf z}_{n+1}\vert{\bf z}_n) d{\bf z}_{n+1}
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+The term $\hat\alpha({\bf z}_n)$ is called the $\alpha$-forward message passing for a linear dynamical system or \textbf{Kalman filter equation}.  The term $\hat\beta({\bf z}_n)$ is called the $\beta$-backward message passing of a linear dynamical system or \textbf{Kalman smoother equation}. Intuitively, $\hat\alpha({\bf z}_n)$ represents the information that the history of the data has on the $n$-th observation, whereas $\hat\beta({\bf z}_n)$ represents how a latent variable with with known value at time $n$ affects the future behaviour of the system.
+
+As we have previously noted, the term $\hat\alpha({\bf z}_n)$ can be represented as the probability density function of a normal distribution whose mean and covariance function that depends on previous covariance functions. We formalise this in the following two propositions
+
+% to-do: write it more clearly
+\begin{proposition}
+	The initial condition $\hat\alpha({\bf z}_1)$ can be written as normal probability density function with mean and covariance matrix given by
+	\begin{align}
+		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1({\bf x}_1 -{\bf C}\boldsymbol\mu_0)\\
+		{\bf V}_1 &=  ({\bf I} - {\bf K}_1{\bf C}){\bf V}_0
+	\end{align}
+	and normalisation coefficient
+	\begin{equation}
+		c_1 = \mathcal{N}({\bf x}_1\vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C} {\bf V}_0 {\bf C})
+	\end{equation}
+	where ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+More generally we have the following proposition
+
+
 % Show that alpha hat is a normal distribution
 %	* Derive the Kalman Filter Equations
 % Show that gamma is also a normal distribution
 
+\begin{proposition}
+	$\gamma({\bf z}_n)$ can be written in terms of the re-scaled factors $\hat\alpha({\bf z}_n)$, and $\hat\beta({\bf z}_n)$ as
+	\begin{equation}
+		\gamma({\bf z}_n) = \hat\alpha({\bf z}_n)\hat\beta({\bf z}_n).
+	\end{equation}
+\end{proposition}
 
-\begin{equation}
-	\gamma({\bf z}_n) = \hat\alpha({\bf z}_n)\hat\beta({\bf z}_n).
-\end{equation}
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
 
-The term $\hat\alpha({\bf z}_n)$ is called the $\alpha$-forward message passing for a linear dynamical system or \textbf{Kalman filter equation}.  The term $\hat\beta({\bf z}_n)$ is called the $\beta$-backward message passing of a linear dynamical system or \textbf{Kalman smoother equation}. Intuitively, $\hat\alpha({\bf z}_n)$ represents the information that the history of the data has on the $n$th observation; $\hat\beta({\bf z}_n)$ represents how the current known value affects the future behaviour of the system.
+\begin{proposition}
+	$\xi({\bf z}_{n-1}, {\bf z}_n)$ can be written in terms of the re-scaled factors $\hat\alpha({\bf z}_n)$, and $\hat\beta({\bf z}_n)$ as
+	\begin{equation}
+		\xi({\bf z}_{n-1}, {\bf z}_{n}) = c_n^{-1}\hat\alpha({\bf z}_n)p({\bf x}_n \vert {\bf z}_n) p({\bf z}_{n-1}\vert {\bf z}_n)\hat\beta({\bf z}_n)
+	\end{equation}
+\end{proposition}
 
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+\subsection{The M-step}
+...
 
 \section{Graphical Models}
 In this section we present some useful proposition of graphical models.
 
 \begin{proposition}\label{prop:graphical-models-separation}
-	Let ${\bf Z} = \{{\bf z}_n\}_n$ be a set of latent random variables, and ${\bf X} = \{{\bf x}_n\}_n$ a set of observed variables with complete-data likelihood $({\bf Z}, {\bf X})$ given by the LDS model. Then, the following conditions hold true
+	Let ${\bf Z} = \{{\bf z}_n\}_n$ be a set of latent random variables, and ${\bf X} = \{{\bf x}_n\}_n$ a set of observed variables with complete-data likelihood $({\bf Z}, {\bf X})$ given by the LDS model. Then, the following factorisations hold true
 	\begin{align}
 		p({\bf X}\vert{\bf z}_n) &= p({{\bf x}_1, \ldots, {\bf x}_n \vert {\bf z}_n})p({{\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n}) \label{gm:1}\\
-		p()
+		p({\bf x}_1, \ldots, {\bf x}_{n-1}\vert {\bf x}_n, {\bf z}_n) &= p({\bf x}_1, \ldots, {\bf x}_{n-1}\vert {\bf z}_n)\\
+		p({\bf x}_1, \ldots, {\bf x}_{n-1}\vert {\bf z}_{n-1}, {\bf z}_{n}) &= p({\bf x}_1, \ldots, {\bf x}_{n-1}\vert {\bf z}_{n-1})\\
+		p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n, {\bf z}_{n+1}) &= p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n)\\
+		p({\bf x}_{n+2}, \ldots, {\bf x}_N\vert {\bf x}_{n+1}, {\bf z}_{n+1}) &= p({\bf x}_{n+2}, \ldots, {\bf x}_N \vert {\bf z}_{n+1})\\
+		p({\bf X}\vert {\bf z}_{n-1}, {\bf z}_{n}) &= p({\bf x}_1, \ldots, {\bf x}_{n-1}\vert {\bf z}_{n-1}) \nonumber\\
+			&\hspace{1cm}p({\bf x}_n\vert {\bf z}_n) p({\bf x}_{n+1}, \ldots, {\bf x}_N \vert {\bf z}_n)\\
+		p({\bf x}_{N+1} \vert {\bf X}, {\bf z}_{N+1}) &= p({\bf x}_{N+1} \vert {\bf z}_{N+1})\\
+		p({\bf z}_{N+1} \vert {\bf X}, {\bf z}_{N}) &= p({\bf z}_{N+1} \vert {\bf z}_{N})\\
 	\end{align}
 \end{proposition}
 
