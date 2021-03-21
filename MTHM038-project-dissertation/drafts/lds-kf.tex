@@ -207,7 +207,7 @@ As we have previously noted, the term $\hat\alpha({\bf z}_n)$ can be represented
 
 % to-do: write it more clearly
 \begin{proposition}
-	The initial condition $\hat\alpha({\bf z}_1)$ can be written as normal probability density function with mean and covariance matrix given by
+	The factor $\hat\alpha({\bf z}_1)$ can be written as normal probability density function with mean and covariance matrix given by
 	\begin{align}
 		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1({\bf x}_1 -{\bf C}\boldsymbol\mu_0)\\
 		{\bf V}_1 &=  ({\bf I} - {\bf K}_1{\bf C}){\bf V}_0
@@ -224,6 +224,24 @@ As we have previously noted, the term $\hat\alpha({\bf z}_n)$ can be represented
 \end{proof}
 
 More generally we have the following proposition
+
+\begin{proposition}
+	For every $n \geq 2$, scaled factor $\hat\alpha({\bf z}_n)$ can be written as a normal probability density function with mean and covariance matrix given by
+	\begin{align}
+		\boldsymbol{\mu}_n &= \boldsymbol{\mu}_{n-1} + {\bf K}_n({\bf x}_n -{\bf C}\boldsymbol\mu_{n-1})\\
+		{\bf V}_n &=  ({\bf I} - {\bf K}_n{\bf C}){\bf P}_{n-1}
+	\end{align}
+	
+	where we have defined
+	\begin{align}
+		{\bf P}_{n-1} &:= \boldsymbol{\Gamma} + {\bf A}{\bf V}_{n-1}{\bf A}^T\\
+		{\bf K}_n &:= {\bf P}_{n-1}{\bf C}^T({\bf C} {\bf P}_{n-1}{\bf C}^T + \boldsymbol\Sigma)^{-1}
+	\end{align}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
 
 
 % Show that alpha hat is a normal distribution
