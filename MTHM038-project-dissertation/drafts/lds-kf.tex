@@ -3,6 +3,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
 
 \newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
 \newtheorem{proposition}{Proposition}[section]
@@ -20,10 +24,9 @@ Dynamical systems are models that capture the time evolution of a system. A disc
 	{\bf x}_{n+1} = {\bf A x}_n
 \end{equation}
 
-An example of a linear dynamical system is...
+% An example of a linear dynamical system is...
 
-
-Suppose $\{{\bf z}_t\}_t$ is a signal coming from an unknown source and $\{{\bf x_t}\}$ are observed values derived from ${\bf z}_t$. If the system is linear and deterministic we write the equations that govern such system in the form
+Suppose $\{{\bf z}_n\}_n$ is a signal coming from an unknown source and $\{{\bf x_n}\}_n$ are observed values derived from ${\bf z}_n$. If the system is linear and deterministic we write the equations that govern such system in the form
 
 \begin{align*}
 	{\bf z}_{n+1} &= {\bf A} {\bf z}_{n}\\
@@ -40,20 +43,24 @@ In this model, we assume the existence of an unobserved signal ${\bf z}_t$ that 
 
 The noise terms $\boldsymbol{\varepsilon}$, and $\boldsymbol{\varphi}$ are assumed to be normally distributed with mean zero and covariance matrices $\boldsymbol{\Gamma}$, and $\boldsymbol{\Sigma}$.
 
-
-
-\begin{align}
-	\boldsymbol\varepsilon_n &\sim \mathcal{N}({\bf 0}, \boldsymbol\Gamma)\\
-	\boldsymbol\varphi & \sim \mathcal{N}({\bf 0}, \boldsymbol\Sigma)
-\end{align}
-
 With our specified assumptions, the likelihood of the model is given by
 
 \begin{equation}
 	p({\bf X}, {\bf Z}\vert\boldsymbol\theta) = p({\bf z}_1)\prod_{n=2}^N p({\bf z}_n\vert {\bf z}_{n-1})\prod_{n=1}^N p({\bf x}_n\vert {\bf z}_n)
 \end{equation}
 
-Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma\}$ that best represent the data. This is usually done maximising the likelihood of the data with respect to the parameters $\boldsymbol{\theta}$. Maximising the likelihood of this model, however, is not straightforward. This is because the only observed data we have is given by the dataset $\{{\bf x}_n\}_n$. % Explain more this step
+We can also represent our model as a graphical model as specified in Figure \ref{fig:lds-gm}.
+
+\begin{figure}
+	\centering
+	\input{lds.tikz}
+	\caption{Graphical representation of a linear dynamical system.}
+	\label{fig:lds-gm}
+\end{figure}
+
+
+
+Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma\}$ that best represent the data. This is usually done maximising the likelihood of the data with respect to the parameters $\boldsymbol{\theta}$. Maximising the likelihood of this model, however, is not straightforward. This is because the only observed data we have is given by the dataset $\bf X$. % Explain more this step
 
 
 One approach of finding such parameters is to make use of the EM algorithm: an iterative approach to maximise the likelihood of the complete-data log-likelihood as follows
@@ -172,7 +179,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 	results in an updating equation of the form
 	
 	\begin{equation}
-		\hat\alpha({\bf z}_n) c_n = p({\bf x}_n\vert{\bf z}_n)\int \hat\alpha({\bf z}_{n-1})p({\bf z}_n \vert {\bf z}_{n-1}) d{\bf z}_{n-1}
+		 c_n \hat\alpha({\bf z}_n) = p({\bf x}_n\vert{\bf z}_n)\int \hat\alpha({\bf z}_{n-1})p({\bf z}_n \vert {\bf z}_{n-1}) d{\bf z}_{n-1}
 	\end{equation}
 	
 	with
@@ -203,50 +210,9 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 
 The term $\hat\alpha({\bf z}_n)$ is called the $\alpha$-forward message passing for a linear dynamical system or \textbf{Kalman filter equation}.  The term $\hat\beta({\bf z}_n)$ is called the $\beta$-backward message passing of a linear dynamical system or \textbf{Kalman smoother equation}. Intuitively, $\hat\alpha({\bf z}_n)$ represents the information that the history of the data has on the $n$-th observation, whereas $\hat\beta({\bf z}_n)$ represents how a latent variable with with known value at time $n$ affects the future behaviour of the system.
 
-As we have previously noted, the term $\hat\alpha({\bf z}_n)$ can be represented as the probability density function of a normal distribution whose mean and covariance function that depends on previous covariance functions. We formalise this in the following two propositions
+In the following two propositions we will show that $\gamma({\bf z}_n)$ and $\xi({\bf z}_{n-1}, {\bf z}_{n})$ can be written in terms of $\hat\alpha$ and $\hat\beta$. We later show that this induces a normal probability density function for $\gamma({\bf z}_n)$ in terms of a recursive formula that allows to efficiently compute the expected values $\mathbb{E}[{\bf z}_n]$, $\mathbb{E}[{\bf z}_n{\bf z}_{n}^{T}]$, and  $\mathbb{E}[{\bf z}_n{\bf z}_{n-1}^{T}]$.
 
-% to-do: write it more clearly
-\begin{proposition}
-	The factor $\hat\alpha({\bf z}_1)$ can be written as normal probability density function with mean and covariance matrix given by
-	\begin{align}
-		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1({\bf x}_1 -{\bf C}\boldsymbol\mu_0)\\
-		{\bf V}_1 &=  ({\bf I} - {\bf K}_1{\bf C}){\bf V}_0
-	\end{align}
-	and normalisation coefficient
-	\begin{equation}
-		c_1 = \mathcal{N}({\bf x}_1\vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C} {\bf V}_0 {\bf C})
-	\end{equation}
-	where ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$
-\end{proposition}
-
-\begin{proof}
-	\texttt{to-do: write proof}
-\end{proof}
-
-More generally we have the following proposition
-
-\begin{proposition}
-	For every $n \geq 2$, scaled factor $\hat\alpha({\bf z}_n)$ can be written as a normal probability density function with mean and covariance matrix given by
-	\begin{align}
-		\boldsymbol{\mu}_n &= \boldsymbol{\mu}_{n-1} + {\bf K}_n({\bf x}_n -{\bf C}\boldsymbol\mu_{n-1})\\
-		{\bf V}_n &=  ({\bf I} - {\bf K}_n{\bf C}){\bf P}_{n-1}
-	\end{align}
-	
-	where we have defined
-	\begin{align}
-		{\bf P}_{n-1} &:= \boldsymbol{\Gamma} + {\bf A}{\bf V}_{n-1}{\bf A}^T\\
-		{\bf K}_n &:= {\bf P}_{n-1}{\bf C}^T({\bf C} {\bf P}_{n-1}{\bf C}^T + \boldsymbol\Sigma)^{-1}
-	\end{align}
-\end{proposition}
-
-\begin{proof}
-	\texttt{to-do: write proof}
-\end{proof}
-
-
-% Show that alpha hat is a normal distribution
-%	* Derive the Kalman Filter Equations
-% Show that gamma is also a normal distribution
+% Show that gamma and xi can be written in terms of \hat\alpha and \hat\beta.
 
 \begin{proposition}
 	$\gamma({\bf z}_n)$ can be written in terms of the re-scaled factors $\hat\alpha({\bf z}_n)$, and $\hat\beta({\bf z}_n)$ as
@@ -269,6 +235,99 @@ More generally we have the following proposition
 \begin{proof}
 	\texttt{to-do: write proof}
 \end{proof}
+
+
+As we have previously noted, the term $\hat\alpha({\bf z}_n)$ can be represented as the probability density function of a normal distribution whose mean and covariance function that depends on previous covariance functions. We formalise this in the following two propositions
+
+% to-do: write it more clearly
+% Show that alpha hat is a normal distribution
+%	* Derive the Kalman Filter Equations
+\begin{proposition}
+	The factor $\hat\alpha({\bf z}_1)$ can be written as normal probability density function with mean and covariance matrix given by
+	\begin{align}
+		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1({\bf x}_1 -{\bf C}\boldsymbol\mu_0)\\
+		{\bf V}_1 &=  ({\bf I} - {\bf K}_1{\bf C}){\bf V}_0
+	\end{align}
+	Furthermore, $c_1$ is a normal probability density function of the form
+	\begin{equation}
+		c_1 = \mathcal{N}({\bf x}_1\vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C} {\bf V}_0 {\bf C})
+	\end{equation}
+	where ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+More generally, we have the following proposition
+
+\begin{proposition}
+	For every $n \geq 2$, the scaled factor $\hat\alpha({\bf z}_n)$ can be written as a normal probability density function with mean and covariance matrix given by
+	\begin{align}
+		\boldsymbol{\mu}_n &= \boldsymbol{\mu}_{n-1} + {\bf K}_n({\bf x}_n -{\bf C}\boldsymbol\mu_{n-1})\\
+		{\bf V}_n &=  ({\bf I} - {\bf K}_n{\bf C}){\bf P}_{n-1}
+	\end{align}
+	
+	where we have defined
+	\begin{align}
+		{\bf P}_{n-1} &:= \boldsymbol{\Gamma} + {\bf A}{\bf V}_{n-1}{\bf A}^T\\
+		{\bf K}_n &:= {\bf P}_{n-1}{\bf C}^T({\bf C} {\bf P}_{n-1}{\bf C}^T + \boldsymbol\Sigma)^{-1}
+	\end{align}
+	
+	Furthermore, $c_n$ is a normal probability density function of the form
+	\begin{equation}
+		c_n = \mathcal{N}({\bf x}_n \vert {\bf CA}\boldsymbol\mu_{n-1}, \boldsymbol\Sigma + {\bf C P}_{n-1}{\bf C}^\text{T})
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+
+% Show that gamma is also a normal distribution
+% to-do: label propositions correctly
+This last two propositions can be used to show that $\gamma({\bf z}_n)$ is a normal probability density function. Hence, the expectations required to compute the E-step can be derived from the mean of a normal distribution and the computation of the covariance between two normal distributions. This is formally shown in the following two propositions
+
+
+\begin{proposition}
+	The term $\gamma({\bf z}_n)$ can be written as a normal distribution of the form
+	\begin{equation}
+		\gamma({\bf z}_n) = \mathcal{N}({\bf z}_n\vert \hat{\boldsymbol\mu}_n, \hat{\bf V}_n)
+	\end{equation}
+	
+	where
+	\begin{align}
+		\hat{\boldsymbol{\mu}}_n &= \boldsymbol{\mu}_n + {\bf J}_n\left(\hat{\boldsymbol \mu}_{n-1} - {\bf A}\boldsymbol\mu_n\right)\\
+		\hat{\bf V}_n &= {\bf V}_n + {\bf J}_n\left(\hat{\bf V}_{n+1} - {\bf P}_n\right){\bf J}_n^T\\
+		{\bf J}_n &= {\bf V}_n{\bf A}^T{\bf P}_n^{-1}
+	\end{align}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+\begin{proposition}
+	The term $\xi({\bf z}_n, {\bf z}_{n-1})$ can be written as a normal distribution with mean and covariance matrix given by
+	\begin{equation}
+		\xi({\bf z}_n, {\bf z}_{n-1}) = \mathcal{N}\left(\left[\gamma({\bf z}_{n-1}), \gamma({\bf z}_{n})\right]^T, {\bf J}_{n-1}\hat{\bf V}_{n}\right)
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
+\begin{tcolorbox}
+\textbf{E-step} update equations
+\begin{align}
+	\mathbb{E}[{\bf z}_n] &= \hat{\boldsymbol{\mu}}_n\\
+	\mathbb{E}[{\bf z}_n {\bf z}_n^T] &= \hat{{\bf V}}_n\\
+	\mathbb{E}[{\bf z}_{n-1}{\bf z}_n^T] &= {\bf J}_{n-1}\hat{\bf V}_n
+\end{align}
+\end{tcolorbox}
+
 
 \subsection{The M-step}
 ...
