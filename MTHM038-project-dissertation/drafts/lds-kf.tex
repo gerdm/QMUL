@@ -6,6 +6,7 @@
 \usepackage{tcolorbox}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usepackage{graphicx}
 
 
 \newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
@@ -25,6 +26,14 @@ Dynamical systems are models that capture the time evolution of a system. A disc
 \end{equation}
 
 % An example of a linear dynamical system is...
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{../figures/discrete-dynamical-system}
+	\caption{Example of a discrete-time dynamical system.}
+	\label{fig:discrete-dynamical-system}
+\end{figure}
+
+
 
 Suppose $\{{\bf z}_n\}_n$ is a signal coming from an unknown source and $\{{\bf x_n}\}_n$ are observed values derived from ${\bf z}_n$. If the system is linear and deterministic we write the equations that govern such system in the form
 
@@ -53,8 +62,8 @@ We can also represent our model as a graphical model as specified in Figure \ref
 
 \begin{figure}
 	\centering
-	\input{lds.tikz}
-	\caption{Graphical representation of a linear dynamical system.}
+	\input{../figures/lds.tikz}
+	\caption{Graphical representation of a linear dynamical system with latent variables.}
 	\label{fig:lds-gm}
 \end{figure}
 
