@@ -35,14 +35,22 @@ Dynamical systems are models that capture the time evolution of a system. A disc
 
 
 
-Suppose $\{{\bf z}_n\}_n$ is a signal coming from an unknown source and $\{{\bf x_n}\}_n$ are observed values derived from ${\bf z}_n$. If the system is linear and deterministic we write the equations that govern such system in the form
+In this work, are interested in dynamical systems that depend on some unobserved signal, usually called latent variables, and a set of observed values that are directly derived from the source signal. We define the set of observed variables ${\bf X}=\left\{{\bf x}_n \vert {\bf x}_n \in \mathbb{R}^M\right\}$ as the observed dataset, and the set of latent variables ${\bf Z}=\left\{{\bf z}_n \vert {\bf z}_n \in \mathbb{R}^K\right\}$ as the latent dataset. We will also denote $\mathcal{D} = ({\bf X}, {\bf Z})$ as the complete-dataset.
+
+One way to represent such system is to assume the existence of an unobserved signal ${\bf z}_n$ that evolves over time according to the matrix ${\bf A}\in\mathbb{R}^{K\times K}$. Once ${\bf z}_{n}$ is updated, the observed value ${\bf x}_{n+1}$ is the result of a linear transformation for ${\bf z}_{n+1}$ induced by the matrix ${\bf C}\in \mathbb{R}^{M\times K}$. If the system is linear we write the equations that govern such system in the form
 
 \begin{align*}
 	{\bf z}_{n+1} &= {\bf A} {\bf z}_{n}\\
 	{\bf x}_{n+1} &= {\bf C} {\bf z}_{n+1}
 \end{align*}
 
-In this model, we assume the existence of an unobserved signal ${\bf z}_t$ that evolves over time according to the matrix $\bf A$. In some settings, however, it is not the case that the signal we are trying to find behaves deterministically. To take into account the uncertainty of the system, we assume that that both the underlying signal and the observed signal are corrupted by some noise. Under this scenario, we modify our previous system as follows:
+Our goal is to find the parameters 
+
+In some settings, however, it is not the case that the signal we are trying to find behaves deterministically. Suppose, for example, that we are trying to model the underlying signal of a stock. In this scenario, we assume that there exists an underlying signal that induces the observed value of a stock. It then follows, that to understand the behaviour of the stock, we can model its underlying behaviour.
+
+\subsection{Stochastic Linear Dynamical Systems}
+
+To take into account the uncertainty of the system, we assume that that both the underlying signal and the observed signal are corrupted by some noise. Under this scenario, we modify our previous system as follows:
  
 
 \begin{align*}
@@ -52,18 +60,18 @@ In this model, we assume the existence of an unobserved signal ${\bf z}_t$ that 
 
 The noise terms $\boldsymbol{\varepsilon}$, and $\boldsymbol{\varphi}$ are assumed to be normally distributed with mean zero and covariance matrices $\boldsymbol{\Gamma}$, and $\boldsymbol{\Sigma}$.
 
-With our specified assumptions, the likelihood of the model is given by
+Given the structure of the dynamical system, the likelihood of the model is given by
 
 \begin{equation}
 	p({\bf X}, {\bf Z}\vert\boldsymbol\theta) = p({\bf z}_1)\prod_{n=2}^N p({\bf z}_n\vert {\bf z}_{n-1})\prod_{n=1}^N p({\bf x}_n\vert {\bf z}_n)
 \end{equation}
 
-We can also represent our model as a graphical model as specified in Figure \ref{fig:lds-gm}.
+We can also represent this system as a graphical model as specified in Figure \ref{fig:lds-gm}.
 
 \begin{figure}
 	\centering
 	\input{../figures/lds.tikz}
-	\caption{Graphical representation of a linear dynamical system with latent variables.}
+	\caption{Graphical representation of a linear dynamical system with latent variables. The filled circles represent observed datapoints, whereas the empty circles represent latent variables.}
 	\label{fig:lds-gm}
 \end{figure}
 
