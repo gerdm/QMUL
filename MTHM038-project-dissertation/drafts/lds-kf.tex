@@ -10,6 +10,8 @@
 
 
 \newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
+\newcommand{\expectation}[1]{\mathbb{E}\left[#1\right]}
+
 \newtheorem{proposition}{Proposition}[section]
 
 \title{Kalman Filters: an introduction}
@@ -18,7 +20,6 @@
 \maketitle
 
 \section{Introduction}
-
 Dynamical systems are models that capture the time evolution of a system. A discrete-time linear dynamical system is a dynamical system in which an $M$-dimensional vector ${\bf x}_n$ evolves in the form.
 
 \begin{equation}
@@ -59,7 +60,7 @@ In some settings, however, we assume that the underlying signal ${\bf z}_n$ and 
 % as we will see, the procedure can be achieved by the EM-algorithm and the dataset Z can be found using a known algorithm known as the Kalman-filter equations.
 
 \subsection{Stochastic Linear Dynamical Systems}
-We begin this section by modifying our previous system to take into account the uncertainty. As previously mentioned, we assume that that both the underlying signal and the observed signal are corrupted by some Gaussian noise.
+We begin this section by modifying our previous system to take into account the uncertainty in the system. As previously mentioned, we assume that that both the underlying signal and the observed signal are corrupted by some noise.
  
 
 \begin{align*}
@@ -67,7 +68,7 @@ We begin this section by modifying our previous system to take into account the 
 	{\bf x}_{n+1} &= {\bf C} {\bf z}_{n+1} + \boldsymbol\varphi_n
 \end{align*}
 
-The noise terms $\boldsymbol{\varepsilon}$, and $\boldsymbol{\varphi}$ are assumed to be normally distributed with mean zero and covariance matrices $\boldsymbol{\Gamma}$, and $\boldsymbol{\Sigma}$.
+The noise terms $\boldsymbol{\varepsilon}_n$, and $\boldsymbol{\varphi}_n$ are assumed to be normally distributed with mean zero and covariance matrices $\boldsymbol{\Gamma}$, and $\boldsymbol{\Sigma}$.
 
 Given the structure of the dynamical system, the likelihood of the model is given by
 
@@ -75,6 +76,7 @@ Given the structure of the dynamical system, the likelihood of the model is give
 	p({\bf X}, {\bf Z}\vert\boldsymbol\theta) = p({\bf z}_1)\prod_{n=2}^N p({\bf z}_n\vert {\bf z}_{n-1})\prod_{n=1}^N p({\bf x}_n\vert {\bf z}_n)
 \end{equation}
 
+% to-do: Add equations for the initial condition z0
 We can also represent this system as a graphical model as specified in Figure \ref{fig:lds-gm}.
 
 \begin{figure}
@@ -85,8 +87,7 @@ We can also represent this system as a graphical model as specified in Figure \r
 \end{figure}
 
 
-
-Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma\}$ that best represent the data. This is usually done maximising the likelihood of the data with respect to the parameters $\boldsymbol{\theta}$. Maximising the likelihood of this model, however, is not straightforward. This is because the only observed data we have is given by the dataset $\bf X$. % Explain more this step
+Our purpose is to find parameters $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma, \boldsymbol\mu_0, {\bf V}_0\}$ that best represent the data. This is usually done maximising the likelihood of the data with respect to the parameters $\boldsymbol{\theta}$. Maximising the likelihood of this model, however, is not straightforward. This is because the only observed data we have is given by the dataset $\bf X$. % Explain more this step
 
 
 One approach of finding such parameters is to make use of the EM algorithm: an iterative approach to maximise the likelihood of the complete-data log-likelihood as follows
@@ -108,7 +109,7 @@ To make use of the E-step, it is helpful to distinguish which elements depend on
 	   &\hspace{1cm}+ \sum_{n=2}^N \frac{1}{2}\log\vert\boldsymbol\Gamma^{-1}\vert - \frac{1}{2}({\bf z}_n - {\bf A z}_{n-1})^T\boldsymbol{\Gamma}^{-1}({\bf z}_n - {\bf A z}_{n-1}) \nonumber \\
 	   &\hspace{1cm}+\sum_{n=1}^N \frac{1}{2}\log\vert\boldsymbol\Sigma\vert -\frac{1}{2}({\bf x}_n - {\bf C z}_n)^T \boldsymbol{\Sigma}^{-1}({\bf x}_n - {\bf C z}_n) + \text{const.}\\
 	   &= \frac{1}{2}\log \vert
-	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left({\bf z}_1 {\bf z}_1^T {\bf V}_0^{-1}\right) -2 {\bf z}_1{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0 {\bf V}_0^{-1}\boldsymbol\mu_0^T\right] \nonumber \\
+	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left({\bf z}_1 {\bf z}_1^T {\bf V}_0^{-1}\right) -2 {\bf z}_1^T{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0^T {\bf V}_0^{-1}\boldsymbol\mu_0\right] \nonumber \\
 	  &\hspace{1cm}+ \frac{N-1}{2}\log\vert\boldsymbol\Gamma^{-1}\vert + \frac{N}{2}\log\vert \boldsymbol\Sigma^{-1}\vert \nonumber \\
 	  &\hspace{1cm}-\frac{1}{2} \sum_{n=2}^{N}\text{Tr}\left({\bf z}_n{\bf z}_n^T\boldsymbol\Gamma^{-1} -2 {\bf z}_{n-1}{\bf z}_n^T{\bf A}\boldsymbol\Gamma^{-1} +  {\bf z}_{n-1}{\bf z}_{n-1}^T{\bf A}\boldsymbol\Gamma^{-1}{\bf A}\right) \nonumber\\
 	  &\hspace{1cm}-\frac{1}{2}\sum_{n=1}^N\left[{\bf x}_n^T\boldsymbol{\Sigma}^{-1}{\bf x}_n-2{\bf z}_n^T\boldsymbol\Sigma^{-1}{\bf x}_n + \text{Tr}({\bf z}_n{\bf z}_n^T{\bf C}\boldsymbol\Sigma^{-1}{\bf C})\right] \nonumber\\
@@ -119,11 +120,11 @@ Where const. are the terms that do not depend on $\boldsymbol{\theta}$. From thi
 
 \begin{align}
 	Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) &= \frac{1}{2}\log \vert
-	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left(\mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] {\bf V}_0^{-1}\right) -2 \mathbb{E}\left[{\bf z}_1\right]{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0 {\bf V}_0^{-1}\boldsymbol\mu_0^T\right] \nonumber \\
+	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left(\mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] {\bf V}_0^{-1}\right) -2 \mathbb{E}\left[{\bf z}_1\right]^T{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0^T {\bf V}_0^{-1}\boldsymbol\mu_0\right] \nonumber \\
 	  &\hspace{1cm}+ \frac{N-1}{2}\log\vert\boldsymbol\Gamma^{-1}\vert + \frac{N}{2}\log\vert \boldsymbol\Sigma^{-1}\vert \nonumber \\
 	  &\hspace{1cm}-\frac{1}{2} \sum_{n=2}^{N}\text{Tr}\left(\mathbb{E}\left[{\bf z}_n{\bf z}_n^T\right]\boldsymbol\Gamma^{-1} -2\mathbb{E}\left[ {\bf z}_{n-1}{\bf z}_n^T\right]{\bf A}\boldsymbol\Gamma^{-1} + \mathbb{E}\left[{\bf z}_{n-1}{\bf z}_{n-1}^T\right]{\bf A}\boldsymbol\Gamma^{-1}{\bf A}\right) \nonumber\\
 	  &\hspace{1cm}-\frac{1}{2}\sum_{n=1}^N\left[{\bf x}_n^T\boldsymbol{\Sigma}^{-1}{\bf x}_n-2\mathbb{E}\left[{\bf z}_n^T\right]\boldsymbol\Sigma^{-1}{\bf x}_n + \text{Tr}(\mathbb{E}\left[{\bf z}_n{\bf z}_n^T\right]{\bf C}\boldsymbol\Sigma^{-1}{\bf C})\right] \nonumber\\
-	  &\hspace{1cm} + \text{const.}
+	  &\hspace{1cm} + \text{const.} \label{eq:Q-LDS}
 \end{align}
 
 Before computing the expected values of the latent variables, it is useful to find the posterior distributions of the latent variables $\gamma({\bf z}_n) := p({\bf z}_n\vert {\bf X})$, and $\xi({\bf z}_{n-1}, {\bf z}_{n}) := p({\bf z}_{n-1}, {\bf z}_n\vert {\bf X})$. %why is it useful?
@@ -356,7 +357,53 @@ This last two propositions can be used to show that $\gamma({\bf z}_n)$ is a nor
 
 
 \subsection{The M-step}
-...
+Once we have computed every set of expected values of the system, we proceed to maximise $Q(s)$. We denote by $\boldsymbol{\theta}^\text{old}$ the set of parameters used to compute the E-step equations. Our next step is to find new parameters $\boldsymbol{\theta}^\text{new}$ that maximise $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$, that is
+
+\begin{equation}
+	\boldsymbol{\theta}^\text{new} = \argmax{\boldsymbol\theta} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})
+\end{equation}
+
+Next, we maximise the term $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$ with respect to each term in $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma, \boldsymbol\mu_0, {\bf V}_0\}$.
+
+We begin by computing the initial condition terms. From equation \ref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p({\bf z}_1)$. Hence
+
+\begin{align}
+	\argmax{\boldsymbol{\mu}_0} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) = \argmax{\boldsymbol{\mu}_0} \boldsymbol{\mu}_0 {\bf V}_0^{-1}\boldsymbol{\mu}_0^T -2\mathbb{E}[{{\bf z}_1}]{\bf V}_0^{-1}\boldsymbol{\mu}_0 \nonumber
+\end{align}
+
+Taking the derivative with respect to the vector $\boldsymbol{\mu}_0$ we find that
+
+\begin{equation}
+	\boldsymbol{\mu}_0^\text{new} = \mathbb{E}[{{\bf z}_1}]
+\end{equation}
+
+Next, for ${\bf V}_0$, we consider the terms in $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$ that only depend on ${\bf V}_0$. Namely,
+
+\begin{equation}
+	\frac{1}{2}\log \vert
+	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left(\mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] {\bf V}_0^{-1}\right) -2 \mathbb{E}\left[{\bf z}_1\right]^T{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0^T {\bf V}_0^{-1}\boldsymbol\mu_0\right] \nonumber
+\end{equation}
+
+Taking the derivative with respect to ${\bf V}_0^{-1}$, we see that
+
+\begin{align}
+	\frac{\partial}{\partial {\bf V}_0^{-1}}Q &= \frac{1}{2}\left[ {\bf V}_0 -  \mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] - \right]
+\end{align}
+
+\begin{align}
+	\frac{\partial}{\partial {\bf V}_0^{-1}} Q &= \frac{1}{2}\left[{\bf V}_0 - \expectation{{\bf z}_1 {\bf z}_1^T} - 2\expectation{{\bf z}_1}\boldsymbol{\mu}_0^T + \boldsymbol{\mu}_0 \boldsymbol{\mu}_0^T \right] \nonumber \\
+	&= \frac{1}{2} \left[{\bf V}_0 - \expectation{{\bf z}_1 {\bf z}_1^T} - 2\expectation{{\bf z}_1}\expectation{{\bf z}_1}^T + \expectation{{\bf z}_1}\expectation{{\bf z}_1}^T \right] \nonumber \\
+	&= \frac{1}{2}\left[{\bf V}_0 - \expectation{{\bf z}_1 {\bf z}_1^T} - \expectation{{\bf z}_1}\expectation{{\bf z}_1}^T\right]
+\end{align}
+
+Setting the last equation to zero and solving for ${\bf V}_0$, we find that
+
+\begin{equation}
+	{\bf V}_0 = \expectation{{\bf z}_1 {\bf z}_1^T} + \expectation{{\bf z}_1}\expectation{{\bf z}_1}^T
+\end{equation}
+
+
+
 
 \section{Graphical Models}
 In this section we present some useful proposition of graphical models.
