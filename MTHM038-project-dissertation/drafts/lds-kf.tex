@@ -11,6 +11,8 @@
 
 \newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
 \newcommand{\expectation}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\x}{{\bf x}}
+\newcommand{\z}{{\bf z}}
 
 \newtheorem{proposition}{Proposition}[section]
 
@@ -20,6 +22,7 @@
 \maketitle
 
 \section{Introduction}
+
 Dynamical systems are models that capture the time evolution of a system. A discrete-time linear dynamical system is a dynamical system in which an $M$-dimensional vector ${\bf x}_n$ evolves in the form.
 
 \begin{equation}
@@ -357,7 +360,7 @@ This last two propositions can be used to show that $\gamma({\bf z}_n)$ is a nor
 
 
 \subsection{The M-step}
-Once we have computed every set of expected values of the system, we proceed to maximise $Q(s)$. We denote by $\boldsymbol{\theta}^\text{old}$ the set of parameters used to compute the E-step equations. Our next step is to find new parameters $\boldsymbol{\theta}^\text{new}$ that maximise $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$, that is
+In this section, we derive the updating equations for the parameters of the system. We denote by $\boldsymbol{\theta}^\text{old}$ the set of parameters used to compute the E-step equations. Our next step is to find new parameters $\boldsymbol{\theta}^\text{new}$ that maximise $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$, that is
 
 \begin{equation}
 	\boldsymbol{\theta}^\text{new} = \argmax{\boldsymbol\theta} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})
@@ -365,7 +368,9 @@ Once we have computed every set of expected values of the system, we proceed to 
 
 Next, we maximise the term $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$ with respect to each term in $\boldsymbol\theta = \{{\bf A}, {\bf C}, \boldsymbol\Gamma, \boldsymbol\Sigma, \boldsymbol\mu_0, {\bf V}_0\}$.
 
-We begin by computing the initial condition terms. From equation \ref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p({\bf z}_1)$. Hence
+We begin by computing the update equations for initial condition, namely, $\boldsymbol\mu$, and $\bf Z$. 
+
+From equation \ref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p({\bf z}_1)$. Hence
 
 \begin{align}
 	\argmax{\boldsymbol{\mu}_0} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) = \argmax{\boldsymbol{\mu}_0} \boldsymbol{\mu}_0 {\bf V}_0^{-1}\boldsymbol{\mu}_0^T -2\mathbb{E}[{{\bf z}_1}]{\bf V}_0^{-1}\boldsymbol{\mu}_0 \nonumber
@@ -379,16 +384,13 @@ Taking the derivative with respect to the vector $\boldsymbol{\mu}_0$ we find th
 
 Next, for ${\bf V}_0$, we consider the terms in $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$ that only depend on ${\bf V}_0$. Namely,
 
-\begin{equation}
-	\frac{1}{2}\log \vert
-	  {\bf V}_0^{-1}\vert -\frac{1}{2}\left[\text{Tr}\left(\mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] {\bf V}_0^{-1}\right) -2 \mathbb{E}\left[{\bf z}_1\right]^T{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0^T {\bf V}_0^{-1}\boldsymbol\mu_0\right] \nonumber
-\end{equation}
+\begin{align}
+	\argmax{{\bf V}_0} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) &= \frac{1}{2}\log \vert
+	  {\bf V}_0^{-1}\vert -\frac{1}{2}\Big[\text{Tr}\left(\mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] {\bf V}_0^{-1}\right) \nonumber\\
+	  &\hspace{1cm} -2 \mathbb{E}\left[{\bf z}_1\right]^T{\bf V}_0^{-1}\boldsymbol\mu_0 + \boldsymbol\mu_0^T {\bf V}_0^{-1}\boldsymbol\mu_0\Big] \nonumber
+\end{align}
 
 Taking the derivative with respect to ${\bf V}_0^{-1}$, we see that
-
-\begin{align}
-	\frac{\partial}{\partial {\bf V}_0^{-1}}Q &= \frac{1}{2}\left[ {\bf V}_0 -  \mathbb{E}\left[{\bf z}_1 {\bf z}_1^T\right] - \right]
-\end{align}
 
 \begin{align}
 	\frac{\partial}{\partial {\bf V}_0^{-1}} Q &= \frac{1}{2}\left[{\bf V}_0 - \expectation{{\bf z}_1 {\bf z}_1^T} - 2\expectation{{\bf z}_1}\boldsymbol{\mu}_0^T + \boldsymbol{\mu}_0 \boldsymbol{\mu}_0^T \right] \nonumber \\
@@ -402,7 +404,20 @@ Setting the last equation to zero and solving for ${\bf V}_0$, we find that
 	{\bf V}_0 = \expectation{{\bf z}_1 {\bf z}_1^T} + \expectation{{\bf z}_1}\expectation{{\bf z}_1}^T
 \end{equation}
 
+Next, we derive the updating equations for the parameters $\bf A$, $\boldsymbol{\Gamma}$, $\bf C$, $\boldsymbol{\Sigma}$.
 
+\begin{proposition}
+	The updating equations for the parameters $\bf A$, $\boldsymbol{\Gamma}$, $\bf C$, $\boldsymbol{\Sigma}$ in the M-step are given by
+	
+	\begin{align}
+		{\bf A} &= \left(\sum_{n=2}^N \expectation{{\bf z}_n {\bf z}_{n-1}^T}\right)\left(\sum_{n=2}^N \expectation{{\bf z}_{n-1}{\bf z}_{n-1}^T}\right)^{-1} \\
+		\boldsymbol{\Gamma} &= \frac{1}{N-1}\sum_{n=1}^N\bigg( \expectation{{\bf z}_n {\bf z}_n^T} - \expectation{{\bf z}_n {\bf z}_{n-1}^T}{\bf A}^T \nonumber\\
+		&\hspace{1cm} - {\bf A}\expectation{{\bf z}_{n-1}{\bf z}_n^T} - {\bf A}\expectation{{\bf z}_{n-1} {\bf z}_{n-1}^T}{\bf A}^T \bigg) \\
+		{\bf C} &= \left(\sum_{n=1}^N {\bf x}_n \expectation{{\bf z}_n}^T \right)\left(\sum_{n=1}^N \expectation{{\bf z}_n {\bf z}_n^T} \right)^{-1} \\
+		\boldsymbol{\Sigma} &= \frac{1}{N}\sum_{n=1}^N\bigg({\bf x}_n{\bf x}_n^T - {\bf x}_n \expectation{{\bf z}_n}^T {\bf C}^T \nonumber\\
+		&\hspace{1cm} - {\bf C}\expectation{{\bf z}_n}{\bf x}_n^T + {\bf C} \expectation{{\bf z}_n {\bf z}_n^T}{\bf C}^T \bigg)
+	\end{align}
+\end{proposition}
 
 
 \section{Graphical Models}
