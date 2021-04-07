@@ -180,7 +180,19 @@ Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} sho
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	We begin by writing
+	\begin{align}
+		\alpha(\z_n) &= p(\x_1, \ldots, \x_n, \z_n) \\
+		&= p(\z_n) p(\x_1, \ldots, \x_n \vert \z_n) \\
+		&= p(\z_n) p(\x_n \vert \z_n) p(\x_1, \ldots, \x_{n-1} \vert \x_n, \z_n) \\
+		&= p(\z_n) p(\x_n \vert \z_n) p(\x_1, \ldots, \x_{n-1} \vert \z_n) \\
+		&= p(\x_n \vert \z_n) p(\x_1, \ldots, \x_{n-1}, \z_n) \\
+		&= p(\x_n \vert \z_n) \int_{\z_{n-1}}p(\x_1, \ldots, \x_{n-1}, \z_{n-1}, \z_n) d\z_{n-1}\\
+		&= p(\x_n \vert \z_n) \int_{\z_{n-1}} p(\z_{n-1})p(\z_n \vert \z_{n-1})p(\x_1, \ldots, \x_{n-1} \vert \z_{n-1}, \z_n) d\z_{n-1}\\
+		&= p(\x_n \vert \z_n) \int_{\z_{n-1}} p(\z_{n-1})p(\z_n \vert \z_{n-1})p(\x_1, \ldots, \x_{n-1} \vert \z_{n-1}) d\z_{n-1}\\
+		&= p(\x_n \vert \z_n) \int_{\z_{n-1}} p(\z_n \vert \z_{n-1})p(\x_1, \ldots, \x_{n-1}, \z_{n-1}) d\z_{n-1}\\
+		&= p(\x_n \vert \z_n) \int_{\z_{n-1}} p(\z_n \vert \z_{n-1})\alpha(\z_{n-1}) d\z_{n-1}\\
+	\end{align}
 \end{proof}
 
 %  	* We show that beta can be represented as a recursive formula
@@ -377,9 +389,7 @@ Next, we maximise the term $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$ 
 \end{proposition}
 
 \begin{proof}
-	We begin by computing the update equations for initial condition, namely, $\boldsymbol\mu$, and $\bf Z$. 
-
-From equation \ref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p(\z_1)$. Hence
+	We begin by computing the update equations for initial condition, namely, $\boldsymbol\mu$, and $\bf Z$. From equation \ref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p(\z_1)$. Hence
 
 \begin{align}
 	\argmax{\boldsymbol{\mu}_0} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) = \argmax{\boldsymbol{\mu}_0} \boldsymbol{\mu}_0 {\bf V}_0^{-1}\boldsymbol{\mu}_0^T -2\mathbb{E}[{\z_1}]{\bf V}_0^{-1}\boldsymbol{\mu}_0 \nonumber
