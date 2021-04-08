@@ -204,7 +204,15 @@ Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} sho
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	\begin{align}
+		\beta(\z_n) &= p(\x_{n+1}, \ldots, \x_N \vert \z_n)\\
+		&= \int_{\z_{n+1}} p(\x_{n+1}, \ldots, \x_N, \z_{n+1} \vert \z_n) d\z_{n+1} \\
+		&= \int_{\z_{n+1}} p(\z_n \vert \z_{n+1}) p(\x_{n+1}, \ldots, \x_N \vert \z_{n+1}, \z_n) d\z_{n+1} \\
+		&= \int_{\z_{n+1}} p(\z_n \vert \z_{n+1}) p(\x_{n+1}, \ldots, \x_N \vert \z_{n+1}) d\z_{n+1} \\
+		&= \int_{\z_{n+1}} p(\z_n \vert \z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\x_{n+2}, \ldots, \x_N \vert \x_{n+1}, \z_{n+1}) d\z_{n+1} \\
+		&= \int_{\z_{n+1}} p(\z_n \vert \z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\x_{n+2}, \ldots, \x_N \vert \z_{n+1}) d\z_{n+1}\\
+		&= \int_{\z_{n+1}} p(\z_n \vert \z_{n+1}) \beta(\z_{n+1}) d\z_{n+1}
+	\end{align}
 \end{proof}
 
 % We argue that alpha and beta values can become small very quick, so we require another way to compute its values
