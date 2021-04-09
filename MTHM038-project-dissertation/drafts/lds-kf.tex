@@ -312,8 +312,13 @@ In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1},
 	\end{equation}
 \end{proposition}
 
-\begin{proof}
-	\texttt{to-do: write proof}
+\begin{proof} We begin this proof by writing down the definition for $\gamma(\z_n)$ and considering equations \ref{eq:alpha-rewrite} and \ref{eq:beta-rewrite} from propositions \ref{prop:alpha-recursive} and \ref{prop:beta-recursive} respectively.
+	\begin{align}
+		\gamma(\z_n) &= \frac{\alpha(\z_n) \beta(\z_n)}{p({\bf X})} \\
+		&= \frac{1}{p({\bf X})}\left(\hat\alpha(\z_n) \prod_{j=1}^n\right)\left(\hat\beta(\z_n) \prod_{j={n+1}}^N\right) \\
+		&= \frac{1}{p(\bf X)} \prod_{j=1}^N c_j \cdot \hat\alpha(\z_n) \hat\beta(\z_n)\\
+		&= \hat\alpha(\z_n) \hat\beta(\z_n)
+	\end{align}
 \end{proof}
 
 \begin{proposition}
