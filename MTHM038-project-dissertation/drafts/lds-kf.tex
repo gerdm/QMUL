@@ -7,7 +7,11 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{bibentry}
+\bibliographystyle{plainnat}
 
+\usepackage[nottoc]{tocbibind}
 
 \newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
 \newcommand{\expectation}[1]{\mathbb{E}\left[#1\right]}
@@ -63,7 +67,7 @@ In some settings, however, we assume that the underlying signal $\z_n$ and the o
 % as we will see, the procedure can be achieved by the EM-algorithm and the dataset Z can be found using a known algorithm known as the Kalman-filter equations.
 
 \subsection{Linear dynamical systems with added noise}
-We begin this section by modifying our previous system to take into account the uncertainty in the system. As previously mentioned, we assume that that both the underlying signal and the observed signal are corrupted by some noise.
+We begin this section by modifying our previous system to take into account the uncertainty in the system. We follow from the ideas presented in \cite{prml}. As previously mentioned, we assume that that both the underlying signal and the observed signal are corrupted by some noise.
  
 
 \begin{align*}
@@ -524,4 +528,5 @@ In this section we present some useful proposition of graphical models.
 	\texttt{to-do: show by D-separation or explicitly?}
 \end{proof}
 
+\bibliography{bib}
 \end{document}
