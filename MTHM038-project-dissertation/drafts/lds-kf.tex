@@ -220,7 +220,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 
 % Introduce alpha hat and beta hat: show that they can be written
 
-\begin{proposition}
+\begin{proposition} \label{prop:alpha-hat}
 	Defining the scaled value $\hat\alpha(\z_n)$ as
 	\begin{equation}
 		\hat\alpha(\z_n) := \frac{\alpha(\z_n)}{p(\x_1, \ldots, \x_n)} = p(\z_n \vert \x_1, \ldots, \x_n)
@@ -261,7 +261,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 	
 \end{proof}
 
-\begin{proposition}
+\begin{proposition} \label{prop:beta-hat}
 	Defining the scaled value $\hat\beta(\z_n)$ as
 	\begin{equation}
 		\hat\beta(\z_n) = \frac{p(\x_{n+1}, \ldots, \x_N \vert \z_n)}{p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n)}
@@ -273,7 +273,23 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	We begin the proof rewriting $\beta(\z_n)$ in terms of $\hat\beta(\z_n)$, and $c_n$. We see that
+	\begin{align}
+		\beta(\z_n) &= p(\x_{n+1}, \ldots, \x_N \vert \z_n)\\
+		&= p(\x_{n+1}, \ldots, \x_N \vert \z_n) \frac{p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n)}{p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n)} \\
+		&= p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n) \frac{p(\x_{n+1}, \ldots, \x_N \vert \z_N)}{p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n)}\\
+		&= p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n) \hat\beta(\z_n)\\
+		&= \hat\beta(\z_n) p(\x_{n+1} \vert \x_1, \ldots \x_n) \cdot \ldots \cdot p(\x_{N} \vert \x_1, \ldots \x_{N-1})\\
+		&= \hat\beta(\z_n) \prod_{j=n+1}^N c_j \label{eq:beta-rewrite}
+	\end{align}
+	
+	Using proposition \ref{prop:beta-recursive} and equation \ref{eq:beta-rewrite}, we see that
+	
+	\begin{align}
+		&\beta(\z_n) = \int_{\z_{n+1}} \beta(\z_{n+1})p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
+		\iff& \hat\beta(\z_n) \prod_{j=n+1}^N c_j = \int_{\z_{n+1}}\hat\beta(\z_n) \prod_{j=n+2}^N c_jp(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
+		\iff& c_{n+1} \hat\beta(\z_n) = \int_{\z_{n+1}} \hat\beta(\z_n) p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}\vert \z_n) d\z_{n+1}
+	\end{align}
 \end{proof}
 
 \begin{proposition}
@@ -480,7 +496,7 @@ Next, we derive the updating equations for the parameters $\bf A$, $\boldsymbol{
 In this section we present some useful proposition of graphical models.
 
 \begin{proposition} \label{prop:graphical-models-separation}
-	Let ${\bf Z} = \{\z_n\}_n$ be a set of latent random variables, and ${\bf X} = \{\x_n\}_n$ a set of observed variables with complete-data likelihood $(\z, \x)$ given by the LDS model. Then, the following factorisations hold true
+	Let ${\bf Z} = \{\z_n\}_n$ be a set of latent random variables, and ${\bf X} = \{\x_n\}_n$ a set of observed variables with complete-data likelihood $({\bf Z}, {\bf X})$ given by the LDS model. Then, the following factorisations hold true
 	\begin{align}
 		p({\bf X}\vert\z_n) &= p({\x_1, \ldots, \x_n \vert \z_n})p({\x_{n+1}, \ldots, \x_N \vert \z_n}) \label{gm:1}\\
 		p(\x_1, \ldots, \x_{n-1}\vert \x_n, \z_n) &= p(\x_1, \ldots, \x_{n-1}\vert \z_n)\\
