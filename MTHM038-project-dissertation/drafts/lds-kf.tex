@@ -315,7 +315,7 @@ In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1},
 \begin{proof} We begin this proof by writing down the definition for $\gamma(\z_n)$ and considering equations \ref{eq:alpha-rewrite} and \ref{eq:beta-rewrite} from propositions \ref{prop:alpha-recursive} and \ref{prop:beta-recursive} respectively.
 	\begin{align}
 		\gamma(\z_n) &= \frac{\alpha(\z_n) \beta(\z_n)}{p({\bf X})} \\
-		&= \frac{1}{p({\bf X})}\left(\hat\alpha(\z_n) \prod_{j=1}^n\right)\left(\hat\beta(\z_n) \prod_{j={n+1}}^N\right) \\
+		&= \frac{1}{p({\bf X})}\left(\hat\alpha(\z_n) \prod_{j=1}^n c_j\right)\left(\hat\beta(\z_n) \prod_{j={n+1}}^N c_j\right) \\
 		&= \frac{1}{p(\bf X)} \prod_{j=1}^N c_j \cdot \hat\alpha(\z_n) \hat\beta(\z_n)\\
 		&= \hat\alpha(\z_n) \hat\beta(\z_n)
 	\end{align}
@@ -329,7 +329,12 @@ In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1},
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	\begin{align}
+		\xi(\z_{n-1}, \z_n) &= \frac{1}{p({\bf X})} \alpha(\z_n) p(\x_n \vert \z_n) p(\z_{n-1} \vert \z_n) \beta(\z_n) \\
+		&= \left(\prod_{j=1}^N c_j\right)^{-1} \left(\hat\alpha(\z_{n-1}) \prod_{j=1}^{n-1} c_j\right)p(\x_n \vert \z_n) p(\z_{n-1} \vert \z_n)\left(\hat\beta(\z_n) \prod_{j={n+1}}^N c_j\right) \\
+		&= \left(\prod_{j=1}^N c_j\right)^{-1} \left(\prod_{j\neq n}^N c_j\right) \hat\alpha(\z_{n-1}) p(\x_n \vert \z_n) p(\z_{n-1} \vert \z_n) \hat\beta(\z_n)\\
+		&= c_n^{-1}\hat\alpha(\z_{n-1}) p(\x_n \vert \z_n) p(\z_{n-1} \vert \z_n) \hat\beta(\z_n)
+	\end{align}
 \end{proof}
 
 
