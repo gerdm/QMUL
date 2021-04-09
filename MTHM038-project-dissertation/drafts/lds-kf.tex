@@ -62,7 +62,7 @@ In some settings, however, we assume that the underlying signal $\z_n$ and the o
 
 % as we will see, the procedure can be achieved by the EM-algorithm and the dataset Z can be found using a known algorithm known as the Kalman-filter equations.
 
-\subsection{Stochastic Linear Dynamical Systems}
+\subsection{Linear dynamical systems with added noise}
 We begin this section by modifying our previous system to take into account the uncertainty in the system. As previously mentioned, we assume that that both the underlying signal and the observed signal are corrupted by some noise.
  
 
@@ -172,7 +172,7 @@ Where we have defined $\alpha(\z_n) := p(\x_1, \ldots, \x_n, \z_n)$ as the joint
 Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} show that both $\gamma$ and $\xi$ are completely determined by the values of $\alpha$, and $\beta$. Hence, we only need to compute the set of values $\{\alpha(\z_n)\}_n$ and $\{\beta(\z_n)\}_n$ once per E-iteration to find the distributions of $\gamma$ and $\xi$. Our next step is to derive an algorithm to efficiently compute $\alpha(\z_n)$, and $\beta(\z_n)$ for every $n$.
 
 % 	* We show that alpha can be represented as a recursive formula
-\begin{proposition}
+\begin{proposition} \label{prop:alpha-recursive}
 	$\alpha(\z_n)$ can be written recursively as
 	\begin{equation}
 		\alpha(\z_n) = p(\x_n\vert \z_n) \int_{\z_{n-1}} \alpha(\z_{n-1})p(\z_n\vert\z_{n-1}) d\z_{n-1}
@@ -180,7 +180,7 @@ Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} sho
 \end{proposition}
 
 \begin{proof}
-	We begin by writing
+	The proof follows from the definition of $\alpha(\z_n)$ and proposition \ref{prop:graphical-models-separation}:
 	\begin{align}
 		\alpha(\z_n) &= p(\x_1, \ldots, \x_n, \z_n) \\
 		&= p(\z_n) p(\x_1, \ldots, \x_n \vert \z_n) \\
@@ -196,7 +196,7 @@ Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} sho
 \end{proof}
 
 %  	* We show that beta can be represented as a recursive formula
-\begin{proposition}
+\begin{proposition} \label{prop:beta-recursive}
 	$\beta(\z_n)$ can be written recursively as
 	\begin{equation}
 		\beta(\z_n) = \int_{\z_{n+1}} \beta(\z_{n+1})p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}\vert \z_n) d\z_{n+1}
@@ -235,12 +235,30 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 	with
 	
 	\begin{equation}
-		c_n = \int_{\z_n} p(\x_n \vert \z_n) \int_{\z_{n-1}} \hat\alpha(\z_{n-1})p(\z_n \vert \z_{n-1}) d\z_n\z_{n-1}
+		c_n = p(\x_n \vert \x_{n-1}, \ldots, \x_1)
 	\end{equation}
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	We begin defining the coefficient $c_n = p(\x_n \vert \x_{n-1}, \ldots, \x_1)$. We see that
+	\begin{align}
+		p(\x_1, \ldots, \x_N) &=  p(\x_1) p(\x_2 \vert \x_1) \cdots p(\x_N \vert \x_1, \ldots, \x_{N-1})\\
+		&= \prod_{n=1}^N c_n
+	\end{align}
+	
+	Considering the definition of $\hat\alpha(\z_n)$, we rewrite $\alpha(\z_n)$ as follows
+	\begin{equation} \label{eq:alpha-rewrite}
+		\alpha(\z_n) = \hat\alpha(\z_n) p(\x_1, \ldots, \x_n) = \hat\alpha(\z_n) \prod_{j=1}^n c_j
+	\end{equation}
+	
+	Using proposition \ref{prop:alpha-recursive}, and equation \ref{eq:alpha-rewrite}
+	\begin{align}
+		&\alpha(\z_n) = p(\x_n\vert \z_n) \int_{\z_{n-1}} \alpha(\z_{n-1})p(\z_n\vert\z_{n-1}) d\z_{n-1}\\
+		\iff & \hat\alpha(\z_n) \prod_{j=1}^{n} c_n = p(\x_n \vert \z_n) \int_{\z_{n-1}} \hat\alpha(\z_{n-1}) \prod_{j=1}^{n-1} c_j \cdot  p(\z_n\vert\z_{n-1}) d\z_{n-1}\\
+		\iff & \hat\alpha(\z_n) c_n =   p(\x_n \vert \z_n) \int_{\z_{n-1}} \hat\alpha(\z_{n-1})   p(\z_n\vert\z_{n-1}) d\z_{n-1}
+	\end{align}
+	
+	
 \end{proof}
 
 \begin{proposition}
@@ -250,13 +268,20 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 	\end{equation}
 	results in an updating equation of the form
 	\begin{equation}
-		\hat\beta(\z_n) = \frac{1}{c_{n+1}}\int p(\x_{n+1}\vert\z_{n+1})p(\z_{n+1}\vert\z_n) d\z_{n+1}
+		\hat\beta(\z_n) = \frac{1}{c_{n+1}}\int p(\x_{n+1}\vert\z_{n+1})p(\z_{n+1}\vert\z_n) d\z_{n+1} 
 	\end{equation}
 \end{proposition}
 
 \begin{proof}
 	\texttt{to-do: write proof}
 \end{proof}
+
+\begin{proposition}
+	The term $c_n$ can be written as a recursive function of the form
+	\begin{equation}
+		c_n = \int_{\z_n} p(\x_n \vert \z_n) \int_{\z_{n-1}} \hat\alpha(\z_{n-1})p(\z_n \vert \z_{n-1}) d\z_n\z_{n-1}
+	\end{equation}
+\end{proposition}
 
 The term $\hat\alpha(\z_n)$ is called the $\alpha$-forward message passing for a linear dynamical system or \textbf{Kalman filter equation}.  The term $\hat\beta(\z_n)$ is called the $\beta$-backward message passing of a linear dynamical system or \textbf{Kalman smoother equation}. Intuitively, $\hat\alpha(\z_n)$ represents the information that the history of the data has on the $n$-th observation, whereas $\hat\beta(\z_n)$ represents how a latent variable with with known value at time $n$ affects the future behaviour of the system.
 
@@ -454,7 +479,7 @@ Next, we derive the updating equations for the parameters $\bf A$, $\boldsymbol{
 \section{Graphical Models}
 In this section we present some useful proposition of graphical models.
 
-\begin{proposition}\label{prop:graphical-models-separation}
+\begin{proposition} \label{prop:graphical-models-separation}
 	Let ${\bf Z} = \{\z_n\}_n$ be a set of latent random variables, and ${\bf X} = \{\x_n\}_n$ a set of observed variables with complete-data likelihood $(\z, \x)$ given by the LDS model. Then, the following factorisations hold true
 	\begin{align}
 		p({\bf X}\vert\z_n) &= p({\x_1, \ldots, \x_n \vert \z_n})p({\x_{n+1}, \ldots, \x_N \vert \z_n}) \label{gm:1}\\
