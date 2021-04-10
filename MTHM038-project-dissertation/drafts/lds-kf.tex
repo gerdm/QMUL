@@ -45,7 +45,7 @@ Dynamical systems are models that capture the time evolution of a system. A disc
 
 
 
-In this work, are interested in dynamical systems that depend on some unobserved signal, usually called latent variables, and a set of observed values that are directly derived from the source signal. We define the set of observed variables ${\bf X}=\left\{\x_n \vert \x_n \in \mathbb{R}^M\right\}$ as the observed dataset, and the set of latent variables ${\bf Z}=\left\{\z_n \vert \z_n \in \mathbb{R}^K\right\}$ as the latent dataset. We also denote $\mathcal{D} = ({\bf X}, {\bf Z})$ as the complete-data set.
+In this work, we are interested in dynamical systems that depend on some unobserved signal, usually called latent variables, and a set of observed values that are directly derived from the source signal. We define the set of observed variables ${\bf X}=\left\{\x_n \vert \x_n \in \mathbb{R}^M\right\}$ as the observed dataset, and the set of latent variables ${\bf Z}=\left\{\z_n \vert \z_n \in \mathbb{R}^K\right\}$ as the latent dataset. We also denote $\mathcal{D} = ({\bf X}, {\bf Z})$ as the complete-data set.
 
 One way to represent such system is to assume the existence of an unobserved signal $\z_n$ that evolves over time according to the matrix ${\bf A}\in\mathbb{R}^{K\times K}$. Once $\z_{n}$ is updated, the observed value $\x_{n+1}$ is the result of a linear transformation for $\z_{n+1}$ induced by the matrix ${\bf C}\in \mathbb{R}^{M\times K}$. The equations that govern such system can be written in the form:
 
@@ -175,7 +175,7 @@ Where we have defined $\alpha(\z_n) := p(\x_1, \ldots, \x_n, \z_n)$ as the joint
 
 
 % Hence, to make sense of gamma and xi we only need to find values of alpha and beta
-Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} show that both $\gamma$ and $\xi$ are completely determined by the values of $\alpha$, and $\beta$. Hence, we only need to compute the set of values $\{\alpha(\z_n)\}_n$ and $\{\beta(\z_n)\}_n$ once per E-iteration to find the distributions of $\gamma$ and $\xi$. Our next step is to derive an algorithm to efficiently compute $\alpha(\z_n)$, and $\beta(\z_n)$ for every $n$.
+Propositions \ref{prop:gamma-factorisation}, and \ref{prop:xi-factorisation} show that both $\gamma$ and $\xi$ are completely determined by the values of $\alpha$, and $\beta$. Hence, we only need to compute the set of values $\{\alpha(\z_n)\}_n$ and $\{\beta(\z_n)\}_n$ once per E-iteration to find the values of $\gamma$ and $\xi$. Our next step is to derive an algorithm to efficiently compute $\alpha(\z_n)$, and $\beta(\z_n)$ for every $n$.
 
 % 	* We show that alpha can be represented as a recursive formula
 \begin{proposition} \label{prop:alpha-recursive}
