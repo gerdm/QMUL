@@ -104,7 +104,7 @@ One approach of finding such parameters is to make use of the EM algorithm: an i
 	&= \argmax{\boldsymbol{\theta}} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})
 \end{align}
 
-Where we have defined $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) := \mathbb{E}_{\z\vert \x, \boldsymbol{\theta}^\text{old}}[\log p(\x, \z\vert \boldsymbol\theta)]$.The computation of the posterior probability of latent variables $p(\z\vert \x, \boldsymbol\theta)$ is called the E-step. The maximisation of the complete-data log-likelihood with respect to the posterior latent variables is called the M-step.
+Where we have defined $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) := \mathbb{E}_{\z\vert \x, \boldsymbol{\theta}^\text{old}}[\log p(\x, \z\vert \boldsymbol\theta)]$. The computation of the posterior probability of latent variables $p(\z\vert \x, \boldsymbol\theta)$ is called the E-step. The maximisation of the complete-data log-likelihood with respect to the posterior latent variables is called the M-step.
 
 
 \subsection{The E-step}
@@ -532,10 +532,20 @@ In this section we present some useful proposition of graphical models.
 \begin{proposition}
 	Let $\x$ and ${\bf y}$ two multivariate normals of the form
 	\begin{align}
-		p(\x) &= \mathcal N(\x \vert \boldsymbol\mu, \boldsymbol\Sigma)\\
-		p({\bf y} \vert \x ) &= \mathcal{N}({\bf y} \vert {\bf A}\x + {\bf b}, {\bf S})
+		p(\x) &= \mathcal{N}\left(\x \vert \boldsymbol\mu, \boldsymbol\Lambda^{-1}\right)\\
+		p({\bf y} \vert \x ) &= \mathcal{N}\left({\bf y} \vert {\bf A}\x + {\bf b}, {\bf L}^{-1}\right)
 	\end{align}
+	Then, the conditional distribution of $\x$ given ${\bf y}$ and the marginal of ${\bf y}$ are given by
+	\begin{align}
+		p({\bf y}) &= \mathcal{N}\left(\x\vert {\bf A}\boldsymbol\mu + {\bf b}, {\bf L}^{-1} + {\bf A}\boldsymbol\Lambda^{-1}{\bf A}^T\right)\\
+		p(\x \vert {\bf y}) &= \mathcal{N}\left(\boldsymbol\Sigma\left\{{\bf A}^T {\bf L}({\bf y} - {\bf b})  + \boldsymbol\Lambda\boldsymbol\mu \right\}, \boldsymbol\Sigma\right)
+	\end{align}
+	where $\boldsymbol{\Sigma} = (\boldsymbol\Lambda + {\bf A}^T {\bf L} {\bf A})^{-1}$.
 \end{proposition}
+
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
 
 \bibliography{bib}
 \end{document}
