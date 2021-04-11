@@ -359,12 +359,40 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 	\begin{equation}
 		c_1 = \mathcal{N}(\x_1\vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C} {\bf V}_0 {\bf C})
 	\end{equation}
-	where ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$
+	where ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$.
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	From proposition \ref{prop:alpha-hat}, we note that $\hat\alpha(\z_1) = p(\z_1\vert\x_1)$. Then, $\hat\alpha(\z_1) \propto p(\z_1)p(\x_1\vert\z_1) = \mathcal{N}(\z_1 \vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1\vert {\bf C}\z_1, \boldsymbol\Sigma)$. Thus, $\hat\alpha(\z_1)$ is a Normal distribution with mean $\boldsymbol{\mu}_1$ and covariance matrix ${\bf V}_1$. We write
+	\begin{align}
+		&c_1 \hat\alpha(\z_1) = \mathcal{N}(\z_1 \vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1\vert {\bf C}\z_1, \boldsymbol\Sigma)\\
+		\iff& c_1 \mathcal{N}(\z_1\vert \boldsymbol\mu, {\bf V}_1) = \mathcal{N}(\z_1 \vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1\vert {\bf C}\z_1, \boldsymbol\Sigma).
+	\end{align}
+	
+	Where $c_1$ is the normalisation coefficient. To find $\boldsymbol{\mu}_1$ and ${\bf V}_1$, we make use of equation \ref{eq:normal-conditional}. We  obtain
+	\begin{align}
+		\boldsymbol{\mu}_1 &= \left({\bf V}_0^{-1} + {\bf C}^T\boldsymbol{\Sigma}^{-1} {\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_1 + {\bf V}_0^{-1}\boldsymbol\mu_0\right\}\\
+		{\bf V}_1 &= \left({\bf V}_0^{-1} + {\bf C}^T\boldsymbol{\Sigma}^{-1} {\bf C}\right)^{-1}.
+	\end{align}
+	
+	Next, we rewrite the covariance matrix using equation \texttt{to-do: include inverse formula.} We see that 
+	\begin{align}
+		{\bf V}_1 &= \left({\bf V}_0^{-1} + {\bf C}^T\boldsymbol{\Sigma}^{-1} {\bf C}\right)^{-1}\\
+		&= {\bf V}_0 - {\bf V}_0 {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf V}_0{\bf C}^T\right)^{-1}{\bf C}{\bf V}_0 \\
+		&= {\bf V}_0 - {\bf K}_1{\bf C}{\bf V}_0\\
+		&= ({\bf I} - {\bf K}_1{\bf C}){\bf V}_0.
+	\end{align}
+	
+	Furthermore,
+	\begin{align}
+		\boldsymbol{\mu}_1 &= \left({\bf V}_0^{-1} + {\bf C}^T\boldsymbol{\Sigma}^{-1} {\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_1 + {\bf V}_0^{-1}\boldsymbol\mu_0\right\}\\
+		&= ({\bf V}_0 - {\bf K}_1{\bf C}{\bf V}_0)  \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_1 + {\bf V}_0^{-1}\boldsymbol\mu_0\right\}\\
+		&= {\bf V}_0{\bf C}\boldsymbol\Sigma^{-1}\x_1 +{\bf V}_0{\bf V}_0^{-1}\boldsymbol{\mu}_0 - {\bf K}_1{\bf C}{\bf V}_0 {\bf C}\boldsymbol\Sigma^{-1}\x_1 -  {\bf K}_1{\bf C}{\bf V}_0{\bf V}_0^{-1}\boldsymbol{\mu}_0 \\
+		&= {\bf V}_0{\bf C}\boldsymbol\Sigma^{-1}\x_1 + \boldsymbol{\mu}_0 - {\bf K}_1{\bf C}{\bf V}_0 {\bf C}\boldsymbol\Sigma^{-1}\x_1 -  {\bf K}_1{\bf C}\boldsymbol{\mu}_0 \\
+	\end{align}
 \end{proof}
+
+% Make note of the term c1 and the previously obtained value c1
 
 More generally, we have the following proposition
 
@@ -391,6 +419,7 @@ More generally, we have the following proposition
 	\texttt{to-do: write proof}
 \end{proof}
 
+%To-do: write about the implications of iterating these equations in terms of the Kalman Filters
 
 % Show that gamma is also a normal distribution
 % to-do: label propositions correctly
@@ -539,8 +568,8 @@ In this section we present some useful proposition of graphical models.
 	\end{align}
 	Then, the conditional distribution of $\x$ given ${\bf y}$ and the marginal of ${\bf y}$ are given by
 	\begin{align}
-		p({\bf y}) &= \mathcal{N}\left(\x\vert {\bf A}\boldsymbol\mu + {\bf b}, {\bf L}^{-1} + {\bf A}\boldsymbol\Lambda^{-1}{\bf A}^T\right)\\
-		p(\x \vert {\bf y}) &= \mathcal{N}\left(\boldsymbol\Sigma\left\{{\bf A}^T {\bf L}({\bf y} - {\bf b})  + \boldsymbol\Lambda\boldsymbol\mu \right\}, \boldsymbol\Sigma\right)
+		p({\bf y}) &= \mathcal{N}\left(\x\vert {\bf A}\boldsymbol\mu + {\bf b}, {\bf L}^{-1} + {\bf A}\boldsymbol\Lambda^{-1}{\bf A}^T\right) \label{eq:normal-marginal}\\
+		p(\x \vert {\bf y}) &= \mathcal{N}\left(\boldsymbol\Sigma\left\{{\bf A}^T {\bf L}({\bf y} - {\bf b})  + \boldsymbol\Lambda\boldsymbol\mu \right\}, \boldsymbol\Sigma\right) \label{eq:normal-conditional}
 	\end{align}
 	where $\boldsymbol{\Sigma} = (\boldsymbol\Lambda + {\bf A}^T {\bf L} {\bf A})^{-1}$.
 \end{proposition}
