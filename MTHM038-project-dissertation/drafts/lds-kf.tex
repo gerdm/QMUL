@@ -349,7 +349,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 % to-do: write it more clearly
 % Show that alpha hat is a normal distribution
 %	* Derive the Kalman Filter Equations
-\begin{proposition}
+\begin{proposition} \label{prop:alpha-forward-equations-1}
 	The factor $\hat\alpha(\z_1)$ can be written as normal probability density function with mean and covariance matrix given by
 	\begin{align}
 		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1(\x_1 -{\bf C}\boldsymbol\mu_0)\\
@@ -407,7 +407,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 
 More generally, we have the following proposition
 
-\begin{proposition}
+\begin{proposition} \label{prop:alpha-forward-equations-n}
 	For every $n \geq 2$, the scaled factor $\hat\alpha(\z_n)$ can be written as a normal probability density function with mean and covariance matrix given by
 	\begin{align}
 		\boldsymbol{\mu}_n &= \boldsymbol{\mu}_{n-1} + {\bf K}_n(\x_n -{\bf C}\boldsymbol\mu_{n-1})\\
@@ -427,7 +427,11 @@ More generally, we have the following proposition
 \end{proposition}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	The derivation of the equations is analogous to those found in proposition \ref{prop:alpha-forward-equations-1}. We begin by making use of the result found in proposition \ref{prop:alpha-hat}. 
+	\begin{align}
+		&c_n \hat\alpha(\z_n) = p(\x_n\vert\z_n) \int \hat\alpha(\z_{n-1})p(\z_n \vert \z_{n-1}) d\z_{n-1}\\
+		\iff& c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_)
+	\end{align}
 \end{proof}
 
 %To-do: write about the implications of iterating these equations in terms of the Kalman Filters
