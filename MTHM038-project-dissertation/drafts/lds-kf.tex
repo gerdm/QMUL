@@ -359,7 +359,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 	\begin{equation}
 		c_1 = \mathcal{N}(\x_1\vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C} {\bf V}_0 {\bf C})
 	\end{equation}
-	where ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$.
+	with ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$.
 \end{proposition}
 
 \begin{proof}
@@ -383,7 +383,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 		&= ({\bf I} - {\bf K}_1{\bf C}){\bf V}_0. \label{eq:part-v1-rewrite}
 	\end{align}
 	
-	Where we have defined ${\bf K}_1 := {\bf V}_0 {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf V}_0{\bf C}^T\right)^{-1}$. Note that using the result derived in proposition \ref{prop:matrix-rewrite1} we can rewrite ${\bf K}_1$ as follows
+	Where we have defined ${\bf K}_1 := {\bf V}_0 {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf V}_0{\bf C}^T\right)^{-1}$. Note that using the result derived in proposition \ref{prop:matrix-rewrite1} we rewrite ${\bf K}_1$ as follows
 	
 	\begin{align}
 		{\bf K}_1 &= {\bf V}_0 {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf V}_0{\bf C}^T\right)^{-1}\\
@@ -414,7 +414,7 @@ More generally, we have the following proposition
 		{\bf V}_n &=  ({\bf I} - {\bf K}_n{\bf C}){\bf P}_{n-1}
 	\end{align}
 	
-	where we have defined
+	with
 	\begin{align}
 		{\bf P}_{n-1} &:= \boldsymbol{\Gamma} + {\bf A}{\bf V}_{n-1}{\bf A}^T\\
 		{\bf K}_n &:= {\bf P}_{n-1}{\bf C}^T({\bf C} {\bf P}_{n-1}{\bf C}^T + \boldsymbol\Sigma)^{-1}
@@ -422,7 +422,7 @@ More generally, we have the following proposition
 	
 	Furthermore, $c_n$ is a normal probability density function of the form
 	\begin{equation}
-		c_n = \mathcal{N}(\x_n \vert {\bf CA}\boldsymbol\mu_{n-1}, \boldsymbol\Sigma + {\bf C P}_{n-1}{\bf C}^\text{T})
+		c_n = \mathcal{N}(\x_n \vert {\bf CA}\boldsymbol\mu_{n-1}, \boldsymbol\Sigma + {\bf C P}_{n-1}{\bf C}^\text{T}).
 	\end{equation}
 \end{proposition}
 
@@ -430,7 +430,44 @@ More generally, we have the following proposition
 	The derivation of the equations is analogous to those found in proposition \ref{prop:alpha-forward-equations-1}. We begin by making use of the result found in proposition \ref{prop:alpha-hat}. 
 	\begin{align}
 		&c_n \hat\alpha(\z_n) = p(\x_n\vert\z_n) \int \hat\alpha(\z_{n-1})p(\z_n \vert \z_{n-1}) d\z_{n-1}\\
-		\iff& c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_)
+		\iff& c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_n, \boldsymbol\Sigma_n) = \mathcal{N}(\x_n \vert {\bf C}\z_n) \nonumber \\
+			&\hspace{1cm} \int \mathcal{N}(\z_{n-1} \vert \boldsymbol\mu_{n-1}, {\bf V}_{n-1}) \mathcal{N}(\z_n \vert {\bf A}\z_{n-1}, \boldsymbol\Gamma) d\z_{n-1} \label{eq:part-zn-rewrite-1}.
+	\end{align}
+	To find the terms $\boldsymbol\mu_n$ and ${\bf V}_n$, we first solve the integral in equation \ref{eq:part-zn-rewrite-1} using the result presented in equation \ref{eq:normal-marginal}. We obtain
+	\begin{equation}
+		\int \mathcal{N}(\z_{n-1} \vert \boldsymbol\mu_{n-1}, {\bf V}_{n-1}) \mathcal{N}(\z_n \vert {\bf A}\z_{n-1}, \boldsymbol\Gamma) d\z_{n-1} = \mathcal{N}(\z_n \vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}).
+	\end{equation}
+	Where we have defined ${\bf P}_{n-1} := \boldsymbol\Gamma + {\bf A}{\bf V}_{n-1}{\bf A}^T$. Hence, we rewrite equation \ref{eq:part-zn-rewrite-1} as 
+	
+	\begin{equation}
+		c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_n, \boldsymbol\Sigma_n) = \mathcal{N}(\x_n \vert {\bf C}\z_n)  \mathcal{N}(\z_n \vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}).
+	\end{equation}
+	
+	Finally, making use of equation \ref{eq:normal-conditional}, we notice that
+	
+	\begin{align}
+		\boldsymbol{\mu}_n &= \left({\bf P}_{n-1}^{-1} + {\bf C}^T \boldsymbol\Sigma^{-1}{\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_n + {\bf P}_{n-1}^{-1}{\bf A}\boldsymbol\mu_{n-1}\right\}\\
+		{\bf V}_n &= \left({\bf P}_{n-1}^{-1} + {\bf C}^T \boldsymbol\Sigma^{-1}{\bf C}\right)^{-1}.
+	\end{align}
+	
+	Next, we rewrite the covariance matrix ${\bf V}_n$ using proposition \ref{prop:woodbury-identity}. We obtain
+	\begin{align}
+		{\bf V}_n &= \left({\bf P}_{n-1}^{-1} + {\bf C}^T \boldsymbol\Sigma^{-1}{\bf C}\right)^{-1} \\
+				  &= {\bf P}_{n-1} - {\bf P}_{n-1} {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf P}_{n-1}{\bf C}^T\right)^{-1}{\bf C}{\bf P}_{n-1} \\
+				  &= {\bf P}_{n-1} - {\bf K}_n{\bf C}{\bf P}_{n-1} \\
+				  &= ({\bf I}- {\bf K}_n{\bf C}){\bf P}_{n-1}.
+	\end{align}
+	Where we have defined ${\bf K}_n := {\bf P}_{n-1} {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf P}_{n-1}{\bf C}^T\right)^{-1}$. By using the result derived in proposition 4.1 we rewrite ${\bf K}_n$ as
+	
+	\begin{align}
+		{\bf K}_n &= {\bf P}_{n-1} {\bf C}^T\left(\boldsymbol\Sigma + {\bf C}{\bf P}_{n-1}{\bf C}^T\right)^{-1} \\
+				  &= \left({\bf P}_{n-1}^{-1} + {\bf C}^T\boldsymbol\Sigma^{-1}{\bf C}\right)^{-1}{\bf C}\boldsymbol\Sigma^{-1}.
+	\end{align}
+	
+	As a consequence
+	\begin{align}
+		\boldsymbol{\mu}_n &= \left({\bf P}_{n-1}^{-1} + {\bf C}^T \boldsymbol\Sigma^{-1}{\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_n + {\bf P}_{n-1}^{-1}{\bf A}\boldsymbol\mu_{n-1}\right\}\\
+		&= \left({\bf P}_{n-1}^{-1} + {\bf C}^T \boldsymbol\Sigma^{-1}{\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_n + {\bf P}_{n-1}^{-1}{\bf A}\boldsymbol\mu_{n-1}\right\}
 	\end{align}
 \end{proof}
 
