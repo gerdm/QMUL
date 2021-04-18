@@ -21,6 +21,7 @@
 \newcommand{\z}{{\bf z}}
 
 \newtheorem{proposition}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
 
 \title{Kalman Filters: an introduction}
 \author{Gerardo Durán Martín}
@@ -349,7 +350,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 % to-do: write it more clearly
 % Show that alpha hat is a normal distribution
 %	* Derive the Kalman Filter Equations
-\begin{proposition} \label{prop:alpha-forward-equations-1}
+\begin{theorem} (\textbf{Kalman Filter: Initial Conditions}) \label{prop:alpha-forward-equations-1}
 	The factor $\hat\alpha(\z_1)$ can be written as normal probability density function with mean and covariance matrix given by
 	\begin{align}
 		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1(\x_1 -{\bf C}\boldsymbol\mu_0)\\
@@ -360,7 +361,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 		c_1 = \mathcal{N}(\x_1\vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C} {\bf V}_0 {\bf C})
 	\end{equation}
 	with ${\bf K}_1 = {\bf V}_0{\bf C}({\bf C} {\bf V}_0 {\bf C} + \boldsymbol\Sigma)^{-1}$.
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
 	From proposition \ref{prop:alpha-hat}, we note that $\hat\alpha(\z_1) = p(\z_1\vert\x_1)$. Then, $\hat\alpha(\z_1) \propto p(\z_1)p(\x_1\vert\z_1) = \mathcal{N}(\z_1 \vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1\vert {\bf C}\z_1, \boldsymbol\Sigma)$. Thus, $\hat\alpha(\z_1)$ is a Normal distribution with mean $\boldsymbol{\mu}_1$ and covariance matrix ${\bf V}_1$. We write
@@ -407,8 +408,8 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 
 More generally, we have the following proposition
 
-\begin{proposition} \label{prop:alpha-forward-equations-n}
-	For every $n \geq 2$, the scaled factor $\hat\alpha(\z_n)$ can be written as a normal probability density function with mean and covariance matrix given by
+\begin{theorem} \label{prop:alpha-forward-equations-n}
+	(\textbf{Kalman Filters}) For every $n \geq 2$, the scaled factor $\hat\alpha(\z_n)$ can be written as a normal probability density function with mean and covariance matrix given by
 	\begin{align}
 		\boldsymbol{\mu}_n &= {\bf A}\boldsymbol{\mu}_{n-1} + {\bf K}_n(\x_n -{\bf C}{\bf A}\boldsymbol\mu_{n-1})\\
 		{\bf V}_n &=  ({\bf I} - {\bf K}_n{\bf C}){\bf P}_{n-1}
@@ -424,7 +425,7 @@ More generally, we have the following proposition
 	\begin{equation}
 		c_n = \mathcal{N}(\x_n \vert {\bf CA}\boldsymbol\mu_{n-1}, \boldsymbol\Sigma + {\bf C P}_{n-1}{\bf C}^\text{T}).
 	\end{equation}
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
 	The derivation of the equations is analogous to those found in proposition \ref{prop:alpha-forward-equations-1}. We begin by making use of the result found in proposition \ref{prop:alpha-hat}. 
