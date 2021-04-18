@@ -306,6 +306,10 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 	\end{equation}
 \end{proposition}
 
+\begin{proof}
+	\texttt{to-do: write proof}
+\end{proof}
+
 The term $\hat\alpha(\z_n)$ is called the $\alpha$-forward message passing for a linear dynamical system or \textbf{Kalman filter equation}.  The term $\hat\beta(\z_n)$ is called the $\beta$-backward message passing of a linear dynamical system or \textbf{Kalman smoother equation}. Intuitively, $\hat\alpha(\z_n)$ represents the information that the history of the data has on the $n$-th observation, whereas $\hat\beta(\z_n)$ represents how a latent variable with with known value at time $n$ affects the future behaviour of the system.
 
 In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1}, \z_{n})$ can be written in terms of $\hat\alpha$ and $\hat\beta$. We later show that this induces a normal probability density function for $\gamma(\z_n)$ in terms of a recursive formula that allows to efficiently compute the expected values $\mathbb{E}[\z_n]$, $\mathbb{E}[\z_n\z_{n}^{T}]$, and  $\mathbb{E}[\z_n\z_{n-1}^{T}]$.
@@ -406,7 +410,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 	Finally, we derive $c_1$ by rewriting the term as the following integral
 	\begin{align}
 		c_1 &= \int p(\z_1) p (\x_1 \vert \z_1) d\z_1\\
-			&= \int \mathcal{N}(\z_1\vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1 \vert {\bf C}\z_1, \boldsymbol\Sigma).
+			&= \int \mathcal{N}(\z_1\vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1 \vert {\bf C}\z_1, \boldsymbol\Sigma) d\z_1.
 	\end{align}
 	
 	Which can be written as follows using equation \ref{eq:normal-marginal}:
@@ -490,7 +494,7 @@ More generally, we have the following proposition
 	Finally, we derive $c_n$ by rewriting the term as the following integral
 	\begin{align}
 		c_n &= \int p(\z_n) p (\x_n \vert \z_n) d\z_n\\
-			&= \int \mathcal{N}(\z_n\vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}) \mathcal{N}(\x_n \vert {\bf C}\z_n, \boldsymbol\Sigma).
+			&= \int \mathcal{N}(\z_n\vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}) \mathcal{N}(\x_n \vert {\bf C}\z_n, \boldsymbol\Sigma) d\z_n.
 	\end{align}
 	
 	Which can be written as follows using equation \ref{eq:normal-marginal}:
