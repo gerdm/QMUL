@@ -354,7 +354,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 % to-do: write it more clearly
 % Show that alpha hat is a normal distribution
 %	* Derive the Kalman Filter Equations
-\begin{theorem} (\textbf{Kalman Filter: Initial Conditions}) \label{theorem:alpha-forward-equations-1}
+\begin{theorem} (\textbf{Kalman Filter: initial condition}) \label{theorem:alpha-forward-equations-1}
 	The factor $\hat\alpha(\z_1)$ can be written as normal probability density function with mean and covariance matrix given by
 	\begin{align}
 		\boldsymbol{\mu}_1 &= \boldsymbol{\mu}_0 + {\bf K}_1(\x_1 -{\bf C}\boldsymbol\mu_0)\\
@@ -503,37 +503,56 @@ More generally, we have the following proposition
 	\end{equation}	
 \end{proof}
 
-%To-do: write about the implications of iterating these equations in terms of the Kalman Filters
+% To-do: write about the implications of iterating these equations in terms of the Kalman Filters
+% To-do: write about the relationship between the alpha terms and the Kalman equations
 
 % Show that gamma is also a normal distribution
 % to-do: label propositions correctly
-This last two propositions can be used to show that $\gamma(\z_n)$ is a normal probability density function. Hence, the expectations required to compute the E-step can be derived from the mean of a normal distribution and the computation of the covariance between two normal distributions. This is formally shown in the following two propositions
+This last two propositions can be used to show that $\gamma(\z_n)$ is a normal probability density function. Hence, the expectations required to compute the E-step can be derived from the mean of a normal distribution and the computation of the covariance between two normal distributions. This is formally shown in the following theorems.
 
 
-\begin{proposition}
+\begin{theorem} (\textbf{Backward-equations})
 	The term $\gamma(\z_n)$ can be written as a normal distribution of the form
 	\begin{equation}
-		\gamma(\z_n) = \mathcal{N}(\z_n\vert \hat{\boldsymbol\mu}_n, \hat{\bf V}_n)
+		\gamma(\z_n) = \mathcal{N}(\z_n\vert \hat{\boldsymbol\mu}_n, \hat{\bf V}_n).
 	\end{equation}
 	
-	where
+	With
 	\begin{align}
 		\hat{\boldsymbol{\mu}}_n &= \boldsymbol{\mu}_n + {\bf J}_n\left(\hat{\boldsymbol \mu}_{n-1} - {\bf A}\boldsymbol\mu_n\right)\\
 		\hat{\bf V}_n &= {\bf V}_n + {\bf J}_n\left(\hat{\bf V}_{n+1} - {\bf P}_n\right){\bf J}_n^T\\
-		{\bf J}_n &= {\bf V}_n{\bf A}^T{\bf P}_n^{-1}
+		{\bf J}_n &= {\bf V}_n{\bf A}^T{\bf P}_n^{-1}.
 	\end{align}
-\end{proposition}
+	
+	And an initial condition given by
+	\begin{equation}
+		\gamma(\z_N) = \hat\alpha(\z_N) = \mathcal{N}(\z_N\vert \boldsymbol\mu_N, {\bf V}_N).
+	\end{equation}
+\end{theorem}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	Using proposition \ref{prop:beta-hat}, we rewrite the scaled the scaled factor $\hat\beta(\z_n)$ as
+	\begin{equation}
+		c_{n+1} \hat\beta(\z_n) = \int \hat\beta(\z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\z_{n+1} \vert \z_n) d\z_{n+1}.
+	\end{equation}
+	
+	As a consequence,	
+	\begin{align}
+		c_{n+1}\hat\alpha(\z_n)\hat\beta(\z_n) &= \hat\alpha(\z_n) \int \hat\beta(\z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\z_{n+1} \vert \z_n) d\z_{n+1}\\
+		&= \mathcal{N}(\z_n \vert \boldsymbol\mu, {\bf V}_n) \int \hat\beta(\z_{n+1}) \\
+			&\hspace{1cm}\mathcal{N}(\x_{n+1} \vert {\bf C}\z_{n+1}, \boldsymbol\Sigma) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma) d\z_{n+1}
+	\end{align}
+	
+	The initial state $\gamma(\z_n)$ is given by
 \end{proof}
 
-\begin{proposition}
+
+\begin{theorem}
 	The term $\xi(\z_n, \z_{n-1})$ can be written as a normal distribution with mean and covariance matrix given by
 	\begin{equation}
 		\xi(\z_n, \z_{n-1}) = \mathcal{N}\left(\left[\gamma(\z_{n-1}), \gamma(\z_{n})\right]^T, {\bf J}_{n-1}\hat{\bf V}_{n}\right)
 	\end{equation}
-\end{proposition}
+\end{theorem}
 
 \begin{proof}
 	\texttt{to-do: write proof}
