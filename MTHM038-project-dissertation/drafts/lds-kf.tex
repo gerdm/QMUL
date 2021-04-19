@@ -319,7 +319,7 @@ In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1},
 
 % Show that gamma and xi can be written in terms of \hat\alpha and \hat\beta.
 
-\begin{proposition}
+\begin{proposition}\label{prop:gamma-rewrite-scaled}
 	$\gamma(\z_n)$ can be written in terms of the re-scaled factors $\hat\alpha(\z_n)$, and $\hat\beta(\z_n)$ as
 	\begin{equation}
 		\gamma(\z_n) = \hat\alpha(\z_n)\hat\beta(\z_n).
@@ -458,7 +458,7 @@ More generally, we have the following proposition
 	\end{equation}
 	Where we have defined ${\bf P}_{n-1} := \boldsymbol\Gamma + {\bf A}{\bf V}_{n-1}{\bf A}^T$. Hence, we rewrite equation \ref{eq:part-zn-rewrite-1} as 
 	
-	\begin{equation}
+	\begin{equation} \label{eq:part-cnzn-rewrite}
 		c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_n, \boldsymbol\Sigma_n) = \mathcal{N}(\x_n \vert {\bf C}\z_n)  \mathcal{N}(\z_n \vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}).
 	\end{equation}
 	
@@ -527,14 +527,21 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		{\bf J}_n &= {\bf V}_n{\bf A}^T{\bf P}_n^{-1}.
 	\end{align}
 	
-	And an initial condition given by
+	And initial condition given by
 	\begin{equation}
 		\gamma(\z_N) = \hat\alpha(\z_N) = \mathcal{N}(\z_N\vert \boldsymbol\mu_N, {\bf V}_N).
 	\end{equation}
 \end{theorem}
 
 \begin{proof}
-	Using proposition \ref{prop:beta-hat}, we rewrite the scaled the scaled factor $\hat\beta(\z_n)$ as
+	We begin by considering the initial condition $\gamma(\z_N)$. Using proposition \ref{prop:gamma-rewrite-scaled}, and considering the initial value $\hat\beta(\z_N)=1$, we obtain
+	\begin{align}
+		\gamma(\z_N) &= \hat\alpha(\z_N)\hat\beta(\z_N)\\
+					 &= \hat\alpha(\z_N)\\
+					 &= \mathcal{N}(\z_N \vert \boldsymbol\mu_N, {\bf V}_N).
+	\end{align}
+
+	Next, to consider the more general case we rewrite the scaled the scaled factor $\hat\beta(\z_n)$ as
 	\begin{equation}
 		c_{n+1} \hat\beta(\z_n) = \int \hat\beta(\z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\z_{n+1} \vert \z_n) d\z_{n+1}.
 	\end{equation}
@@ -542,13 +549,26 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 	As a consequence,	
 	\begin{align}
 		c_{n+1}\hat\alpha(\z_n)\hat\beta(\z_n) &= \hat\alpha(\z_n) \int \hat\beta(\z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\z_{n+1} \vert \z_n) d\z_{n+1}\\
-		&= \mathcal{N}(\z_n \vert \boldsymbol\mu, {\bf V}_n) \int \hat\beta(\z_{n+1}) \\
-			&\hspace{1cm}\mathcal{N}(\x_{n+1} \vert {\bf C}\z_{n+1}, \boldsymbol\Sigma) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma) d\z_{n+1}
+		&= p(\z_n)\int \hat\beta(\z_{n+1}) p(\x_{n+1}\vert \z_{n+1})p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
+		&= \int \hat\beta(\z_{n+1}) p(\x_{n+1}\vert \z_{n+1}) p(\z_n) p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
+		&= \int \hat\beta(\z_{n+1 }) p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}) p(\z_{n}\vert \z_{n+1}) d\z_{n+1}.
 	\end{align}
 	
-	The initial state $\gamma(\z_n)$ is given by
+	To further simplify this last equation, recall that
+	\begin{align}
+		p(\z_n\vert \z_{n+1}) &\propto p(\z_n) p(\z_{n+1} \vert \z_n) \\
+		&= \mathcal{N}(\z_n \vert\boldsymbol\mu_n, {\bf V}_n) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma).
+	\end{align}
+	
+	Making use of equation \ref{eq:normal-conditional}, we observe that $p(\z_n \vert \z_{n+1})$ is a multivariate Normal distribution with mean and covariance matrix given by
+	
+	\begin{align}
+		{\bf m}_n &= {\bf M}_n \left({\bf A}^T\boldsymbol\Gamma^{-1}\z_{n+1} + {\bf V}_n^{-1}\boldsymbol\mu_n\right)\\
+		{\bf M}_n &= \left( {\bf V}_n^{-1}  + {\bf A}^T\boldsymbol{\Gamma}^{-1}{\bf A} \right)^{-1},
+	\end{align}
+	
+	i.e, $p(\z_n \vert \z_{n+1}) = \mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)$. 
 \end{proof}
-
 
 \begin{theorem}
 	The term $\xi(\z_n, \z_{n-1})$ can be written as a normal distribution with mean and covariance matrix given by
