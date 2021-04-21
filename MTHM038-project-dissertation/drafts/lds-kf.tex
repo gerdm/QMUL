@@ -261,7 +261,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 		\alpha(\z_n) = \hat\alpha(\z_n) p(\x_1, \ldots, \x_n) = \hat\alpha(\z_n) \prod_{j=1}^n c_j
 	\end{equation}
 	
-	Using proposition \ref{prop:alpha-recursive}, and equation \ref{eq:alpha-rewrite}
+	Using proposition \ref{prop:alpha-recursive} and equation \ref{eq:alpha-rewrite} we observe
 	\begin{align}
 		&\alpha(\z_n) = p(\x_n\vert \z_n) \int_{\z_{n-1}} \alpha(\z_{n-1})p(\z_n\vert\z_{n-1}) d\z_{n-1}\\
 		\iff & \hat\alpha(\z_n) \prod_{j=1}^{n} c_n = p(\x_n \vert \z_n) \int_{\z_{n-1}} \hat\alpha(\z_{n-1}) \prod_{j=1}^{n-1} c_j \cdot  p(\z_n\vert\z_{n-1}) d\z_{n-1}\\
@@ -276,7 +276,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 	\begin{equation}
 		\hat\beta(\z_n) = \frac{p(\x_{n+1}, \ldots, \x_N \vert \z_n)}{p(\x_{n+1}, \ldots, \x_N \vert \x_1, \ldots \x_n)}
 	\end{equation}
-	results in an updating equation of the form
+	results in an equation of the form
 	\begin{equation}
 		\hat\beta(\z_n) = \frac{1}{c_{n+1}}\int p(\x_{n+1}\vert\z_{n+1})p(\z_{n+1}\vert\z_n) d\z_{n+1} 
 	\end{equation}
@@ -551,10 +551,10 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		c_{n+1}\hat\alpha(\z_n)\hat\beta(\z_n) &= \hat\alpha(\z_n) \int \hat\beta(\z_{n+1}) p(\x_{n+1} \vert \z_{n+1}) p(\z_{n+1} \vert \z_n) d\z_{n+1}\\
 		&= p(\z_n)\int \hat\beta(\z_{n+1}) p(\x_{n+1}\vert \z_{n+1})p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
 		&= \int \hat\beta(\z_{n+1}) p(\x_{n+1}\vert \z_{n+1}) p(\z_n) p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
-		&= \int \hat\beta(\z_{n+1 }) p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}) p(\z_{n}\vert \z_{n+1}) d\z_{n+1}.
+		&= \int \hat\beta(\z_{n+1 }) p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}) p(\z_{n}\vert \z_{n+1}) d\z_{n+1} \label{eq:part-c-alpha-beta}.
 	\end{align}
 	
-	To further simplify this last equation, recall that
+	To further simplify equation \ref{eq:part-c-alpha-beta}, recall that
 	\begin{align}
 		p(\z_n\vert \z_{n+1}) &\propto p(\z_n) p(\z_{n+1} \vert \z_n) \\
 		&= \mathcal{N}(\z_n \vert\boldsymbol\mu_n, {\bf V}_n) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma).
@@ -567,7 +567,12 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		{\bf M}_n &= \left( {\bf V}_n^{-1}  + {\bf A}^T\boldsymbol{\Gamma}^{-1}{\bf A} \right)^{-1},
 	\end{align}
 	
-	i.e, $p(\z_n \vert \z_{n+1}) = \mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)$. 
+	i.e, $p(\z_n \vert \z_{n+1}) = \mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)$. Furthermore, making use of equation \ref{eq:normal-marginal}, we observe that
+	\begin{align}
+		p(\z_{n+1}) &= \int p(\z_n) p(\z_{n+1} \vert \z_n) d\z_n\\
+					&= \int \mathcal{N}(\z_n \vert\boldsymbol\mu_n, {\bf V}_n) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma) d\z_n\\
+					&= \mathcal{N}\left(\z_{n+1} \vert {\bf A}\boldsymbol\mu_n, \boldsymbol\Gamma\right)
+	\end{align}
 \end{proof}
 
 \begin{theorem}
@@ -686,7 +691,7 @@ In this section we present some useful proposition of graphical models.
 \end{proof}
 
 \section{Normal Distribution}
-\begin{proposition}
+\begin{proposition} \label{prop:multivariate-normal-combination}
 	Let $\x$ and ${\bf y}$ two multivariate normals of the form
 	\begin{align}
 		p(\x) &= \mathcal{N}\left(\x \vert \boldsymbol\mu, \boldsymbol\Lambda^{-1}\right)\\
