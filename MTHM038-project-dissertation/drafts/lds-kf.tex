@@ -571,7 +571,42 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 	\begin{align}
 		p(\z_{n+1}) &= \int p(\z_n) p(\z_{n+1} \vert \z_n) d\z_n\\
 					&= \int \mathcal{N}(\z_n \vert\boldsymbol\mu_n, {\bf V}_n) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma) d\z_n\\
-					&= \mathcal{N}\left(\z_{n+1} \vert {\bf A}\boldsymbol\mu_n, \boldsymbol\Gamma\right)
+					&= \mathcal{N}\left(\z_{n+1} \vert {\bf A}\boldsymbol\mu_n, \boldsymbol\Gamma\right) \label{eq:part-zn+1-marginal}.
+	\end{align}
+	
+	% It follows that c_n+1 alpha beta is normal distribution since the right-hand part of the equation is the result
+	% of marginalising and conditioning normals
+	Finally, considering equations \ref{eq:part-cnzn-rewrite} and \ref{eq:part-zn+1-marginal}, we rewrite \ref{eq:part-c-alpha-beta} as
+	\begin{align}
+		c_{n+1}\hat\alpha(\z_n)\hat\beta(\z_n) &= c_{n+1} \mathcal{N}(\z_{n} \vert \hat{\boldsymbol\mu}_n, \hat{\bf V}_n)\\
+		&= \int \hat\beta(\z_{n+1}) c_{n+1} \hat\alpha(\z_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n) d\z_{n+1}\\
+		&= \int \hat\beta(\z_{n+1}) c_{n+1} \hat\alpha(\z_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)d\z_{n+1}\\
+		&= c_{n+1}\int \hat\beta(\z_{n+1}) \hat\alpha(\z_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)d\z_{n+1}\\
+		&= c_{n+1}\int \gamma(\z_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n) d\z_{n+1}\\
+		&= c_{n+1}\int \mathcal{N}(\z_{n+1} \vert \hat{\boldsymbol\mu}_{n+1}, \hat{\bf V}_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)d\z_{n+1}.\\
+	\end{align}
+	Using equation \ref{eq:normal-marginal}, we obtain
+	\begin{align}
+		\hat{\boldsymbol{\mu}}_n &= {\bf M}_n {\bf A}^T \boldsymbol\Gamma ^{-1} \hat{\boldsymbol{\mu}} + {\bf M}_n {\bf V}_n^{-1} \boldsymbol\mu_n \label{eq:part-muhat-1}\\
+		\hat{{\bf V}}_n&= {\bf M}_n + {\bf M}_n {\bf A}^T \boldsymbol{\Gamma}^{-1} \hat{\bf V}_n\Gamma^{-1}{\bf A} \label{eq:part-Vhat-1}
+	\end{align}
+	
+	Therefore, $\gamma(\z_n) = \mathcal{N}(\z_n \vert \hat{\boldsymbol{\mu}}, \hat {\bf V}_n)$ as stated. 
+	
+	We conclude this proof by simplifying equations \ref{eq:part-muhat-1} and \ref{eq:part-Vhat-1}.  Let us denote ${\bf J}_n = {\bf V}_n{\bf A}^T({\bf P}_n)^{-1}$. Using the result of proposition \ref{prop:woodbury-identity}, we obtain
+	\begin{align}
+		{\bf M}_n &= \left({\bf V}_n^{-1} + {\bf A}^T \boldsymbol\Gamma^{-1} {\bf A}\right)^{-1}\\
+			&= {\bf V}_n - {\bf V}_n{\bf A}^T\left(\boldsymbol\Gamma + {\bf A}{\bf V}_n {\bf A}^T\right)^{-1}{\bf A}{\bf V}_n\\
+			&= {\bf V}_n - {\bf V}_n{\bf A}^T\left({\bf P}_n\right)^{-1}{\bf A}{\bf V}_n\\
+			&= \left({\bf I} - {\bf V}_n{\bf A}^T\left({\bf P}_n\right)^{-1}{\bf A}\right){\bf V}_n\\
+			&= \left({\bf I} - {\bf J}_n{\bf A}\right){\bf V}_n.
+	\end{align}
+	
+	Furthermore, we observe that
+	\begin{align}
+		{\bf M}_n {\bf A}^T \boldsymbol{\Gamma}^{-1} &= \left({\bf V}_n - {\bf V}_n{\bf A}^T\left({\bf P}_n\right)^{-1}{\bf A}{\bf V}_n\right){\bf A}^T{\bf V}_n\\
+		&= {\bf V}_n{\bf A}^T{\bf V}_n - {\bf V}_n{\bf A}^T\left({\bf P}_n\right)^{-1}{\bf A}{\bf V}_n {\bf A}^T{\bf V}_n\\
+		&= {\bf V}_n{\bf A}^T \left({\bf I}\right)
 	\end{align}
 \end{proof}
 
