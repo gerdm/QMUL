@@ -147,7 +147,7 @@ Before computing the expected values of the latent variables, it is useful to fi
 \end{proposition}
 
 \begin{proof}\label{prop:gamma-factorisation}
-Consider  $\gamma(\z_n)$ and equation \ref{gm:1} from proposition \ref{prop:graphical-models-separation}. We have
+Consider  $\gamma(\z_n)$ and equation \eqref{eq:gm-1} from proposition \ref{prop:graphical-models-separation}. We have
 \begin{align}
 	\gamma(\z_n) &= p(\z_n \vert \x)\\
 					  &= \frac{1}{p(\x)}p(\z_n)p(\x \vert \z_n)\\
@@ -261,7 +261,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 		\alpha(\z_n) = \hat\alpha(\z_n) p(\x_1, \ldots, \x_n) = \hat\alpha(\z_n) \prod_{j=1}^n c_j
 	\end{equation}
 	
-	Using proposition \ref{prop:alpha-recursive} and equation \ref{eq:alpha-rewrite} we observe
+	Using proposition \ref{prop:alpha-recursive} and equation \eqref{eq:alpha-rewrite} we observe
 	\begin{align}
 		&\alpha(\z_n) = p(\x_n\vert \z_n) \int_{\z_{n-1}} \alpha(\z_{n-1})p(\z_n\vert\z_{n-1}) d\z_{n-1}\\
 		\iff & \hat\alpha(\z_n) \prod_{j=1}^{n} c_n = p(\x_n \vert \z_n) \int_{\z_{n-1}} \hat\alpha(\z_{n-1}) \prod_{j=1}^{n-1} c_j \cdot  p(\z_n\vert\z_{n-1}) d\z_{n-1}\\
@@ -293,7 +293,7 @@ For moderately large $N$, $\alpha$ and $\beta$ become small very quick. To solve
 		&= \hat\beta(\z_n) \prod_{j=n+1}^N c_j \label{eq:beta-rewrite}
 	\end{align}
 	
-	Using proposition \ref{prop:beta-recursive} and equation \ref{eq:beta-rewrite}, we see that
+	Using proposition \ref{prop:beta-recursive} and equation \eqref{eq:beta-rewrite}, we see that
 	
 	\begin{align}
 		&\beta(\z_n) = \int_{\z_{n+1}} \beta(\z_{n+1})p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}\vert \z_n) d\z_{n+1}\\
@@ -326,7 +326,7 @@ In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1},
 	\end{equation}
 \end{proposition}
 
-\begin{proof} We begin this proof by writing down the definition for $\gamma(\z_n)$ and considering equations \ref{eq:alpha-rewrite} and \ref{eq:beta-rewrite} from propositions \ref{prop:alpha-recursive} and \ref{prop:beta-recursive} respectively.
+\begin{proof} We begin this proof by writing down the definition for $\gamma(\z_n)$ and considering equations \eqref{eq:alpha-rewrite} and \eqref{eq:beta-rewrite} from propositions \ref{prop:alpha-recursive} and \ref{prop:beta-recursive} respectively.
 	\begin{align}
 		\gamma(\z_n) &= \frac{\alpha(\z_n) \beta(\z_n)}{p({\bf X})} \\
 		&= \frac{1}{p({\bf X})}\left(\hat\alpha(\z_n) \prod_{j=1}^n c_j\right)\left(\hat\beta(\z_n) \prod_{j={n+1}}^N c_j\right) \\
@@ -335,7 +335,7 @@ In the following two propositions we show that $\gamma(\z_n)$ and $\xi(\z_{n-1},
 	\end{align}
 \end{proof}
 
-\begin{proposition}
+\begin{proposition} \label{prop:xi-rewrite}
 	$\xi(\z_{n-1}, \z_n)$ can be written in terms of the re-scaled factors $\hat\alpha(\z_n)$, and $\hat\beta(\z_n)$ as
 	\begin{equation}
 		\xi(\z_{n-1}, \z_{n}) = c_n^{-1}\hat\alpha(\z_n)p(\x_n \vert \z_n) p(\z_{n-1}\vert \z_n)\hat\beta(\z_n)
@@ -377,7 +377,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 		\iff& c_1 \mathcal{N}(\z_1\vert \boldsymbol\mu, {\bf V}_1) = \mathcal{N}(\z_1 \vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1\vert {\bf C}\z_1, \boldsymbol\Sigma).
 	\end{align}
 	
-	Where $c_1$ is the normalisation coefficient. To find $\boldsymbol{\mu}_1$ and ${\bf V}_1$, we make use of equation \ref{eq:normal-conditional}. We  obtain
+	Where $c_1$ is the normalisation coefficient. To find $\boldsymbol{\mu}_1$ and ${\bf V}_1$, we make use of equation \eqref{eq:normal-conditional}. We  obtain
 	\begin{align}
 		\boldsymbol{\mu}_1 &= \left({\bf V}_0^{-1} + {\bf C}^T\boldsymbol{\Sigma}^{-1} {\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_1 + {\bf V}_0^{-1}\boldsymbol\mu_0\right\}\\
 		{\bf V}_1 &= \left({\bf V}_0^{-1} + {\bf C}^T\boldsymbol{\Sigma}^{-1} {\bf C}\right)^{-1}.
@@ -408,7 +408,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 		&= \boldsymbol{\mu}_0 + {\bf K}_1(\x_1 -{\bf C}\boldsymbol\mu_0).
 	\end{align}
 	
-	Where we have used equations \ref{eq:part-k1-rewrite} and \ref{eq:part-v1-rewrite} to derive equation \ref{eq:part-m1-rewrite}.
+	Where we have used equations \eqref{eq:part-k1-rewrite} and \eqref{eq:part-v1-rewrite} to derive equation \eqref{eq:part-m1-rewrite}.
 	
 	Finally, we derive $c_1$ by rewriting the term as the following integral
 	\begin{align}
@@ -416,7 +416,7 @@ As we have previously mentioned, the term $\hat\alpha(\z_n)$ can be represented 
 			&= \int \mathcal{N}(\z_1\vert \boldsymbol\mu_0, {\bf V}_0) \mathcal{N}(\x_1 \vert {\bf C}\z_1, \boldsymbol\Sigma) d\z_1.
 	\end{align}
 	
-	Which can be written as follows using equation \ref{eq:normal-marginal}:
+	Which can be written as follows using equation \eqref{eq:normal-marginal}:
 	\begin{equation}
 		c_1 = \mathcal{N}(\x_1 \vert {\bf C}\boldsymbol\mu_0, \boldsymbol\Sigma + {\bf C}{\bf V}_0 {\bf C}^T)
 	\end{equation}
@@ -452,17 +452,17 @@ More generally, we have the following proposition
 		\iff& c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_n, \boldsymbol\Sigma_n) = \mathcal{N}(\x_n \vert {\bf C}\z_n) \nonumber \\
 			&\hspace{1cm} \int \mathcal{N}(\z_{n-1} \vert \boldsymbol\mu_{n-1}, {\bf V}_{n-1}) \mathcal{N}(\z_n \vert {\bf A}\z_{n-1}, \boldsymbol\Gamma) d\z_{n-1} \label{eq:part-zn-rewrite-1}.
 	\end{align}
-	To find the terms $\boldsymbol\mu_n$ and ${\bf V}_n$, we first solve the integral in equation \ref{eq:part-zn-rewrite-1} using the result presented in equation \ref{eq:normal-marginal}. We obtain
+	To find the terms $\boldsymbol\mu_n$ and ${\bf V}_n$, we first solve the integral in equation \eqref{eq:part-zn-rewrite-1} using the result presented in equation \eqref{eq:normal-marginal}. We obtain
 	\begin{equation}
 		\int \mathcal{N}(\z_{n-1} \vert \boldsymbol\mu_{n-1}, {\bf V}_{n-1}) \mathcal{N}(\z_n \vert {\bf A}\z_{n-1}, \boldsymbol\Gamma) d\z_{n-1} = \mathcal{N}(\z_n \vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}).
 	\end{equation}
-	Where we have defined ${\bf P}_{n-1} := \boldsymbol\Gamma + {\bf A}{\bf V}_{n-1}{\bf A}^T$. Hence, we rewrite equation \ref{eq:part-zn-rewrite-1} as 
+	Where we have defined ${\bf P}_{n-1} := \boldsymbol\Gamma + {\bf A}{\bf V}_{n-1}{\bf A}^T$. Hence, we rewrite equation \eqref{eq:part-zn-rewrite-1} as 
 	
 	\begin{equation} \label{eq:part-cnzn-rewrite}
 		c_n \mathcal{N}(\z_n \vert \boldsymbol\mu_n, \boldsymbol\Sigma_n) = \mathcal{N}(\x_n \vert {\bf C}\z_n)  \mathcal{N}(\z_n \vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}).
 	\end{equation}
 	
-	Finally, making use of equation \ref{eq:normal-conditional}, we notice that
+	Finally, making use of equation \eqref{eq:normal-conditional}, we notice that
 	
 	\begin{align}
 		\boldsymbol{\mu}_n &= \left({\bf P}_{n-1}^{-1} + {\bf C}^T \boldsymbol\Sigma^{-1}{\bf C}\right)^{-1} \left\{{\bf C}\boldsymbol\Sigma^{-1}\x_n + {\bf P}_{n-1}^{-1}{\bf A}\boldsymbol\mu_{n-1}\right\}\\
@@ -492,7 +492,7 @@ More generally, we have the following proposition
 		&= {\bf K}_n \x_n + {\bf A}\boldsymbol\mu_{n-1} - {\bf K}_n {\bf C}{\bf A}\boldsymbol\mu_{n-1}\\
 		&= {\bf A}\boldsymbol{\mu}_{n-1} + {\bf K}_{n}(\x_n - {\bf CA}\boldsymbol\mu_{n-1})
 	\end{align}
-	Note that we have used equations \ref{eq:part-kn-rewrite} and \ref{eq:part-v1-rewrite} to derive equation \ref{eq:part-mn-rewrite}.
+	Note that we have used equations \eqref{eq:part-kn-rewrite} and \eqref{eq:part-v1-rewrite} to derive equation \eqref{eq:part-mn-rewrite}.
 	
 	Finally, we derive $c_n$ by rewriting the term as the following integral
 	\begin{align}
@@ -500,7 +500,7 @@ More generally, we have the following proposition
 			&= \int \mathcal{N}(\z_n\vert {\bf A} \boldsymbol\mu_{n-1}, {\bf P}_{n-1}) \mathcal{N}(\x_n \vert {\bf C}\z_n, \boldsymbol\Sigma) d\z_n.
 	\end{align}
 	
-	Which can be written as follows using equation \ref{eq:normal-marginal}:
+	Which can be written as follows using equation \eqref{eq:normal-marginal}:
 	\begin{equation}
 		c_n = \mathcal{N}\left(\x_n \vert {\bf C}{\bf A}\boldsymbol\mu_{n-1}, \boldsymbol\Sigma + {\bf C}{\bf P}_{n-1}{\bf C}^T\right).
 	\end{equation}	
@@ -554,20 +554,20 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		&= \int \hat\beta(\z_{n+1 }) p(\x_{n+1}\vert \z_{n+1}) p(\z_{n+1}) p(\z_{n}\vert \z_{n+1}) d\z_{n+1} \label{eq:part-c-alpha-beta}.
 	\end{align}
 	
-	To further simplify equation \ref{eq:part-c-alpha-beta}, recall that
+	To further simplify equation \eqref{eq:part-c-alpha-beta}, recall that
 	\begin{align}
 		p(\z_n\vert \z_{n+1}) &\propto p(\z_n) p(\z_{n+1} \vert \z_n) \\
 		&= \mathcal{N}(\z_n \vert\boldsymbol\mu_n, {\bf V}_n) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma).
 	\end{align}
 	
-	Making use of equation \ref{eq:normal-conditional}, we observe that $p(\z_n \vert \z_{n+1})$ is a multivariate Normal distribution with mean and covariance matrix given by
+	Making use of equation \eqref{eq:normal-conditional}, we observe that $p(\z_n \vert \z_{n+1})$ is a multivariate Normal distribution with mean and covariance matrix given by
 	
 	\begin{align}
 		{\bf m}_n &= {\bf M}_n \left({\bf A}^T\boldsymbol\Gamma^{-1}\z_{n+1} + {\bf V}_n^{-1}\boldsymbol\mu_n\right)\\
 		{\bf M}_n &= \left( {\bf V}_n^{-1}  + {\bf A}^T\boldsymbol{\Gamma}^{-1}{\bf A} \right)^{-1},
 	\end{align}
 	
-	i.e, $p(\z_n \vert \z_{n+1}) = \mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)$. Furthermore, making use of equation \ref{eq:normal-marginal}, we observe that
+	i.e, $p(\z_n \vert \z_{n+1}) = \mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)$. Furthermore, making use of equation \eqref{eq:normal-marginal}, we observe that
 	\begin{align}
 		p(\z_{n+1}) &= \int p(\z_n) p(\z_{n+1} \vert \z_n) d\z_n\\
 					&= \int \mathcal{N}(\z_n \vert\boldsymbol\mu_n, {\bf V}_n) \mathcal{N}(\z_{n+1} \vert {\bf A}\z_n, \boldsymbol\Gamma) d\z_n\\
@@ -576,7 +576,7 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 	
 	% It follows that c_n+1 alpha beta is normal distribution since the right-hand part of the equation is the result
 	% of marginalising and conditioning normals
-	Finally, considering equations \ref{eq:part-cnzn-rewrite} and \ref{eq:part-zn+1-marginal}, we rewrite \ref{eq:part-c-alpha-beta} as
+	Finally, considering equations \eqref{eq:part-cnzn-rewrite} and \eqref{eq:part-zn+1-marginal}, we rewrite \eqref{eq:part-c-alpha-beta} as
 	\begin{align}
 		c_{n+1}\hat\alpha(\z_n)\hat\beta(\z_n) &= c_{n+1} \mathcal{N}(\z_{n} \vert \hat{\boldsymbol\mu}_n, \hat{\bf V}_n)\\
 		&= \int \hat\beta(\z_{n+1}) c_{n+1} \hat\alpha(\z_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n) d\z_{n+1}\\
@@ -585,7 +585,7 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		&= c_{n+1}\int \gamma(\z_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n) d\z_{n+1}\\
 		&= c_{n+1}\int \mathcal{N}(\z_{n+1} \vert \hat{\boldsymbol\mu}_{n+1}, \hat{\bf V}_{n+1})\mathcal{N}(\z_n \vert {\bf m}_n, {\bf M}_n)d\z_{n+1}.\\
 	\end{align}
-	Using equation \ref{eq:normal-marginal}, we obtain
+	Using equation \eqref{eq:normal-marginal}, we obtain
 	\begin{align}
 		\hat{\boldsymbol{\mu}}_n &= {\bf M}_n {\bf A}^T \boldsymbol\Gamma ^{-1} \hat{\boldsymbol{\mu}} + {\bf M}_n {\bf V}_n^{-1} \boldsymbol\mu_n \label{eq:part-muhat-1}\\
 		\hat{{\bf V}}_n&= {\bf M}_n + {\bf M}_n {\bf A}^T \boldsymbol{\Gamma}^{-1} \hat{\bf V}_{n+1}\boldsymbol\Gamma^{-1}{\bf A}{\bf M}_n \label{eq:part-Vhat-1}
@@ -593,7 +593,7 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 	
 	Therefore, $\gamma(\z_n) = \mathcal{N}(\z_n \vert \hat{\boldsymbol{\mu}}, \hat {\bf V}_n)$ as stated. 
 	
-	We conclude this proof by simplifying equations \ref{eq:part-muhat-1} and \ref{eq:part-Vhat-1}.  Let us denote ${\bf J}_n = {\bf V}_n{\bf A}^T{\bf P}_n^{-1}$. Using the result of proposition \ref{prop:woodbury-identity}, we obtain
+	We conclude this proof by simplifying equations \eqref{eq:part-muhat-1} and \eqref{eq:part-Vhat-1}.  Let us denote ${\bf J}_n = {\bf V}_n{\bf A}^T{\bf P}_n^{-1}$. Using the result of proposition \ref{prop:woodbury-identity}, we obtain
 	\begin{align}
 		{\bf M}_n 
 			&= \left({\bf V}_n^{-1} + {\bf A}^T \boldsymbol\Gamma^{-1} {\bf A}\right)^{-1}\\
@@ -614,7 +614,7 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		&= {\bf J}_n. \label{eq:part-Jn-rewrite}
 	\end{align}
 
-	Using equations \ref{eq:part-Mn-rewrite} and \ref{eq:part-Jn-rewrite}, we rewrite $\hat{\boldsymbol{\mu}}_n$ as follows:
+	Using equations \eqref{eq:part-Mn-rewrite} and \eqref{eq:part-Jn-rewrite}, we rewrite $\hat{\boldsymbol{\mu}}_n$ as follows:
 	\begin{align}
 		\hat{\boldsymbol{\mu}}_n 
 		&= {\bf M}_n {\bf A}^T \boldsymbol\Gamma ^{-1} \hat{\boldsymbol{\mu}} + {\bf M}_n {\bf V}_n^{-1} \boldsymbol\mu_n\\
@@ -633,7 +633,7 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 		&= {\bf V}_n + {\bf J}_n(\hat{\bf V}_{n+1} - {\bf P}_n){\bf J}_n^T.\\
 	\end{align}
 	
-	Where equation \ref{eq:part-Vhat-rewrite} followed from ${\bf J}_n = {\bf V}_n{\bf A}{\bf P}_n^{-1}$ implying ${\bf AV}_n = {\bf P}_n{\bf J}_n^T$.
+	Where equation \eqref{eq:part-Vhat-rewrite} followed from ${\bf J}_n = {\bf V}_n{\bf A}{\bf P}_n^{-1}$ implying ${\bf AV}_n = {\bf P}_n{\bf J}_n^T$.
 \end{proof}
 
 \begin{theorem}
@@ -644,7 +644,7 @@ This last two propositions can be used to show that $\gamma(\z_n)$ is a normal p
 \end{theorem}
 
 \begin{proof}
-	\texttt{to-do: write proof}
+	Using the result of proposition \ref{prop:xi-rewrite}
 \end{proof}
 
 \begin{tcolorbox}
@@ -675,7 +675,7 @@ Next, we maximise the term $Q(\boldsymbol\theta, \boldsymbol\theta^\text{old})$ 
 \end{proposition}
 
 \begin{proof}
-	We begin by computing the update equations for initial condition, namely, $\boldsymbol\mu$, and $\bf Z$. From equation \ref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p(\z_1)$. Hence
+	We begin by computing the update equations for initial condition, namely, $\boldsymbol\mu$, and $\bf Z$. From equation \eqref{eq:Q-LDS}, we notice that the only terms that depend on $\boldsymbol{\mu}_0$ are given only by the terms in $p(\z_1)$. Hence
 
 \begin{align}
 	\argmax{\boldsymbol{\mu}_0} Q(\boldsymbol\theta, \boldsymbol\theta^\text{old}) = \argmax{\boldsymbol{\mu}_0} \boldsymbol{\mu}_0 {\bf V}_0^{-1}\boldsymbol{\mu}_0^T -2\mathbb{E}[{\z_1}]{\bf V}_0^{-1}\boldsymbol{\mu}_0 \nonumber
@@ -735,7 +735,7 @@ In this section we present some useful proposition of graphical models.
 \begin{proposition} \label{prop:graphical-models-separation}
 	Let ${\bf Z} = \{\z_n\}_n$ be a set of latent random variables, and ${\bf X} = \{\x_n\}_n$ a set of observed variables with complete-data likelihood $({\bf Z}, {\bf X})$ given by the LDS model. Then, the following factorisations hold true
 	\begin{align}
-		p({\bf X}\vert\z_n) &= p({\x_1, \ldots, \x_n \vert \z_n})p({\x_{n+1}, \ldots, \x_N \vert \z_n}) \label{gm:1}\\
+		p({\bf X}\vert\z_n) &= p({\x_1, \ldots, \x_n \vert \z_n})p({\x_{n+1}, \ldots, \x_N \vert \z_n}) \label{eq:gm-1}\\
 		p(\x_1, \ldots, \x_{n-1}\vert \x_n, \z_n) &= p(\x_1, \ldots, \x_{n-1}\vert \z_n)\\
 		p(\x_1, \ldots, \x_{n-1}\vert \z_{n-1}, \z_{n}) &= p(\x_1, \ldots, \x_{n-1}\vert \z_{n-1})\\
 		p(\x_{n+1}, \ldots, \x_N \vert \z_n, \z_{n+1}) &= p(\x_{n+1}, \ldots, \x_N \vert \z_n)\\
